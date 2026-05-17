@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accounting Principles 1 — Chapters 1, 2</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta property="og:title" content="Accounting Principles 1 — Chapters 1, 2">
+<meta property="og:description" content="47 Questions · Multiple Choice · Capital University — Dr. Hamdy Habl">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://muddathiroshey.github.io/Accounting-Test/">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --ink-soft: #4a4a6a;
+    --ink-muted: #8888aa;
+    --paper: #faf9f6;
+    --paper-warm: #f4f1ea;
+    --paper-card: #ffffff;
+    --accent: #c84b31;
+    --accent-light: #f5e6e2;
+    --accent-deep: #8c3421;
+    --gold: #c9922a;
+    --gold-light: #fdf3e3;
+    --success: #2d6a4f;
+    --success-light: #d8f3e9;
+    --danger: #9b2335;
+    --danger-light: #fde8eb;
+    --border: #e2ddd6;
+    --border-strong: #c8c3ba;
+    --shadow-sm: 0 1px 3px rgba(26,26,46,0.06);
+    --shadow-md: 0 4px 16px rgba(26,26,46,0.10);
+    --shadow-lg: 0 12px 40px rgba(26,26,46,0.14);
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  .hero {
+    background: var(--ink);
+    color: white;
+    padding: 56px 40px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 90% 50%, rgba(200,75,49,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(201,146,42,0.12) 0%, transparent 60%);
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; position: relative; }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--accent); }
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 5vw, 46px);
+    line-height: 1.15;
+    margin-bottom: 10px;
+    color: #ffffff;
+  }
+  .hero-title em { font-style: italic; color: #f0c090; }
+  .hero-sub { font-size: 14px; color: rgba(255,255,255,0.55); margin-bottom: 32px; font-weight: 300; }
+  .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; }
+  .stat { display: flex; flex-direction: column; gap: 2px; }
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 28px; color: white; line-height: 1; }
+  .stat-label { font-size: 11px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .progress-wrap {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 14px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+  }
+  .progress-inner { max-width: 860px; margin: 0 auto; display: flex; align-items: center; gap: 16px; }
+  .progress-text { font-size: 12px; font-weight: 500; color: var(--ink-muted); white-space: nowrap; min-width: 110px; }
+  .progress-track { flex: 1; height: 5px; background: var(--paper-warm); border-radius: 99px; overflow: hidden; }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    border-radius: 99px;
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+  .progress-pct { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); font-weight: 500; min-width: 32px; text-align: right; }
+
+  .main { max-width: 860px; margin: 0 auto; padding: 40px 40px 80px; }
+
+  .section-header { display: flex; align-items: center; gap: 14px; margin: 40px 0 24px; }
+  .section-icon {
+    width: 38px; height: 38px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; flex-shrink: 0;
+  }
+  .section-icon.mc { background: var(--accent-light); color: var(--accent); }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--ink); line-height: 1.2; }
+  .section-meta { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
+
+  .q-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .q-card:hover { box-shadow: var(--shadow-md); }
+  .q-card.answered { border-color: var(--border-strong); }
+  .q-card.correct-card { border-color: #a3d9c2; background: #f8fffe; }
+  .q-card.wrong-card { border-color: #f0b8c0; background: #fffafa; }
+
+  .q-header { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px; }
+  .q-badge {
+    background: var(--paper-warm); color: var(--ink-muted);
+    font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500;
+    padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border);
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .q-text { font-size: 14.5px; color: var(--ink); line-height: 1.65; font-weight: 400; }
+
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 14px; border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; position: relative;
+  }
+  .option:hover { border-color: var(--accent); background: var(--accent-light); }
+  .option input[type=radio] { display: none; }
+  .option-dot {
+    width: 18px; height: 18px; border: 1.5px solid var(--border-strong);
+    border-radius: 50%; flex-shrink: 0; margin-top: 1px;
+    display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+  }
+  .option-dot::after {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--success); opacity: 0; transition: opacity 0.15s;
+  }
+  .option.selected { border-color: var(--accent); background: var(--accent-light); }
+  .option.selected .option-dot { border-color: var(--accent); background: var(--accent-light); }
+  .option.selected .option-dot::after { opacity: 1; }
+  .option.correct-opt { border-color: var(--success); background: var(--success-light); }
+  .option.correct-opt .option-dot { border-color: var(--success); background: var(--success-light); }
+  .option.correct-opt .option-text { color: var(--success); }
+  .option.correct-opt .option-letter { color: var(--success); }
+  .option.correct-opt:not(.selected) .option-dot::after { opacity: 0; }
+  .option.correct-opt.selected .option-dot::after { opacity: 1; background: var(--success); }
+  .option.wrong-opt { border-color: var(--danger); background: var(--danger-light); }
+  .option.wrong-opt .option-dot { border-color: var(--danger); background: var(--danger-light); }
+  .option.wrong-opt .option-dot::after { opacity: 1; background: var(--danger); }
+  .option.wrong-opt .option-text { color: var(--danger); }
+  .option.wrong-opt .option-letter { color: var(--danger); }
+  .option-letter { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: var(--ink-muted); margin-top: 2px; flex-shrink: 0; min-width: 14px; }
+  .option-text { font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
+
+  .actions { display: flex; gap: 12px; margin-top: 40px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: white; border: none;
+    padding: 13px 32px; border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: background 0.15s, transform 0.1s;
+    box-shadow: 0 2px 8px rgba(200,75,49,0.25);
+  }
+  .btn-primary:hover { background: var(--accent-deep); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-secondary {
+    background: white; color: var(--ink-soft); border: 1.5px solid var(--border-strong);
+    padding: 13px 28px; border-radius: var(--radius-sm);
+    font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--ink-soft); color: var(--ink); background: var(--paper-warm); }
+
+  .score-card {
+    display: none; background: var(--ink); color: white;
+    border-radius: var(--radius); padding: 32px 36px; margin-top: 40px;
+    position: relative; overflow: hidden; box-shadow: var(--shadow-lg);
+  }
+  .score-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 80% at 90% 50%, rgba(200,75,49,0.2) 0%, transparent 65%);
+  }
+  .score-card-inner { position: relative; }
+  .score-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-bottom: 28px; }
+  .score-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.45); margin-bottom: 6px; font-family: 'DM Mono', monospace; }
+  .score-big { font-family: 'DM Serif Display', serif; font-size: 56px; line-height: 1; color: white; }
+  .score-sub { font-size: 14px; color: rgba(255,255,255,0.55); margin-top: 4px; }
+  .score-grade { font-family: 'DM Serif Display', serif; font-size: 42px; color: var(--gold); line-height: 1; }
+  .score-breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
+  .score-section { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-sm); padding: 14px 16px; }
+  .score-section-label { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .score-section-val { font-family: 'DM Serif Display', serif; font-size: 22px; color: white; }
+  .score-section-pct { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+
+  .q-feedback { display: none; margin-top: 10px; font-size: 12px; font-weight: 500; padding: 6px 12px; border-radius: 4px; width: fit-content; }
+  .q-feedback.show-correct { display: block; background: var(--success-light); color: var(--success); }
+  .q-feedback.show-wrong { display: block; background: var(--danger-light); color: var(--danger); }
+
+  .context-block {
+    background: var(--gold-light); border: 1px solid #e8d5a3;
+    border-left: 4px solid var(--gold); border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 18px 22px; margin-bottom: 16px; margin-top: 8px;
+  }
+  .context-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--gold); font-weight: 500; margin-bottom: 10px; }
+  .context-title { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--ink); margin-bottom: 10px; }
+  .context-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  .context-table td { padding: 5px 8px; color: var(--ink-soft); border-bottom: 0.5px solid #e0d5b8; }
+  .context-table td:last-child { text-align: right; font-family: 'DM Mono', monospace; }
+  .context-table tr.total td { font-weight: 600; color: var(--ink); border-top: 1.5px solid #c8a84a; border-bottom: none; }
+  .context-table tr.section-head td { font-weight: 600; color: var(--ink); padding-top: 10px; border-bottom: none; font-size: 12px; }
+  .context-table tr.indented td:first-child { padding-left: 20px; }
+
+  .scroll-top {
+    position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px;
+    background: var(--ink); color: white; border: none; border-radius: 50%;
+    font-size: 18px; cursor: pointer; box-shadow: var(--shadow-md);
+    opacity: 0; transition: opacity 0.3s; z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .scroll-top.visible { opacity: 1; }
+  .scroll-top:hover { background: var(--accent); }
+
+  @media (max-width: 600px) {
+    .hero { padding: 36px 20px 32px; }
+    .main { padding: 24px 20px 60px; }
+    .progress-wrap { padding: 12px 20px; }
+    .hero-stats { gap: 20px; }
+    .q-card { padding: 16px 16px; }
+    .score-card { padding: 24px 20px; }
+    .score-big { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Capital University — Accounting Department</div>
+    <h1 class="hero-title">Accounting Principles <em>1</em></h1>
+    <p class="hero-sub">Chapters 1, 2 &nbsp;·&nbsp; Dr. Hamdy Habl &nbsp;·&nbsp; Revision &amp; Practice</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num" id="total-count">47</span><span class="stat-label">Questions</span></div>
+      <div class="stat"><span class="stat-num" id="mc-count">47</span><span class="stat-label">Multiple Choice</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <span class="progress-text" id="prog-text">0 / 47 answered</span>
+    <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+    <span class="progress-pct" id="prog-pct">0%</span>
+  </div>
+</div>
+
+<main class="main">
+
+  <div class="section-header">
+    <div class="section-icon mc">MC</div>
+    <div class="section-info">
+      <div class="section-title">Multiple Choice</div>
+      <div class="section-meta">Select the best answer for each question</div>
+    </div>
+  </div>
+
+  <div id="mc-container"></div>
+
+  <div class="actions">
+    <button class="btn-primary" onclick="submitTest()">View Score</button>
+    <button class="btn-secondary" onclick="resetTest()">Reset All</button>
+  </div>
+
+  <div class="score-card" id="score-card">
+    <div class="score-card-inner">
+      <div class="score-top">
+        <div>
+          <div class="score-label">Final Score</div>
+          <div class="score-big" id="score-pct">—</div>
+          <div class="score-sub" id="score-sub">— correct out of 47</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="score-label">Grade</div>
+          <div class="score-grade" id="score-grade">—</div>
+        </div>
+      </div>
+      <div class="score-breakdown">
+        <div class="score-section">
+          <div class="score-section-label">Correct</div>
+          <div class="score-section-val" id="mc-val">—</div>
+          <div class="score-section-pct" id="mc-pct">—</div>
+        </div>
+        <div class="score-section">
+          <div class="score-section-label">Unanswered</div>
+          <div class="score-section-val" id="skip-val">—</div>
+          <div class="score-section-pct" style="color:rgba(255,255,255,0.35);">not yet answered</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<button class="scroll-top" id="scroll-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const mcQuestions = [
+  {q:"The first required step in the accounting cycle is ……….",opts:["reversing entries.","journalizing transactions in the book of original entry.","analyzing transactions.","posting transactions"],ans:2},
+  {q:"All of the following are property, plant, and equipment except ………… .",opts:["supplies.","machinery.","land.","buildings."],ans:0},
+  {q:"Liabilities are generally classified on a balance sheet as ……………….",opts:["small liabilities and large liabilities.","present liabilities and future liabilities.","tangible liabilities and intangible liabilities.","current liabilities and long-term liabilities."],ans:3},
+  {q:"On May 14, Arizona Company purchased supplies of $2,000 on account. The entry to record the purchases will include ……………",opts:["A debit to Supplies and a credit to Accounts Payable.","A debit to Supplies Expense and a credit to Accounts Receivable.","A debit to Supplies and a credit to Cash.","A debit to Accounts Receivable and a credit to Supplies."],ans:0},
+  {q:"On June 1, 2021, Mona Company reported a cash balance of $12,000. During June, Donna made deposits of $5,000 and made disbursements totaling $16,000. What is the cash balance at the end of June?",opts:["$1,000 debit balance","$15,000 debit balance","$1,000 credit balance","$4,000 credit balance"],ans:0},
+  {q:"DINA started her business by $100,000 as capital. During the year, Dina contributed a building worth $50,000 to the business and purchased assets totaling $90,000. The drawings during the period equal $5,000. What would be the capital at the end of the period?",opts:["Zero","$100,000","$150,000","$145,000"],ans:3},
+  {q:"Which of the following statements is false?",opts:["Revenues increase owner's equity.","Revenues have normal credit balances.","Revenues are a positive factor in the computation of net income.","Revenues are increased by debits"],ans:3},
+  {q:"Which of the following rules is incorrect?",opts:["Credits decrease the drawing account.","Debits increase the capital account.","Credits increase revenue accounts.","Debits decrease liability accounts"],ans:1},
+  {q:"DINA's company purchases equipment for $1,500 and furniture for $1,200 from Alex's company for $2,700 cash. The entry for this transaction will include ……….",opts:["Credit to cash for Alex.","Credit to accounts payable for donia.","debit to equipment $1,500 and debit to furniture $1,200 for Alex.","debit to equipment $1,500 and furniture $1,200 for Dina's company."],ans:3},
+  {q:"The capital at the end of the year should appear on ……………...",opts:["owners' equity statement.","cash flow statement.","balance sheet.","A & C.","All of these."],ans:3},
+  {q:"A capital account balance …………….",opts:["May be debit.","May be credit.","Always credit.","Always debit."],ans:2},
+  {q:"A liability account …………….",opts:["May be debit.","May be credit.","May be debit or credit.","Always credit."],ans:3},
+  {q:"At September 1, 2020, Foil Co. reported owner's equity of $136,000. During the month, Foil generated revenues of $20,000, incurred expenses of $12,000, purchased equipment for $5,000 and withdrew cash of $2,000. What is the amount of owner's equity at September 30, 2020?",opts:["$136,000","$8,000","$137,000","$142,000"],ans:3},
+  {q:"After transaction information has been recorded in the journal, it is transferred to the:",opts:["trial balance.","income statement.","book of original entry.","Ledger"],ans:3},
+  {q:"On July 7, 2022, Rethink Company performed cash services of $1,400. The entry to record this transaction would include:",opts:["a debit to Service Revenue of $1,400.","a credit to Accounts Receivable of $1,400.","a debit to Cash of $1,400.","a credit to Accounts Payable of $1,400."],ans:2},
+  {q:"Jack withdraws $500 cash from his business for personal use. The entry for this transaction will include a debit of $500 to:",opts:["Jack, Drawing.","Jack, Capital.","Owner's Salary Expense.","Salaries Expense."],ans:0},
+  {q:"On May 4, Carter a carpenter, received a cash payment for services previously billed to a client. Carter paid his telephone bill, and he also bought equipment on credit. For the three transactions, at least one of the entries will include a:",opts:["credit to Nick Carter, Capital.","credit to Notes Payable.","debit to Accounts Receivable.","credit to Accounts Payable"],ans:3},
+  {q:"Cerner Company showed the following balances at Jan. 1 of its second year. What did Cerner Company show as Net profit?",opts:["$2,500","$21,000","$20,500","$22,000"],ans:0},
+  {q:"Ending capital for Cerner Company will be:",opts:["$2,500","$1,000","$6,000","$3,000"],ans:3},
+  {q:"Dawson's Delivery Service purchased equipment. Dawson paid $500 in cash and signed a note for $2,000. Dawson debited the Equipment account for:",opts:["$3,000","$3,500","$1,500","$2,500"],ans:3},
+  {q:"Net income for a period is generated from:",opts:["Business activities.","Drawings.","Additional investments.","Liabilities."],ans:0},
+  {q:"A future economic sacrifice of benefits resulting from current obligations to transfer or render services to other entities in the future as a result of past transactions, is a(n):",opts:["Assets","Liabilities","Expenses","Revenues"],ans:1},
+  {q:"What did Waleed's shop show as total credits?",opts:["$1,000,000","$1,680,000","$1,860,000","$1,580,000"],ans:2},
+  {q:"The total revenues are:",opts:["$300,000","$200,000","$100,000","$400,000"],ans:0},
+  {q:"The total expenses are:",opts:["$90,000","$120,000","$140,000","$60,000"],ans:2},
+  {q:"The net income of Waleed's shop is:",opts:["$435,000","$160,000","$135,000","$300,000"],ans:1},
+  {q:"The ending capital of Waleed's shop is:",opts:["$600,000","$500,000","$660,000","$760,000"],ans:2},
+  {q:"The total assets are:",opts:["$580,000","$240,000","$1,380,000","$1,620,000"],ans:3},
+  {q:"The total liabilities are:",opts:["$400,000","$470,000","$1,380,000","$960,000"],ans:3},
+  {q:"The total liabilities &amp; equity are:",opts:["$580,000","$240,000","$1,380,000","$1,620,000"],ans:3},
+  {q:"If salaries expenses are paid for $8,000 in cash. The effect of this transaction on the accounting equation is as follows:",opts:["A Decrease in Assets & a decrease in owner's equity.","An increase in Assets & an increase in owner's equity","A Decrease in Assets & an increase in owner's equity.","An increase in Assets & a decrease in owner's equity"],ans:0},
+  {q:"………… states that 'Each transaction has two sides. One debit and one credit. The debit should be equal to the credit'.",opts:["The double entry system","The Debit and Credit Rule","The cost principle","The matching principle"],ans:0},
+  {q:"Owner's equity is increased by:",opts:["Assets","Liabilities","owner's equity","Expenses","Revenues"],ans:4},
+  {q:"Assets of Ahmed Company increased by $312,000, also its liabilities increased by $270,000. Owner's equity:",opts:["Decreased by $42,000","Decreased by $582,000","Increased by $42,000","Increased by $582,000"],ans:2},
+  {q:"……………………. reports the financial position of the entity at a specific date.",opts:["Income statement","Owner's equity statement","Balance sheet","Cash flow statement"],ans:2},
+  {q:"The following are external reports, except:",opts:["Balance sheet","Cash flow statement","Income statement","Budgets"],ans:3},
+  {q:"The following are external users of accounting information, except:",opts:["Management","Creditors","Investors","Customers"],ans:0},
+  {q:"............................. are expected economic benefits owned or controlled by the entity.",opts:["Assets","Liabilities","Owner's equity","Revenues"],ans:0},
+  {q:"………………….. are future economic sacrifices of benefits resulting from current obligations.",opts:["Assets","Liabilities","Owner's equity","Expenses"],ans:1},
+  {q:"Which of the following items are liabilities?",opts:["Rent","Rent payable","Notes Receivable","Accounts Receivable"],ans:1},
+  {q:"'Debit' is an accounting terminology that refers to:",opts:["Decrease both assets and liabilities","Decrease assets and increase liabilities","Increase both assets and liabilities","Increase assets and decrease liabilities"],ans:3},
+  {q:"When the owner deposits $30,000 in the bank as capital:",opts:["The assets increase by 30,000, owner's equity increases by 30,000","The assets decrease by 30,000, owner's equity decreases by 30,000","The assets increase by 30,000, owner's equity decreases by 30,000","The assets decrease by 30,000, owner's equity increases by 30,000"],ans:0},
+  {q:"When the entity purchases an office building on credit, the effect is:",opts:["Increase in assets and decrease in owner's equity","Decrease in assets and increase in owner's equity","Increase in assets and liabilities","Increase in assets and owner's equity"],ans:2},
+  {q:"When the entity paid salaries in cash, the effect is:",opts:["Increase in assets and owner's equity","Decrease in assets and owner's equity","Increase in assets and decrease in owner's equity","Decrease in assets and increase in owner's equity"],ans:1},
+  {q:"If the company sold some assets at cost in cash, the effect is:",opts:["Increase in assets and owner's equity","Increase in assets and decrease in owner's equity","Decrease in assets and owner's equity","Increase in one asset and decrease in another asset"],ans:3},
+  {q:"If liabilities decreased by $50,000:",opts:["Assets may be increased by $50,000","Owner's equity may be decreased by $50,000","Assets and Owner's equity may be decreased by $50,000","None of the above"],ans:1},
+  {q:"The accounting equation for Mona's entity is: $200,000 = $60,000 + $140,000. If land is purchased in cash for $50,000:",opts:["$250,000 = $60,000 + $190,000","$150,000 = $10,000 + $140,000","$250,000 = $110,000 + $140,000","$200,000 = $60,000 + $140,000"],ans:3},
+];
+
+const contextBlocks = {
+  12: {
+    label: 'Use the following information to answer question 13',
+    title: 'Foil Co. — September 2020',
+    html: `<table class="context-table">
+      <tr><td>Owner's equity, Sept 1</td><td>$136,000</td></tr>
+      <tr><td>Revenues generated</td><td>$20,000</td></tr>
+      <tr><td>Expenses incurred</td><td>$12,000</td></tr>
+      <tr><td>Equipment purchased (cash)</td><td>$5,000</td></tr>
+      <tr><td>Cash withdrawn</td><td>$2,000</td></tr>
+    </table>`
+  },
+  17: {
+    label: 'Use the following information to answer questions 18 – 19',
+    title: "Cerner Company — Balances at Jan. 1 of Second Year",
+    html: `<table class="context-table">
+      <tr><td>Cash</td><td>$5,000</td></tr>
+      <tr><td>Prepaid Insurance</td><td>$500</td></tr>
+      <tr><td>Accounts Receivable</td><td>$2,500</td></tr>
+      <tr><td>Rent Payable</td><td>$2,000</td></tr>
+      <tr><td>Notes Payable</td><td>$3,000</td></tr>
+      <tr><td>Cerner, Capital</td><td>$1,000</td></tr>
+      <tr><td>Cerner, Drawing</td><td>$500</td></tr>
+      <tr><td>Revenues</td><td>$15,000</td></tr>
+      <tr><td>Expenses</td><td>$12,500</td></tr>
+    </table>`
+  },
+  22: {
+    label: 'Use the following information to answer questions 24 – 31',
+    title: "Waleed's Shop — Financial Records",
+    html: `<table class="context-table">
+      <tr class="section-head"><td>Assets &amp; Liabilities</td><td></td></tr>
+      <tr class="indented"><td>Accounts Payable</td><td>$90,000</td></tr>
+      <tr class="indented"><td>Accounts Receivable</td><td>$100,000</td></tr>
+      <tr class="indented"><td>Land</td><td>$340,000</td></tr>
+      <tr class="indented"><td>Cash</td><td>$40,000</td></tr>
+      <tr class="indented"><td>Equipment</td><td>$300,000</td></tr>
+      <tr class="indented"><td>Buildings</td><td>$500,000</td></tr>
+      <tr class="indented"><td>Notes Payable</td><td>$470,000</td></tr>
+      <tr class="indented"><td>Computers</td><td>$240,000</td></tr>
+      <tr class="indented"><td>Long-term Loans</td><td>$400,000</td></tr>
+      <tr class="indented"><td>Inventory</td><td>$100,000</td></tr>
+      <tr class="indented"><td>Beginning Capital</td><td>$600,000</td></tr>
+      <tr class="indented"><td>Drawings</td><td>$100,000</td></tr>
+      <tr class="section-head"><td>Revenues</td><td></td></tr>
+      <tr class="indented"><td>Sales Revenues</td><td>$200,000</td></tr>
+      <tr class="indented"><td>Service Revenues</td><td>$100,000</td></tr>
+      <tr class="section-head"><td>Expenses</td><td></td></tr>
+      <tr class="indented"><td>Salaries Expense</td><td>$60,000</td></tr>
+      <tr class="indented"><td>Rent Expense</td><td>$30,000</td></tr>
+      <tr class="indented"><td>Advertising Expense</td><td>$20,000</td></tr>
+      <tr class="indented"><td>Utilities Expense</td><td>$30,000</td></tr>
+    </table>`
+  }
+};
+
+const letters = ['a','b','c','d','e'];
+const total = mcQuestions.length;
+let answered = {};
+let correctCount = 0;
+
+function updateProgress() {
+  const count = Object.keys(answered).length;
+  const pct = Math.round(count / total * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = count + ' / ' + total + ' answered';
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+function revealMC(i) {
+  const item = mcQuestions[i];
+  const chosen = answered[i];
+  const card = document.getElementById('mc-card-' + i);
+  item.opts.forEach((_, j) => {
+    const opt = document.getElementById(`mc-opt-${i}-${j}`);
+    opt.style.pointerEvents = 'none';
+    if (j === item.ans) opt.classList.add('correct-opt');
+    else if (j === chosen && chosen !== item.ans) { opt.classList.add('wrong-opt'); opt.classList.remove('selected'); }
+  });
+  const fb = document.getElementById('mc-fb-' + i);
+  if (chosen === item.ans) {
+    correctCount++;
+    card.classList.add('correct-card');
+    fb.textContent = '✓ Correct!';
+    fb.className = 'q-feedback show-correct';
+  } else {
+    card.classList.add('wrong-card');
+    fb.textContent = '✗ Incorrect — correct answer: ' + letters[item.ans] + ') ' + item.opts[item.ans];
+    fb.className = 'q-feedback show-wrong';
+  }
+  updateScoreCard();
+}
+
+function updateScoreCard() {
+  const totalAnswered = Object.keys(answered).length;
+  const pct = totalAnswered > 0 ? Math.round(correctCount / totalAnswered * 100) : 0;
+  document.getElementById('score-card').style.display = 'block';
+  document.getElementById('score-pct').textContent = pct + '%';
+  document.getElementById('score-sub').textContent = correctCount + ' correct out of ' + totalAnswered + ' answered';
+  document.getElementById('score-grade').textContent = getGrade(pct);
+  document.getElementById('mc-val').textContent = correctCount + ' / ' + totalAnswered;
+  document.getElementById('mc-pct').textContent = totalAnswered > 0 ? pct + '% accuracy' : '—';
+  document.getElementById('skip-val').textContent = total - totalAnswered;
+}
+
+function buildMC() {
+  const container = document.getElementById('mc-container');
+  mcQuestions.forEach((item, i) => {
+    if (contextBlocks[i]) {
+      const cb = contextBlocks[i];
+      const block = document.createElement('div');
+      block.className = 'context-block';
+      block.innerHTML = `<div class="context-label">${cb.label}</div><div class="context-title">${cb.title}</div>${cb.html}`;
+      container.appendChild(block);
+    }
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'mc-card-' + i;
+    const opts = item.opts.map((o, j) => `
+      <label class="option" id="mc-opt-${i}-${j}" onclick="selectMC(${i},${j})">
+        <input type="radio" name="mc-${i}" value="${j}">
+        <div class="option-dot"></div>
+        <span class="option-letter">${letters[j]})</span>
+        <span class="option-text">${o}</span>
+      </label>`).join('');
+    card.innerHTML = `
+      <div class="q-header">
+        <span class="q-badge">${i + 1}</span>
+        <span class="q-text">${item.q}</span>
+      </div>
+      <div class="options">${opts}</div>
+      <div class="q-feedback" id="mc-fb-${i}"></div>`;
+    container.appendChild(card);
+  });
+}
+
+function selectMC(qi, oi) {
+  if (answered[qi] !== undefined) return;
+  answered[qi] = oi;
+  document.getElementById(`mc-opt-${qi}-${oi}`).classList.add('selected');
+  document.getElementById('mc-card-' + qi).classList.add('answered');
+  updateProgress();
+  revealMC(qi);
+}
+
+function getGrade(pct) {
+  if (pct >= 90) return 'A+';
+  if (pct >= 85) return 'A';
+  if (pct >= 80) return 'B+';
+  if (pct >= 75) return 'B';
+  if (pct >= 70) return 'C+';
+  if (pct >= 65) return 'C';
+  if (pct >= 60) return 'D+';
+  if (pct >= 50) return 'D';
+  return 'F';
+}
+
+function submitTest() {
+  document.getElementById('score-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetTest() {
+  answered = {};
+  correctCount = 0;
+  document.getElementById('mc-container').innerHTML = '';
+  document.getElementById('score-card').style.display = 'none';
+  buildMC();
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.addEventListener('scroll', () => {
+  document.getElementById('scroll-btn').classList.toggle('visible', window.scrollY > 400);
+});
+
+buildMC();
+updateProgress();
+document.getElementById('total-count').textContent = total;
+document.getElementById('mc-count').textContent = total;
+</script>
+</body>
+</html>

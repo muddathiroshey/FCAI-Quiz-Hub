@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS 241 – Operating Systems Quiz</title>
+<meta property="og:title" content="CS 241 – Operating Systems Quiz">
+<meta property="og:description" content="9 Lectures · Multiple Choice & True/False · Capital University — Dr. Ahmed Hesham Mostafa">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0f172a;--ink-soft:#334155;--ink-muted:#64748b;--paper:#f8fafc;--paper-warm:#f1f5f9;--paper-card:#ffffff;--accent:#2563eb;--accent-light:#dbeafe;--accent-deep:#1d4ed8;--gold:#d97706;--gold-light:#fef3c7;--success:#15803d;--success-light:#dcfce7;--danger:#b91c1c;--danger-light:#fee2e2;--border:#e2e8f0;--border-strong:#cbd5e1;--shadow-sm:0 1px 3px rgba(15,23,42,0.06);--shadow-md:0 4px 16px rgba(15,23,42,0.10);--shadow-lg:0 12px 40px rgba(15,23,42,0.14);--radius:10px;--radius-sm:6px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;line-height:1.6;}
+
+/* HERO */
+.hero{background:var(--ink);color:white;padding:56px 40px 48px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 85% 50%,rgba(37,99,235,0.22) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 10% 80%,rgba(217,119,6,0.14) 0%,transparent 60%);}
+.hero-inner{max-width:960px;margin:0 auto;position:relative;}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#60a5fa;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.hero-eyebrow::before{content:'';display:block;width:28px;height:1px;background:#60a5fa;}
+.hero-title{font-family:'DM Serif Display',serif;font-size:clamp(26px,5vw,44px);line-height:1.15;margin-bottom:8px;color:#fff;}
+.hero-title em{font-style:italic;color:#93c5fd;}
+.hero-sub{font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:32px;font-weight:300;}
+
+/* LECTURE NAV TABS */
+.lecture-nav{background:white;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-sm);}
+.lecture-nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none;}
+.lecture-nav-inner::-webkit-scrollbar{display:none;}
+.lec-tab{padding:14px 18px;font-size:13px;font-weight:500;color:var(--ink-muted);cursor:pointer;border:none;background:transparent;font-family:'DM Sans',sans-serif;white-space:nowrap;border-bottom:3px solid transparent;transition:all .2s;flex-shrink:0;}
+.lec-tab:hover{color:var(--ink);background:var(--paper-warm);}
+.lec-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* PROGRESS */
+.progress-wrap{background:white;border-bottom:1px solid var(--border);padding:10px 40px;}
+.progress-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:16px;}
+.progress-text{font-size:12px;font-weight:500;color:var(--ink-muted);white-space:nowrap;min-width:130px;}
+.progress-track{flex:1;height:5px;background:var(--paper-warm);border-radius:99px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:99px;transition:width .4s cubic-bezier(.4,0,.2,1);width:0%;}
+.progress-pct{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);font-weight:500;min-width:32px;text-align:right;}
+
+/* MAIN */
+.main{max-width:960px;margin:0 auto;padding:40px 40px 80px;}
+
+/* LECTURE SECTION */
+.lec-section{display:none;}
+.lec-section.active{display:block;}
+.lec-header{margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.lec-num{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);margin-bottom:8px;}
+.lec-title{font-family:'DM Serif Display',serif;font-size:28px;color:var(--ink);}
+.lec-stats{display:flex;gap:20px;margin-top:12px;flex-wrap:wrap;}
+.lec-stat{font-size:12px;color:var(--ink-muted);background:var(--paper-warm);padding:4px 10px;border-radius:4px;border:1px solid var(--border);}
+
+/* SECTION HEADER */
+.section-header{display:flex;align-items:center;gap:14px;margin:32px 0 20px;}
+.section-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:12px;font-weight:500;flex-shrink:0;}
+.section-icon.mc{background:var(--accent-light);color:var(--accent);}
+.section-icon.tf{background:var(--gold-light);color:var(--gold);}
+.section-title{font-family:'DM Serif Display',serif;font-size:20px;color:var(--ink);}
+.section-meta{font-size:12px;color:var(--ink-muted);margin-top:1px;}
+
+/* QUESTION CARD */
+.q-card{background:var(--paper-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-bottom:12px;box-shadow:var(--shadow-sm);transition:box-shadow .2s,border-color .2s;}
+.q-card:hover{box-shadow:var(--shadow-md);}
+.q-card.answered{border-color:var(--border-strong);}
+.q-card.correct-card{border-color:#86efac;background:#f0fdf4;}
+.q-card.wrong-card{border-color:#fca5a5;background:#fff5f5;}
+.q-header{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px;}
+.q-badge{background:var(--paper-warm);color:var(--ink-muted);font-family:'DM Mono',monospace;font-size:11px;font-weight:500;padding:3px 8px;border-radius:4px;border:1px solid var(--border);flex-shrink:0;margin-top:2px;}
+.q-text{font-size:14px;color:var(--ink);line-height:1.65;}
+
+/* OPTIONS */
+.options{display:flex;flex-direction:column;gap:7px;}
+.option{display:flex;align-items:flex-start;gap:12px;padding:9px 13px;border:1.5px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .15s;position:relative;}
+.option:hover{border-color:var(--accent);background:var(--accent-light);}
+.option input[type=radio]{display:none;}
+.option-dot{width:17px;height:17px;border:1.5px solid var(--border-strong);border-radius:50%;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.option-dot::after{content:'';width:7px;height:7px;border-radius:50%;background:var(--success);opacity:0;transition:opacity .15s;}
+.option.selected .option-dot{border-color:var(--accent);background:var(--accent-light);}
+.option.selected .option-dot::after{opacity:1;}
+.option.selected{border-color:var(--accent);background:var(--accent-light);}
+.option-letter{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--ink-muted);margin-top:2px;flex-shrink:0;min-width:14px;}
+.option-text{font-size:13.5px;color:var(--ink-soft);line-height:1.5;}
+.option.correct-opt{border-color:var(--success);background:var(--success-light);}
+.option.correct-opt .option-text{color:var(--success);}
+.option.correct-opt .option-letter{color:var(--success);}
+.option.correct-opt .option-dot{border-color:var(--success);background:var(--success-light);}
+.option.correct-opt:not(.selected) .option-dot::after{opacity:0;}
+.option.correct-opt.selected .option-dot::after{opacity:1;background:var(--success);}
+.option.wrong-opt{border-color:var(--gold);background:var(--gold-light);}
+.option.wrong-opt .option-text{color:#92400e;}
+.option.wrong-opt .option-letter{color:#92400e;}
+.option.wrong-opt .option-dot{border-color:var(--gold);background:var(--gold-light);}
+.option.wrong-opt .option-dot::after{opacity:1;background:var(--gold);}
+
+/* T/F */
+.tf-wrap{display:flex;gap:10px;margin-top:4px;}
+.tf-btn{flex:1;padding:10px 0;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--ink-soft);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.tf-btn:hover{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
+.tf-btn.selected{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
+.tf-btn.correct-tf{border-color:var(--success);background:var(--success-light);color:var(--success);}
+.tf-btn.wrong-tf{border-color:var(--gold);background:var(--gold-light);color:#92400e;}
+.tf-dot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.5;}
+
+/* FEEDBACK */
+.q-feedback{display:none;margin-top:9px;font-size:12px;font-weight:500;padding:5px 11px;border-radius:4px;width:fit-content;}
+.q-feedback.show-correct{display:block;background:var(--success-light);color:var(--success);}
+.q-feedback.show-wrong{display:block;background:var(--danger-light);color:var(--danger);}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);margin:36px 0;}
+
+/* SCORE */
+.score-card{display:none;background:var(--ink);color:white;border-radius:var(--radius);padding:28px 32px;margin-top:32px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);}
+.score-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 90% 50%,rgba(37,99,235,0.22) 0%,transparent 65%);}
+.score-card-inner{position:relative;}
+.score-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:20px;margin-bottom:24px;}
+.score-label{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.45);margin-bottom:5px;font-family:'DM Mono',monospace;}
+.score-big{font-family:'DM Serif Display',serif;font-size:50px;line-height:1;color:white;}
+.score-sub{font-size:13px;color:rgba(255,255,255,.55);margin-top:3px;}
+.score-grade{font-family:'DM Serif Display',serif;font-size:38px;color:#fbbf24;line-height:1;}
+.score-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;}
+.score-section{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-sm);padding:12px 14px;}
+.score-section-label{font-size:10px;color:rgba(255,255,255,.4);margin-bottom:3px;text-transform:uppercase;letter-spacing:.1em;}
+.score-section-val{font-family:'DM Serif Display',serif;font-size:20px;color:white;}
+.score-section-pct{font-size:11px;color:rgba(255,255,255,.4);margin-top:1px;}
+
+/* ACTIONS */
+.actions{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap;}
+.btn-primary{background:var(--accent);color:white;border:none;padding:12px 28px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s;box-shadow:0 2px 8px rgba(37,99,235,.25);}
+.btn-primary:hover{background:var(--accent-deep);transform:translateY(-1px);}
+.btn-secondary{background:white;color:var(--ink-soft);border:1.5px solid var(--border-strong);padding:12px 24px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;}
+.btn-secondary:hover{border-color:var(--ink-soft);color:var(--ink);background:var(--paper-warm);}
+
+/* EXPLAIN BUTTON & PANEL */
+.btn-explain{display:none;margin-top:10px;padding:6px 14px;background:transparent;border:1.5px solid #94a3b8;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:#475569;cursor:pointer;transition:all .15s;}
+.btn-explain:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
+.btn-explain.visible{display:inline-flex;align-items:center;gap:6px;}
+.explain-panel{display:none;margin-top:12px;background:#f8fafc;border:1px solid #e2e8f0;border-left:3px solid var(--accent);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:14px 16px;}
+.explain-panel.visible{display:block;}
+.explain-source{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-muted);margin-bottom:6px;}
+.explain-why{font-size:13px;color:#1e293b;line-height:1.65;}
+.scroll-top{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--ink);color:white;border:none;border-radius:50%;font-size:17px;cursor:pointer;box-shadow:var(--shadow-md);opacity:0;transition:opacity .3s;z-index:200;display:flex;align-items:center;justify-content:center;}
+.scroll-top.visible{opacity:1;}
+.scroll-top:hover{background:var(--accent);}
+
+@media(max-width:600px){.hero{padding:32px 18px 28px;}.main{padding:20px 18px 60px;}.lecture-nav-inner{padding:0 8px;}.lec-tab{padding:12px 12px;font-size:12px;}.progress-wrap{padding:10px 18px;}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Capital University — Computer Science And Artificial Intelligence</div>
+    <h1 class="hero-title">CS 241 — <em>Operating Systems</em></h1>
+    <p class="hero-sub">Dr. Ahmed Hesham Mostafa &nbsp;·&nbsp; Lectures 0 – 8 &nbsp;·&nbsp; Multiple Choice & True / False</p>
+  </div>
+</header>
+
+<nav class="lecture-nav">
+  <div class="lecture-nav-inner" id="lec-tabs"></div>
+</nav>
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <span class="progress-text" id="prog-text">0 answered</span>
+    <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+    <span class="progress-pct" id="prog-pct">0%</span>
+  </div>
+</div>
+
+<main class="main" id="main-content"></main>
+
+<button class="scroll-top" id="scroll-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const letters = ['a','b','c','d','e'];
+
+const lectures = [
+  {
+    id: 0,
+    title: "Course Introduction & Plan",
+    mc: [
+      {q:"What is an Operating System?",opts:["Software that acts as an interface between hardware components and the user","A programming language used to write applications","A type of computer hardware","A network protocol"],ans:0},
+      {q:"Which company implemented the first OS in the early 1950s?",opts:["Microsoft","IBM","General Motors Research Lab","Apple"],ans:2},
+      {q:"In what year was the first version of Unix OS developed?",opts:["Late 1950s","Early 1960s","Late 1960s","Early 1980s"],ans:2},
+      {q:"MS-DOS was built by Microsoft in which year?",opts:["1975","1981","1985","1990"],ans:1},
+      {q:"Windows first came into existence in which year when a GUI was created and paired with MS-DOS?",opts:["1981","1983","1985","1990"],ans:2},
+      {q:"In the mid-1960s, operating systems started to use what?",opts:["Networks","Disks","Virtual memory","Threads"],ans:1},
+      {q:"What does OS stand for?",opts:["Open Software","Operating System","Output Service","Original Software"],ans:1},
+    ],
+    tf: [
+      {q:"An Operating System acts as an interface between computer hardware and the user.",ans:true},
+      {q:"Every computer system must have at least one operating system to run other programs.",ans:true},
+      {q:"MS-DOS was the first OS built by Apple.",ans:false},
+      {q:"The first version of Unix was developed in the early 1950s.",ans:false},
+      {q:"Windows first appeared in 1985 when a GUI was paired with MS-DOS.",ans:true},
+      {q:"It is possible for a user to use a mobile device without an operating system.",ans:false},
+    ]
+  },
+  {
+    id: 1,
+    title: "Introduction & OS Components",
+    mc: [
+      {q:"Which of the following is NOT one of the three main goals of an operating system?",opts:["Execute user programs","Make the computer system convenient to use","Use the computer hardware efficiently","Compile source code into machine code"],ans:3,exp:["Executing user programs is explicitly listed as Goal 1 of the OS.", "Making the system convenient is Goal 2 of the OS.", "Efficient hardware use is Goal 3 of the OS.", "Compiling source code is the job of a compiler, not the OS. The three OS goals are: execute programs, convenience, and efficiency."],src:"Lecture 1 > OS Goals"},
+      {q:"What does PCB stand for?",opts:["Process Control Block","Program Counter Buffer","Primary Cache Block","Process Communication Bus"],ans:0,exp:["Correct - PCB (Process Control Block) stores all attributes of a process.", "The program counter is a field inside the PCB, not what PCB stands for.", "Cache blocks are a hardware concept unrelated to the PCB acronym.", "PCB is Process Control Block, not a communication bus."],src:"Lecture 1 > Process Management"},
+      {q:"Which OS component is responsible for recognizing CLI commands like cd, mkdir, cls?",opts:["I/O Management","Process Management","Command Interpreter System Management","Security Management"],ans:2,exp:["I/O Management handles devices like keyboard/monitor, not command recognition.", "Process Management handles scheduling and execution, not CLI parsing.", "The Command Interpreter System Management identifies and processes CLI commands like cd, mkdir, cls.", "Security Management handles authorization, not command parsing."],src:"Lecture 1 > Command Interpreter System Management"},
+      {q:"Which of the following is a User Mode component of the OS?",opts:["Process Management","Memory Management","I/O Management","File System Management"],ans:2,exp:["Process Management runs in Kernel Mode.", "Memory Management runs in Kernel Mode.", "I/O Management is a User Mode component that handles input/output operations.", "File System Management runs in Kernel Mode."],src:"Lecture 1 > Components in User Mode"},
+      {q:"Which of the following is a Kernel Mode component of the OS?",opts:["I/O Management","Command Interpreter System","Process Management","Graphical Interface"],ans:2,exp:["I/O Management is a User Mode component.", "Command Interpreter System Management is a User Mode component.", "Process Management is a Kernel Mode component - it includes scheduling, IPC, concurrency, and deadlock handling.", "Graphical interfaces are user-facing, not Kernel Mode components."],src:"Lecture 1 > Components in Kernel Mode"},
+      {q:"What is the technique used to prevent multiple processes from accessing the same resource simultaneously called?",opts:["Deadlock","Process Synchronization","Context Switching","Scheduling"],ans:1,exp:["Deadlock is the problem that synchronization prevents, not the solution.", "Process Synchronization controls access to shared resources using techniques like semaphores.", "Context Switching saves/restores process state - it does not prevent simultaneous resource access.", "Scheduling decides which process runs next - it does not protect shared resources."],src:"Lecture 1 > Process Synchronization"},
+      {q:"What is Deadlock?",opts:["When a process runs too fast","When multiple processes wait for each other to release resources and none proceeds","When the OS crashes","When memory is full"],ans:1,exp:["Process speed is unrelated to deadlock.", "Deadlock: multiple processes each wait for a resource held by another, so none can proceed.", "An OS crash is a system failure, not deadlock.", "Full memory causes allocation failures, not deadlock."],src:"Lecture 1 > Process Management - Deadlock"},
+      {q:"Which disk scheduling algorithm is mentioned as managed by the OS?",opts:["Round Robin","Priority Scheduling","FCFS (First Come First Serve)","Multilevel Queue"],ans:2,exp:["Round Robin is a CPU scheduling algorithm.", "Priority Scheduling is a CPU scheduling algorithm.", "The lecture mentions FCFS and SSTF as disk scheduling algorithms managed by the OS File System component.", "Multilevel Queue is a CPU scheduling algorithm."],src:"Lecture 1 > File System and Device Management"},
+      {q:"What type of error does the OS throw when a C program tries to access memory that doesn't belong to it?",opts:["Null Pointer Exception","Stack Overflow","Segmentation Fault","Memory Leak"],ans:2,exp:["Null Pointer Exception is a Java/application-level error.", "Stack Overflow occurs when the call stack exceeds its limit.", "The OS throws Segmentation Fault: the memory you are trying to access does not belong to your program.", "Memory Leak is when a program fails to free memory - not an OS error."],src:"Lecture 1 > Security Management - Program Level"},
+      {q:"What does DMA stand for in the context of computer system organization?",opts:["Dynamic Memory Allocation","Direct Memory Access","Data Management Architecture","Disk Memory Access"],ans:1,exp:["Dynamic Memory Allocation is a programming concept (malloc), not hardware DMA.", "DMA = Direct Memory Access - allows devices to access shared memory directly.", "Data Management Architecture is not a standard hardware term.", "Disk Memory Access is not what DMA stands for."],src:"Lecture 1 > Computer System Organization"},
+      {q:"Which of the following best describes Process Management scheduling?",opts:["Getting processes from new state into ready queue for CPU","Writing processes to disk","Sending processes over network","Compressing process memory"],ans:0,exp:["Scheduling gets processes from the new state into the ready queue for CPU execution.", "Writing to disk is swapping or I/O, not scheduling.", "Network transfer is IPC via sockets, not scheduling.", "Memory compression is a memory management concern."],src:"Lecture 1 > Process Management - Scheduling"},
+      {q:"Which technique does OS use to handle deadlocks via Semaphores?",opts:["Process Synchronization","Memory Compaction","Context Switching","Disk Scheduling"],ans:0,exp:["Process Synchronization uses semaphores to coordinate resource access and prevent deadlock.", "Memory Compaction moves RAM holes together - unrelated to deadlock.", "Context Switching saves/restores process state - unrelated to deadlock prevention.", "Disk Scheduling orders I/O requests - unrelated to deadlock."],src:"Lecture 1 > Process Synchronization"},
+      {q:"What are the two views of OS components?",opts:["Hardware View and Software View","User View and Kernel View","Input View and Output View","Static View and Dynamic View"],ans:1,exp:["Hardware/Software is not how OS component views are categorized.", "OS components divide into User View (I/O Management, Command Interpreter) and Kernel View (Process, Memory, File System, Security).", "Input/Output describes data flow, not OS component views.", "Static/Dynamic is not a recognized OS component classification."],src:"Lecture 1 > OS Components Overview"},
+      {q:"Memory Deallocation in OS refers to:",opts:["Allocating more memory to a process","Freeing memory when a process completes execution","Copying memory from disk to RAM","Encrypting memory blocks"],ans:1,exp:["Allocating more memory is the opposite of deallocation.", "Memory Deallocation frees memory occupied by a completed process so it can be assigned to new processes.", "Copying from disk to RAM is swapping or loading - not deallocation.", "Memory encryption is a security feature."],src:"Lecture 1 > Memory Management - Deallocation"},
+      {q:"What does SSTF stand for in disk scheduling?",opts:["Shortest Seek Time First","Sequential Sector Transfer First","System Storage Task First","Single Sector Transfer Frequency"],ans:0,exp:["SSTF = Shortest Seek Time First - services the disk request closest to the current head position.", "Sequential Sector Transfer is not a real disk scheduling term.", "System Storage Task First is not a recognized algorithm.", "Single Sector Transfer Frequency is not a disk scheduling concept."],src:"Lecture 1 > File System and Device Management"},
+      {q:"A process in the Running state issues an I/O request. What state does it transition to?",opts:["Ready","Terminated","Waiting","New"],ans:2,exp:["Ready means waiting for the CPU, not waiting for an I/O event.", "Terminated means the process finished - an I/O request does not terminate it.", "When a process issues an I/O request it moves to the Waiting state until the I/O completes.", "New is the initial creation state - a running process cannot go back to New."],src:"Lecture 1 > Process State Diagram"},
+      {q:"If the OS switches from user mode to kernel mode during I/O processing, which component triggers this switch?",opts:["Security Management","File System Management","I/O Management","Command Interpreter"],ans:2,exp:["Security Management handles authorization, not I/O mode switching.", "File System Management handles file storage, not I/O mode switching.", "I/O Management triggers the mode switch: input given, OS recognizes, switches to kernel mode, processes, switches back, displays result.", "Command Interpreter handles CLI commands, not hardware mode switching."],src:"Lecture 1 > I/O Management Processing Steps"},
+      {q:"Which of the following correctly describes the relationship between concurrency and deadlock?",opts:["Concurrency eliminates deadlock","Deadlock can arise when concurrent processes compete for shared resources","Deadlock only happens in single-threaded programs","Concurrency and deadlock are unrelated"],ans:1,exp:["Concurrency creates the conditions for deadlock - it does not eliminate it.", "Deadlock arises from concurrency: processes compete for shared resources, each waiting for a resource held by another.", "Deadlock requires at least two competing processes - single-threaded programs cannot deadlock.", "Concurrency and deadlock are directly related through resource competition."],src:"Lecture 1 > Process Management - Concurrency and Deadlock"},
+      {q:"A process has completed execution. In what order does the OS handle its resources?",opts:["First schedule another process, then free memory","Deallocate memory, close files, release I/O, then remove PCB","Remove PCB first, then free memory","Archive the PCB to disk before releasing resources"],ans:1,exp:["Scheduling another process is independent - resource cleanup follows a specific order.", "On termination: deallocate memory, close files, release I/O devices, then remove the PCB.", "The PCB must remain until all resources are freed - it is removed last.", "PCBs are deallocated, not archived to disk."],src:"Lecture 1 > Process Management"},
+      {q:"Which scenario would NOT cause a process to move from Running to Ready state?",opts:["Time slice expires","Higher priority process arrives (preemptive)","Process requests I/O","Scheduler preempts the process"],ans:2,exp:["Time slice expiry returns the process to Ready.", "Higher-priority preemption returns the process to Ready.", "An I/O request moves the process to the Waiting state, NOT the Ready state. This is the correct answer.", "Scheduler preemption returns the process to Ready."],src:"Lecture 1 > Process State Diagram"},
+      {q:"The OS must switch from user mode to kernel mode when:",opts:["A user opens a GUI window","A program calls printf() in C","A process terminates normally","All of the above involve a mode switch"],ans:3,exp:["Opening a GUI involves system-level drawing operations requiring kernel mode.", "printf() is a system call triggering I/O processing in kernel mode.", "Process termination requires kernel resource cleanup.", "All of these involve kernel intervention - GUI opening, I/O system calls like printf, and process termination all trigger a mode switch."],src:"Lecture 1 > I/O Management and Process Management"},
+    ],
+    tf: [
+      {q:"PCB stands for Process Control Block.",ans:true,exp:"PCB = Process Control Block. It stores all attributes of a process: PID, registers, memory limits, CPU scheduling info, and I/O information.",src:"Lecture 1 > Process Management"},
+      {q:"The Command Interpreter System Management component belongs to Kernel Mode.",ans:false,exp:"The Command Interpreter System Management is a User Mode component - it handles CLI input in user space. Kernel Mode components are Process Management, Memory Management, File System, and Security Management.",src:"Lecture 1 > Components in User Mode"},
+      {q:"Process Management includes scheduling, IPC, concurrency, and deadlock handling.",ans:true,exp:"Process Management covers: Scheduling (ready queue), IPC (inter-process communication), Concurrency (multiple threads), and Deadlock handling (process synchronization via semaphores).",src:"Lecture 1 > Process Management"},
+      {q:"In process synchronization, the OS uses techniques like Semaphores.",ans:true,exp:"The OS uses semaphores to ensure processes coordinate before accessing shared resources, preventing race conditions and deadlock.",src:"Lecture 1 > Process Synchronization"},
+      {q:"Security management in the OS only operates at the user level.",ans:false,exp:"Security Management operates at BOTH User Level (authentication, file authorization) AND Program Level (preventing processes from accessing each other's memory - Segmentation Fault).",src:"Lecture 1 > Security Management"},
+      {q:"A Segmentation Fault error is thrown when a program accesses memory outside its allocated space.",ans:true,exp:"The OS throws 'Segmentation Fault: Core Dumped' when a program tries to access memory that does not belong to it - e.g., another process's memory block.",src:"Lecture 1 > Security Management - Program Level"},
+      {q:"The OS allows process 1 to access memory blocks assigned to process 2.",ans:false,exp:"The OS strictly prevents cross-process memory access. If process 1 accessed process 2's memory, it could corrupt data and crash the whole system. Memory protection is a core OS responsibility.",src:"Lecture 1 > Memory Management - Protection"},
+      {q:"File formatting means applying different data structures on disk to store files.",ans:true,exp:"Formatting applies data structures (FAT32, NTFS, etc.) to the disk to enable storing and retrieving files - this is the first step before files can be saved.",src:"Lecture 1 > File System and Device Management"},
+      {q:"Fragmentation occurs when leftover storage blocks in a frame cannot be used for larger data.",ans:true,exp:"Fragmentation: e.g., a 4-block frame with only 1 block used - the remaining 3 blocks cannot accommodate a 2-block request. The leftover space is wasted.",src:"Lecture 1 > File System and Device Management"},
+      {q:"NTFS and FAT32 are examples of file systems.",ans:true,exp:"NTFS (New Technology File System) and FAT32 (File Allocation Table 32) are file systems used by operating systems to organize and store files on disk.",src:"Lecture 1 > File System and Device Management"},
+      {q:"A process can only be in one state at a time.",ans:true,exp:"A process transitions between states (New, Ready, Running, Waiting, Terminated) based on events. At any moment, it occupies exactly one state.",src:"Lecture 1 > Process State"},
+      {q:"The OS kernel mode has fewer privileges than user mode.",ans:false,exp:"Kernel mode has the HIGHEST privilege level - it can access all hardware and memory. User mode is restricted and must request OS services via system calls.",src:"Lecture 1 > OS Components - Kernel Mode"},
+      {q:"Disk Scheduling algorithms like FCFS and SSTF are managed by the OS File System component.",ans:true,exp:"The lecture mentions FCFS (First Come First Serve) and SSTF (Shortest Seek Time First) as disk scheduling algorithms managed by the OS File System & Device Management component.",src:"Lecture 1 > File System and Device Management"},
+      {q:"Inter-Process Communication is only possible through shared memory.",ans:false,exp:"IPC supports two models: Shared Memory and Message Passing. Message Passing uses send/receive operations without shared variables. Both are valid IPC mechanisms.",src:"Lecture 1 > IPC Models"},
+      {q:"A deadlock can occur even when only one process is running.",ans:false,exp:"Deadlock requires at least two or more processes, each holding a resource and waiting for one held by another. A single process cannot deadlock with itself.",src:"Lecture 1 > Process Management - Deadlock"},
+    ]
+  },
+  {
+    id: 2,
+    title: "OS Technology Concepts",
+    mc: [
+      {q:"What does BIOS stand for?",opts:["Basic Input/Output System","Binary Input Output Software","Boot Initialization Operating System","Base Input Output Structure"],ans:0,exp:["BIOS stands for Basic Input/Output System.", "Binary Input Output Software is not the correct expansion.", "Boot Initialization Operating System is not what BIOS stands for.", "Base Input Output Structure is not the correct expansion."],src:"Lecture 2 > BIOS"},
+      {q:"BIOS is typically stored in which type of memory?",opts:["RAM","EPROM","SSD","Cache"],ans:1,exp:["RAM is volatile and loses contents when powered off - BIOS must persist.", "BIOS is stored in EPROM (Electrically Erasable Programmable ROM) on the motherboard.", "SSDs are storage drives, not where BIOS firmware lives.", "Cache is fast temporary memory - BIOS firmware is stored in non-volatile EPROM."],src:"Lecture 2 > BIOS"},
+      {q:"What replaced BIOS in the early 21st century?",opts:["MBR","GRUB","UEFI","NTLDR"],ans:2,exp:["MBR is the Master Boot Record - a partition structure, not a BIOS replacement.", "GNU GRUB is a bootloader, not a BIOS replacement.", "UEFI (Unified Extensible Firmware Interface) replaced BIOS in the early 21st century.", "NTLDR is the NT Loader for Windows NT - not a BIOS replacement."],src:"Lecture 2 > BIOS vs UEFI"},
+      {q:"What does POST stand for in the context of BIOS?",opts:["Power-On Self Test","Primary Output System Test","Process Operating System Test","Pre-OS Start Test"],ans:0,exp:["POST = Power-On Self Test - the BIOS runs this on startup to check hardware.", "Primary Output System Test is not what POST stands for.", "Process Operating System Test is not the correct expansion.", "Pre-OS Start Test is not what POST stands for."],src:"Lecture 2 > BIOS - POST"},
+      {q:"How many bytes does the MBR consist of?",opts:["256","512","1024","2048"],ans:1,exp:["256 bytes is too small - the MBR is 512 bytes.", "The MBR is the first 512 bytes of the hard drive, containing the partition table and bootstrap code.", "1024 bytes is double the actual MBR size.", "2048 bytes is four times the actual MBR size."],src:"Lecture 2 > MBR"},
+      {q:"What does MBR stand for?",opts:["Master Boot Record","Main Binary Register","Memory Boot Routine","Multiple Boot Record"],ans:0,exp:["MBR = Master Boot Record - the first 512 bytes of the boot device.", "Main Binary Register is not a real hardware term.", "Memory Boot Routine is not what MBR stands for.", "Multiple Boot Record is not the correct expansion."],src:"Lecture 2 > MBR"},
+      {q:"EEPROM stands for:",opts:["Extended Erasable Programmable Read-Only Memory","Electrically-Erasable Programmable ROM","Enhanced External Peripheral ROM","Electronic Erasable Permanent Read-Only Memory"],ans:1,exp:["Extended Erasable Programmable ROM is not the correct expansion.", "EEPROM = Electrically-Erasable Programmable ROM - where BIOS firmware is typically stored.", "Enhanced External Peripheral ROM is not the correct expansion.", "Electronic Erasable Permanent Read-Only Memory is not the correct expansion."],src:"Lecture 2 > BIOS"},
+      {q:"GNU GRUB is an example of a:",opts:["File System","Bootloader","Partition Table","Kernel"],ans:1,exp:["File systems (FAT32, NTFS) organize data on disk - they are not bootloaders.", "GNU GRUB is a bootloader responsible for loading the OS into memory.", "The partition table is inside the MBR - GRUB itself is the bootloader.", "The kernel is the core OS that GRUB loads - GRUB is the bootloader."],src:"Lecture 2 > The Bootloader"},
+      {q:"What is NTLDR?",opts:["A type of RAM","NT Loader for Windows NT operating system","A disk partition tool","A network protocol"],ans:1,exp:["RAM is memory - NTLDR is a program, not a type of memory.", "NTLDR = NT Loader - the bootloader used for the Windows NT operating system.", "Disk partition tools are separate utilities - NTLDR is a bootloader.", "Network protocols are communication standards - NTLDR is a Windows bootloader."],src:"Lecture 2 > The Bootloader"},
+      {q:"Which partition style supports a maximum of 128 partitions using GPT?",opts:["Basic Disk with MBR","Dynamic Disk","Basic Disk with GPT","Spanned Volume"],ans:2,exp:["Basic Disk with MBR supports a maximum of 4 primary partitions.", "Dynamic Disk supports unlimited partitions but is a different disk type.", "Basic Disk with GPT supports up to 128 partitions.", "A Spanned Volume is a dynamic disk volume type, not a partition style."],src:"Lecture 2 > GUID Partition Table (GPT)"},
+      {q:"Mirroring (RAID-1) means:",opts:["Data is striped across two or more disks","Data is duplicated on two physical disks for redundancy","Data is spread across three or more disks with parity","Data is stored in a single volume"],ans:1,exp:["Data striping across disks is RAID-0, not RAID-1.", "RAID-1 (mirroring) duplicates all data on two physical disks. If one fails, the other provides full access.", "Data striped across 3+ disks with parity is RAID-5.", "Single-disk storage is a simple volume, not RAID-1."],src:"Lecture 2 > Dynamic Disk Volume - Mirrored"},
+      {q:"Striping (RAID-0) is also known as:",opts:["Mirrored Volume","Spanned Volume","Striped Volume","RAID-5 Volume"],ans:2,exp:["A mirrored volume is RAID-1.", "A spanned volume links free space across disks without interleaving.", "RAID-0 = Striped Volume - data interleaved across two or more physical disks.", "RAID-5 adds parity across 3+ disks."],src:"Lecture 2 > Dynamic Disk Volume - Striped"},
+      {q:"What does GPT stand for?",opts:["General Partition Table","GUID Partition Table","Global Program Table","Graphics Processing Terminal"],ans:1,exp:["General Partition Table is not the correct expansion.", "GPT = GUID Partition Table - the modern partition scheme that overcomes MBR limitations.", "Global Program Table is not a real term.", "Graphics Processing Terminal is completely unrelated."],src:"Lecture 2 > GUID Partition Table"},
+      {q:"A Primary Partition is the only partition that can be set:",opts:["Logical","Extended","Active","Dynamic"],ans:2,exp:["Logical is a partition type inside an Extended partition - it cannot be set Active.", "Extended partitions contain logical drives - they cannot be set Active.", "The Primary Partition is the only partition that can be set Active - BIOS needs an active partition to locate boot files.", "Dynamic is a disk type, not a partition setting."],src:"Lecture 2 > Basic Partition"},
+      {q:"What does UEFI store its initialization information in?",opts:["MBR","EPROM","An .efi file on the EFI System Partition","NTLDR"],ans:2,exp:["MBR is where BIOS looks for boot code - UEFI uses the EFI System Partition instead.", "EPROM is where legacy BIOS firmware is stored, not UEFI startup data.", "UEFI stores all initialization in an .efi file inside the EFI System Partition (ESP) on the hard drive.", "NTLDR is a Windows NT bootloader, not UEFI storage."],src:"Lecture 2 > BIOS vs UEFI"},
+      {q:"During the POST process, the BIOS detects a missing keyboard. What happens next?",opts:["The OS boots normally and handles it later","BIOS halts or displays an error before handing off to the bootloader","The bootloader retries detection","The MBR is rewritten"],ans:1,exp:["BIOS must complete POST before handing off - it will not ignore hardware errors.", "During POST, if a hardware error is detected, BIOS halts or displays an error before passing control to the bootloader.", "The bootloader has no hardware detection capability - that is BIOS's job.", "The MBR is not rewritten during hardware detection errors."],src:"Lecture 2 > BIOS - POST"},
+      {q:"A system uses MBR partitioning with three primary partitions already created. How many more primary partitions can be added?",opts:["0","1","2","3"],ans:1,exp:["Zero more would mean 3 is the maximum - but MBR allows 4 primary partitions.", "With 3 already created, exactly 1 more primary partition can be added (MBR maximum = 4).", "Two more would exceed the 4-partition MBR limit.", "Three more would total 6 - far exceeding the 4-partition MBR limit."],src:"Lecture 2 > Basic Partition"},
+      {q:"Why can UEFI handle much larger drives than BIOS?",opts:["UEFI uses RAM instead of ROM","UEFI is not limited to 16-bit mode and supports GPT which overcomes MBR's 2TB limit","UEFI compresses data on the drive","UEFI uses a faster boot algorithm"],ans:1,exp:["Both BIOS and UEFI are firmware stored in ROM - that is not the relevant distinction.", "UEFI is not limited to 16-bit mode and supports GPT which overcomes MBR's 2TB maximum disk size limit.", "Data compression is not how UEFI handles larger drives.", "UEFI's advantage is GPT/64-bit addressing, not a different boot algorithm."],src:"Lecture 2 > BIOS vs UEFI"},
+      {q:"A RAID-5 array has 4 disks. How many disks can fail before data is lost?",opts:["0","1","2","3"],ans:1,exp:["0 failures tolerated would mean RAID-5 provides no redundancy - but it does.", "A RAID-5 array can tolerate exactly 1 disk failure - it reconstructs data from the remaining 3 disks.", "2 failures would require RAID-6 to tolerate.", "3 failures cannot be recovered by any standard RAID level."],src:"Lecture 2 > Dynamic Disk Volume - RAID-5"},
+      {q:"What is the correct order of the boot process?",opts:["OS → BIOS → MBR → Bootloader","Bootloader → BIOS → MBR → OS","BIOS → POST → MBR → Bootloader → OS","POST → OS → BIOS → MBR"],ans:2,exp:["The OS cannot start before BIOS and the bootloader.", "The bootloader runs after MBR, not before BIOS.", "Correct boot order: BIOS powers on > POST runs > MBR is read > Bootloader executes > OS loads.", "POST cannot run after the OS is already loaded."],src:"Lecture 2 > How Boot Process Occurs"},
+      {q:"If a dynamic disk's spanned volume spans 5 disks and one disk fails, what happens to the data?",opts:["Only the data on the failed disk is lost","All data on the volume is lost","The volume degrades but remains accessible","The OS automatically rebuilds the volume"],ans:1,exp:["Only losing data on the failed disk applies to RAID-5 - a spanned volume loses everything.", "A spanned volume has no fault tolerance - if any one disk fails, all data on the volume is lost.", "Degraded but accessible is RAID-5 behavior, not spanned volumes.", "Spanned volumes cannot auto-rebuild - that requires RAID with redundancy."],src:"Lecture 2 > Dynamic Disk Volume - Spanned"},
+    ],
+    tf: [
+      {q:"BIOS stands for Basic Input/Output System.",ans:true},
+      {q:"UEFI replaced BIOS in the early 21st century.",ans:true,exp:"UEFI (Unified Extensible Firmware Interface) replaced BIOS in the early 21st century. UEFI can handle much larger drives (via GPT) and operates faster than BIOS.",src:"Lecture 2 > BIOS vs UEFI"},
+      {q:"The MBR contains the first 1024 bytes of the hard drive.",ans:false,exp:"The MBR is the first 512 bytes (not 1024) of the hard drive. It contains the partition table and the bootstrap code that loads the OS bootloader.",src:"Lecture 2 > MBR"},
+      {q:"BIOS still works in 16-bit mode.",ans:true,exp:"BIOS operates in 16-bit mode, which limits the amount of code that can be read and executed from firmware ROM - one reason UEFI was developed.",src:"Lecture 2 > BIOS vs UEFI"},
+      {q:"A RAID-5 volume requires at least three disks.",ans:true,exp:"RAID-5 stripes data with parity across an array of three or more disks. The minimum is 3 disks - one for parity, allowing one disk failure recovery.",src:"Lecture 2 > Dynamic Disk Volume - RAID-5"},
+      {q:"A mirrored volume can be extended.",ans:false,exp:"A mirrored volume (RAID-1) CANNOT be extended. It duplicates data on exactly two disks. To get a larger mirrored volume, you must create a new one.",src:"Lecture 2 > Dynamic Disk Volume - Mirrored"},
+      {q:"Named pipes require a parent-child relationship between processes.",ans:false,exp:"Named pipes do NOT require a parent-child relationship - this is what distinguishes them from ordinary pipes. Named pipes can be used between any processes that know the pipe name.",src:"Lecture 2 > Named Pipes"},
+      {q:"FAT32 and NTFS are examples of file systems.",ans:true,exp:"FAT32 (File Allocation Table 32) and NTFS (New Technology File System) are the two most common Windows file systems for organizing files on disk.",src:"Lecture 2 > File System"},
+      {q:"EEPROM stands for Electrically-Erasable Programmable ROM.",ans:true,exp:"EEPROM = Electrically-Erasable Programmable ROM. BIOS is usually stored here, allowing firmware to be updated (flashed) without replacing the physical chip.",src:"Lecture 2 > BIOS"},
+      {q:"Dynamic disks support unlimited number of partitions.",ans:true,exp:"Dynamic disks use their own volume management and support an unlimited number of partitions - unlike basic disks limited to 4 (MBR) or 128 (GPT) primary partitions.",src:"Lecture 2 > Dynamic Disk"},
+      {q:"UEFI can only boot from GPT partitioned disks.",ans:false,exp:"UEFI can boot from both MBR and GPT disks. However, UEFI with Secure Boot and full features is most commonly used with GPT-partitioned disks.",src:"Lecture 2 > BIOS vs UEFI"},
+      {q:"The bootloader is responsible for loading the operating system into memory.",ans:true,exp:"The bootloader (GNU GRUB, Windows Boot Manager, NTLDR) is the program responsible for loading the OS kernel into memory and transferring control to it.",src:"Lecture 2 > The Bootloader"},
+      {q:"A spanned volume provides fault tolerance if one of its disks fails.",ans:false,exp:"A spanned volume has NO fault tolerance. If any one of its disks fails, all data on the entire volume is permanently lost.",src:"Lecture 2 > Dynamic Disk Volume - Spanned"},
+      {q:"BIOS reads the first 512 bytes of the selected boot device to find the MBR.",ans:true,exp:"BIOS loads the first 512 bytes from the hard drive of the selected boot device - these 512 bytes are the MBR (Master Boot Record), which contains the partition table and bootstrap code.",src:"Lecture 2 > How Boot Process Occurs"},
+      {q:"In a RAID-1 mirror, if one disk fails, the data is permanently lost.",ans:false,exp:"In RAID-1, data is duplicated on two physical disks. If one fails, the other continues providing full data access. Data is NOT permanently lost - this is the whole point of RAID-1.",src:"Lecture 2 > Dynamic Disk Volume - Mirrored"},
+    ]
+  },
+  {
+    id: 3,
+    title: "Processes",
+    mc: [
+      {q:"What is a process?",opts:["A program stored on disk","A program in execution","A file in memory","A hardware component"],ans:1,exp:["A program stored on disk is passive - it becomes a process when loaded and executing.", "A process is a program in execution - active, with resources allocated.", "A file in memory is data - a process is a program actively executing.", "Hardware components are physical devices, not software processes."],src:"Lecture 3 > Process Concept"},
+      {q:"Which section of a process in memory contains global variables?",opts:["Stack","Heap","Text","Data section"],ans:3,exp:["The stack holds temporary data: function parameters, return addresses, local variables.", "The heap holds dynamically allocated memory (malloc, new).", "The text section contains the program code (instructions).", "The data section contains global variables that persist throughout execution."],src:"Lecture 3 > Process in Memory"},
+      {q:"Which section contains memory dynamically allocated during runtime?",opts:["Stack","Text","Heap","Data"],ans:2,exp:["The stack holds temporary function-call data - it is managed by call/return.", "The text section holds executable code, not runtime data.", "The heap contains memory dynamically allocated at runtime using malloc() or new.", "The data section holds initialized/uninitialized global and static variables."],src:"Lecture 3 > Process in Memory - Heap"},
+      {q:"Which of the following is NOT a valid process state?",opts:["New","Running","Sleeping","Terminated"],ans:2,exp:["New is a valid state - the process is being created.", "Running is a valid state - instructions are being executed.", "'Sleeping' is NOT one of the five states. The five states are: New, Ready, Running, Waiting, Terminated.", "Terminated is a valid state - the process has finished execution."],src:"Lecture 3 > Process State"},
+      {q:"What does PCB stand for in this context?",opts:["Process Control Block","Program Cache Buffer","Parallel Computing Bus","Primary Code Block"],ans:0,exp:["Process Control Block - stores all state information for a process.", "Program Cache Buffer is not a real OS term.", "Parallel Computing Bus is not related to process management.", "Primary Code Block is not a real term."],src:"Lecture 3 > Process Control Block"},
+      {q:"Which UNIX system call creates a new process?",opts:["exec()","wait()","fork()","abort()"],ans:2,exp:["exec() replaces the current process memory with a new program - it does not create a new process.", "wait() causes the parent to wait for child termination - it does not create processes.", "fork() creates a new child process that is a duplicate of the parent.", "abort() terminates a child process - it does not create one."],src:"Lecture 3 > Process Creation - UNIX"},
+      {q:"Which system call replaces the process memory space with a new program after fork()?",opts:["wait()","abort()","exec()","kill()"],ans:2,exp:["wait() causes the parent to wait for child termination - it does not replace memory.", "abort() terminates a process - it does not load a new program.", "After fork(), exec() replaces the child's memory space with a new program.", "kill() sends a signal to a process - it does not replace memory."],src:"Lecture 3 > Process Creation - exec()"},
+      {q:"What is cascading termination?",opts:["Terminating only the parent process","Terminating all children and grandchildren when a parent terminates","Restarting all processes","Killing idle processes"],ans:1,exp:["Only terminating the parent would leave orphan child processes.", "Cascading termination: when a parent terminates, the OS terminates all its children, grandchildren, etc.", "Restarting processes is the opposite of termination.", "Killing idle processes is a resource management decision, not cascading termination."],src:"Lecture 3 > Process Termination"},
+      {q:"What are the two models of Inter-Process Communication (IPC)?",opts:["Pipes and Sockets","Shared Memory and Message Passing","Direct and Indirect","Synchronous and Asynchronous"],ans:1,exp:["Pipes and Sockets are IPC mechanisms, but the two main models are Shared Memory and Message Passing.", "The two IPC models are Shared Memory and Message Passing.", "Direct and Indirect are communication naming schemes, not the two main IPC models.", "Synchronous and Asynchronous describe communication behavior, not the two IPC models."],src:"Lecture 3 > IPC Models"},
+      {q:"In the Producer-Consumer problem with a bounded buffer, what happens when all buffers are full?",opts:["Consumer waits","Producer waits","Both wait","Buffer expands"],ans:1},
+      {q:"What is a context switch?",opts:["Changing the OS kernel","Saving the current process state and restoring another process state","Switching between user and kernel mode","Changing memory allocation"],ans:1,exp:["Changing the OS kernel is not what a context switch does.", "A context switch saves the current process state in its PCB and loads the saved state of the next process.", "Switching between user and kernel mode is a mode switch - different from a context switch.", "Changing memory allocation is a memory management operation."],src:"Lecture 3 > Context Switch"},
+      {q:"In direct communication, processes must:",opts:["Use a mailbox","Name each other explicitly","Use a shared file","Use sockets"],ans:1,exp:["Mailboxes are used in indirect communication, not direct.", "In direct communication, processes must name each other explicitly: send(P, msg) and receive(Q, msg).", "Shared files are not used in direct IPC communication.", "Sockets are for client-server communication, not named direct communication."],src:"Lecture 3 > Direct Communication"},
+      {q:"In indirect communication, messages are directed to and from:",opts:["Processes directly","Mailboxes/Ports","Shared memory","Network sockets"],ans:1,exp:["In direct communication processes name each other - indirect uses mailboxes.", "In indirect communication, messages go through mailboxes (ports). Each mailbox has a unique ID.", "Shared memory is a different IPC model entirely.", "Network sockets are for networked communication - indirect IPC uses mailboxes."],src:"Lecture 3 > Indirect Communication"},
+      {q:"Which buffering type requires sender to always wait for receiver (rendezvous)?",opts:["Unbounded capacity","Bounded capacity","Zero capacity","Fixed capacity"],ans:2,exp:["Unbounded capacity means the sender never waits (infinite queue).", "Bounded capacity means the sender waits only when the link is full.", "Zero capacity: no messages queued, sender blocks until receiver is ready - this is rendezvous.", "Fixed capacity is not a standard buffering term."],src:"Lecture 3 > Buffering - Zero Capacity"},
+      {q:"What is the purpose of the Program Counter in a PCB?",opts:["Store the process priority","Indicate the address of the next instruction to execute","Count the number of CPU cycles","Track open files"],ans:1,exp:["Process priority is stored in CPU-scheduling information, not the program counter.", "The program counter in the PCB stores the address of the next instruction to execute.", "CPU cycles are tracked in accounting information, not the program counter.", "Open files are tracked in I/O information fields, not the program counter."],src:"Lecture 3 > PCB - Program Counter"},
+      {q:"Ordinary pipes in UNIX are:",opts:["Bidirectional","Named","Unidirectional","Network-capable"],ans:2,exp:["Bidirectional communication requires named pipes - ordinary pipes are unidirectional.", "Named pipes have names in the filesystem - ordinary pipes are anonymous.", "Ordinary pipes are unidirectional - producer writes to write-end, consumer reads from read-end.", "Ordinary pipes cannot be used over a network - that requires sockets."],src:"Lecture 3 > Pipes - Ordinary Pipes"},
+      {q:"Named Pipes differ from Ordinary Pipes because:",opts:["They are unidirectional","They require parent-child relationship","They are bidirectional and no parent-child relationship needed","They only work on Windows"],ans:2,exp:["Named pipes are bidirectional - ordinary pipes are unidirectional.", "Named pipes do NOT require parent-child relationship - that is ordinary pipes.", "Named pipes are bidirectional and require no parent-child relationship.", "Named pipes are provided on both UNIX and Windows systems."],src:"Lecture 3 > Named Pipes"},
+      {q:"What is the 'Waiting' state of a process?",opts:["Process is being created","Process is waiting for an event to occur","Process is waiting to be assigned to a processor","Process has finished execution"],ans:1},
+      {q:"What does the ready queue contain?",opts:["Processes waiting for I/O","All processes in main memory ready to execute","Terminated processes","Processes being swapped to disk"],ans:1,exp:["Processes waiting for I/O are in a wait queue, not the ready queue.", "The ready queue contains all processes in main memory that are ready and waiting to be assigned a CPU.", "Terminated processes are removed from all queues.", "Processes being swapped to disk are not in the ready queue."],src:"Lecture 3 > Process Scheduling - Ready Queue"},
+      {q:"A socket is defined as:",opts:["A hardware port","An endpoint for communication","A type of pipe","A shared memory segment"],ans:1,exp:["A hardware port is a physical connector - a socket is a software communication endpoint.", "A socket is an endpoint for communication - identified by IP address and port number.", "A pipe is a different IPC mechanism for local processes.", "Shared memory is a different IPC model."],src:"Lecture 3 > Sockets"},
+      {q:"Process A calls fork(). The child then calls exec(). Which of the following is true?",opts:["The parent's memory is modified","The child replaces its memory space with a new program","Both parent and child run the same program","exec() creates another child process"],ans:1},
+      {q:"Three processes P1, P2, P3 share mailbox A. P1 sends a message. Both P2 and P3 try to receive. Which solution does NOT resolve the ambiguity?",opts:["Allow only one process to receive at a time","Let the system randomly pick the receiver","Allow the link to be associated with at most two processes","Allow all processes to receive the same message simultaneously"],ans:3,exp:["Limiting the link to two processes resolves the ambiguity.", "Random selection by the system is a valid solution.", "Allowing only one receiver at a time is a valid solution.", "Allowing all processes to receive simultaneously creates duplication and ambiguity."],src:"Lecture 3 > Indirect Communication - Mailbox Sharing"},
+      {q:"What is the key difference between bounded and unbounded buffering in IPC?",opts:["Bounded uses shared memory, unbounded uses message passing","Bounded has a fixed buffer size where producer may wait; unbounded has no practical limit","Bounded is for named pipes only","Unbounded means zero capacity"],ans:1,exp:["Both can use either shared memory or message passing.", "Bounded: fixed buffer size, producer may wait when full. Unbounded: no practical limit, producer never waits.", "Both bounded and unbounded can be used with named pipes.", "Unbounded means no practical limit - not zero capacity."],src:"Lecture 3 > Buffering"},
+      {q:"A process is in the Waiting state. Which event would move it back to Ready?",opts:["CPU time slice expires","The event it was waiting for (e.g., I/O completion) occurs","It is newly created","It calls exit()"],ans:1,exp:["CPU time slice expiry moves a Running process to Ready, not a Waiting process.", "The event the process was waiting for (e.g., I/O completion) moves it from Waiting to Ready.", "A newly created process goes from New to Ready.", "exit() terminates the process - it does not move it to Ready."],src:"Lecture 3 > Process State Diagram"},
+      {q:"In the Linux task_struct, which field stores the process identifier?",opts:["long state","unsigned int time_slice","pid_t pid","struct mm_struct *mm"],ans:2,exp:["long state stores the process state (running, waiting, etc.).", "unsigned int time_slice stores scheduling time information.", "pid_t pid stores the process identifier (PID) in Linux's task_struct.", "struct mm_struct *mm stores the address space/memory information."],src:"Lecture 3 > Process Representation in Linux"},
+      {q:"If P and Q use direct communication and P sends to Q while Q is not yet receiving, with zero-capacity buffering, what happens?",opts:["The message is queued","P blocks until Q receives","The message is discarded","Q crashes"],ans:1,exp:["Message queuing requires at least bounded capacity.", "With zero-capacity buffering, P blocks until Q is ready to receive.", "The message is not discarded - P waits.", "Q does not crash."],src:"Lecture 3 > Buffering - Zero Capacity"},
+      {q:"Which PCB field would you inspect to determine how much CPU time a process has consumed?",opts:["Process state","Program counter","Accounting information","Memory-management information"],ans:2,exp:["Process state shows the current state (running, waiting) - not time used.", "Program counter indicates the next instruction - not time usage.", "Accounting information in the PCB includes CPU and real time used, time limits, account numbers.", "Memory-management information contains page tables and memory limits."],src:"Lecture 3 > PCB - Accounting Information"},
+    ],
+    tf: [
+      {q:"A program is an active entity while a process is a passive entity stored on disk.",ans:false,exp:"It is the OPPOSITE: a program is PASSIVE (stored on disk as an executable file), while a process is ACTIVE (a program currently loaded in memory and executing).",src:"Lecture 3 > Process Concept"},
+      {q:"The stack section of a process contains temporary data like function parameters and return addresses.",ans:true,exp:"The stack contains temporary data created when functions are called: function parameters, return addresses, and local variables. This data is created and destroyed with each function call/return.",src:"Lecture 3 > Process in Memory - Stack"},
+      {q:"One program can result in several processes.",ans:true,exp:"Multiple users can run the same program simultaneously - each gets their own process with separate memory and state. One program executable can spawn many processes.",src:"Lecture 3 > Process Concept"},
+      {q:"The fork() system call in UNIX creates a new process.",ans:true,exp:"fork() creates a new child process that is a duplicate of the parent. The child gets a copy of the parent's address space and begins execution after the fork() call.",src:"Lecture 3 > Process Creation - UNIX"},
+      {q:"Context switch time is considered useful productive work for the system.",ans:false,exp:"Context switch time is PURE OVERHEAD - the system does no useful work while switching. It only saves and restores state. Minimizing context switches improves system performance.",src:"Lecture 3 > Context Switch"},
+      {q:"In IPC Shared Memory, communication is under control of the operating system.",ans:false,exp:"In IPC Shared Memory, communication is under control of the USER PROCESSES, not the OS. The OS only sets up the shared memory region - the processes themselves manage synchronization.",src:"Lecture 3 > IPC - Shared Memory"},
+      {q:"Zero capacity buffering means the sender must wait for the receiver (rendezvous).",ans:true,exp:"With zero capacity buffering, no messages can be queued. The sender must block until the receiver is ready to receive. Both must be present simultaneously - this is called a rendezvous.",src:"Lecture 3 > Buffering - Zero Capacity"},
+      {q:"Ordinary pipes can be accessed from outside the process that created them.",ans:false,exp:"Ordinary pipes can ONLY be accessed from within the process that created them (and its children). They require a parent-child relationship and cannot be used between unrelated processes.",src:"Lecture 3 > Pipes - Ordinary Pipes"},
+      {q:"Named pipes can be used without a parent-child relationship.",ans:true,exp:"Named pipes are more powerful than ordinary pipes - they are bidirectional, require no parent-child relationship, and can be used by multiple unrelated processes on both UNIX and Windows.",src:"Lecture 3 > Named Pipes"},
+      {q:"The loopback IP address 127.0.0.1 refers to the system on which the process is running.",ans:true,exp:"127.0.0.1 is the loopback address - it always refers to the local machine itself. A socket connecting to 127.0.0.1 connects to a service running on the same machine.",src:"Lecture 3 > Sockets"},
+      {q:"After fork(), the child process always runs before the parent process.",ans:false,exp:"After fork(), the scheduling order of parent and child is non-deterministic - it depends on the OS scheduler. There is no guarantee which runs first.",src:"Lecture 3 > Process Creation - fork()"},
+      {q:"A process can transition directly from New state to Running state without passing through Ready.",ans:false,exp:"A process must pass through the Ready state before Running. The sequence is: New -> Ready (admitted) -> Running (scheduler dispatch). Direct New to Running is not allowed.",src:"Lecture 3 > Process State Diagram"},
+      {q:"In indirect communication, a mailbox can be shared by more than two processes.",ans:true,exp:"In indirect communication, a mailbox can be shared by many processes - P1, P2, P3 can all share mailbox A. Multiple processes can send to and receive from the same mailbox.",src:"Lecture 3 > Indirect Communication"},
+      {q:"The context of a process includes CPU register values, process state, and memory-management information.",ans:true,exp:"The context represented in the PCB includes: CPU register values (program counter, general purpose registers), process state, and memory-management information. All are saved on a context switch.",src:"Lecture 3 > Context Switch"},
+      {q:"In non-blocking (asynchronous) receive, the receiver gets either a valid message or a null message.",ans:true,exp:"Non-blocking receive: the receiver gets either a valid message if one is available, or a null message if nothing is waiting. It does not block to wait for a message.",src:"Lecture 3 > Synchronization - Non-blocking"},
+    ]
+  },
+  {
+    id: 4,
+    title: "Threads & Concurrency",
+    mc: [
+      {q:"What is the main advantage of using threads over creating new processes?",opts:["Threads have more memory","Thread creation is lighter-weight than process creation","Threads run on separate CPUs","Threads are more secure"],ans:1,exp:["Threads share memory with their process - they do not have more memory.", "Thread creation is lighter-weight - threads share the process address space, avoiding the overhead of duplicating it.", "Threads on the same core share CPU time - they do not automatically get separate CPUs.", "Thread isolation is less strict than process isolation - threads share memory."],src:"Lecture 4 > Motivation"},
+      {q:"Which of the following is NOT a benefit of multithreading?",opts:["Responsiveness","Resource Sharing","Economy","Increased memory usage per task"],ans:3,exp:["Responsiveness is a real benefit - a blocked thread does not block the whole application.", "Resource Sharing is a real benefit - threads share code and data by default.", "Economy is a real benefit - thread creation and switching are cheaper.", "Increased memory usage per task is a cost/drawback, not a benefit. Benefits are: Responsiveness, Resource Sharing, Economy, Scalability."],src:"Lecture 4 > Benefits of Multithreading"},
+      {q:"Amdahl's Law is used to calculate:",opts:["Memory usage in multithreading","Potential performance gains from adding more processing cores","Network throughput","Disk I/O speed"],ans:1},
+      {q:"In the Many-to-One thread model:",opts:["Each user thread maps to one kernel thread","Many user threads map to a single kernel thread","Many kernel threads map to one user thread","All threads map to all cores"],ans:1,exp:["Each user thread mapping to one kernel thread describes the One-to-One model.", "In Many-to-One, all user threads map to a single kernel thread - the OS only sees one thread.", "Many kernel threads mapping to one user thread is not a recognized model.", "Mapping all threads to all cores describes ideal parallelism, not a threading model."],src:"Lecture 4 > Many-to-One"},
+      {q:"Which thread model provides the most concurrency?",opts:["Many-to-One","One-to-One","Many-to-Many","None-to-Many"],ans:1,exp:["Many-to-One maps all user threads to one kernel thread - only one can run at a time.", "One-to-One provides the most concurrency - each user thread has its own kernel thread.", "Many-to-Many is flexible but One-to-One provides the most direct concurrency.", "None-to-Many is not a recognized threading model."],src:"Lecture 4 > Thread Models"},
+      {q:"Which operating systems use the One-to-One thread model?",opts:["Only macOS","Windows and Linux","Only Android","Only iOS"],ans:1,exp:["macOS is not mentioned as the only One-to-One OS.", "Windows and Linux both use the One-to-One model - each user thread maps to its own kernel thread.", "Android is not the primary example given for One-to-One.", "iOS is not listed as the primary example."],src:"Lecture 4 > One-to-One Model - Examples"},
+      {q:"Data parallelism means:",opts:["Each thread performs a unique operation","Distributing subsets of the same data across multiple cores","Sending data over a network","Using shared memory between processes"],ans:1,exp:["Each thread performing a unique operation describes task parallelism.", "Data parallelism distributes subsets of the same data across multiple cores, each performing the same operation.", "Sending data over a network is not parallelism.", "Shared memory between processes is IPC, not data parallelism."],src:"Lecture 4 > Multicore Programming - Data Parallelism"},
+      {q:"Task parallelism means:",opts:["Distributing threads across cores, each performing unique operations","Running the same operation on multiple data sets","Using a single thread for all tasks","Splitting one task into identical sub-tasks"],ans:0,exp:["Task parallelism: distributing threads across cores, each performing a unique/different operation.", "Running the same operation on multiple data sets describes data parallelism.", "A single thread cannot achieve parallelism.", "Splitting into identical sub-tasks is data parallelism, not task parallelism."],src:"Lecture 4 > Multicore Programming - Task Parallelism"},
+      {q:"Which of the following is a primary thread library?",opts:["OpenMP","POSIX Pthreads","MPI","CUDA"],ans:1,exp:["OpenMP is a parallel programming API, not one of the three primary thread libraries.", "POSIX Pthreads is one of the three primary thread libraries - the others are Windows threads and Java threads.", "MPI is for distributed computing, not a thread library.", "CUDA is NVIDIA's parallel computing platform, not a thread library."],src:"Lecture 4 > Thread Libraries"},
+      {q:"If an application is 75% parallel and 25% serial running on 2 cores, what is the speedup according to Amdahl's Law?",opts:["1.0","1.6","2.0","2.28"],ans:1,exp:["1.0 means no speedup - two cores with 75% parallelism achieves 1.6x.", "Speedup = 1/(0.25 + 0.75/2) = 1/0.625 = 1.6x with 2 cores.", "2.0 would require 100% parallelizable code with 2 cores.", "2.28 is the speedup with 4 cores, not 2."],src:"Lecture 4 > Amdahl's Law Calculation"},
+      {q:"Concurrency means:",opts:["Multiple tasks running simultaneously on multiple cores","More than one task making progress on a single core","Tasks running without interruption","All tasks completing at the same time"],ans:1,exp:["Multiple tasks running simultaneously on multiple cores is parallelism, not concurrency.", "Concurrency: more than one task makes progress. On a single core, tasks interleave. Parallelism requires multiple cores running simultaneously.", "Tasks running without interruption describes sequential execution.", "All tasks completing at the same time is not what concurrency means."],src:"Lecture 4 > Concurrency vs. Parallelism"},
+      {q:"Which model allows the OS to create a sufficient number of kernel threads dynamically?",opts:["Many-to-One","One-to-One","Many-to-Many","One-to-Many"],ans:2,exp:["Many-to-One maps all user threads to a single kernel thread - no dynamic creation.", "One-to-One creates one kernel thread per user thread - fixed ratio.", "Many-to-Many allows the OS to create a sufficient number of kernel threads, matching user threads flexibly.", "One-to-Many is not a recognized threading model."],src:"Lecture 4 > Many-to-Many Model"},
+      {q:"An application is 50% parallelizable. According to Amdahl's Law, what is the maximum possible speedup regardless of how many cores are added?",opts:["2x","4x","Unlimited","10x"],ans:0,exp:["With S=0.5, maximum speedup = 1/S = 2x, regardless of cores.", "4x is not achievable with 50% serial code.", "Amdahl's Law: maximum speedup = 1/S where S=0.5, so 2x maximum.", "10x is not achievable with 50% serial code."],src:"Lecture 4 > Amdahl's Law - Maximum Speedup"},
+      {q:"In the Many-to-One model, why can't multiple threads run in parallel on a multicore system?",opts:["There are not enough user threads","Only one thread may be in the kernel at a time","The OS does not support it","User threads have lower priority"],ans:1},
+      {q:"A web server uses the One-to-One model with 1000 simultaneous clients. What is the main risk?",opts:["Too many context switches","Creating 1000 kernel threads causes excessive overhead","Threads cannot share memory","Each request blocks all others"],ans:1,exp:["Context switches are a concern for all multithreading.", "Creating 1000 kernel threads causes excessive overhead - the number of threads is sometimes restricted in One-to-One for this reason.", "Threads can share memory - that is not the issue.", "In One-to-One, threads are independent - blocking does not affect others."],src:"Lecture 4 > One-to-One Model"},
+      {q:"Which threading challenge is specifically introduced when moving from single-core to multicore?",opts:["Memory allocation","Data dependency — threads may depend on results from other threads","Context switching overhead","Thread library selection"],ans:1},
+      {q:"If S=0.1 (10% serial) and N=10 cores, what is the approximate speedup using Amdahl's Law?",opts:["5x","10x","~5.26x","~9x"],ans:2,exp:["5x would require S=0.2.", "10x requires infinite cores to approach.", "With S=0.1, N=10: speedup = 1/(0.1 + 0.9/10) = approximately 5.26x.", "9x is not the correct calculation."],src:"Lecture 4 > Amdahl's Law Calculation"},
+      {q:"Two threads share a global counter and both execute counter++ without synchronization. This is an example of:",opts:["Deadlock","A race condition","Data parallelism","Task scheduling"],ans:1,exp:["Deadlock requires processes holding resources while waiting.", "Without synchronization, two threads may read-modify-write in interleaved order - this is a race condition.", "Data parallelism applies the same operation to different data sets.", "Task scheduling is unrelated."],src:"Lecture 4 > Multicore Programming - Race Conditions"},
+      {q:"Why does the Many-to-One model perform poorly on multicore systems?",opts:["It uses too much memory","Multiple user-level threads cannot run in parallel because they all map to one kernel thread","It does not support blocking operations","It requires special hardware"],ans:1,exp:["Memory usage is not why Many-to-One performs poorly on multicore.", "Multiple user-level threads cannot run in parallel because they all map to one kernel thread - the OS can only schedule that one kernel thread.", "Many-to-One supports blocking operations - but blocking one thread blocks all.", "No special hardware is required - the limitation is in the software model."],src:"Lecture 4 > Many-to-One Model"},
+    ],
+    tf: [
+      {q:"Thread creation is heavier-weight than process creation.",ans:false,exp:"Thread creation is LIGHTER-weight than process creation. Threads share the process address space - no need to duplicate memory maps, copy file descriptors, etc. This is what makes thread creation cheap.",src:"Lecture 4 > Motivation"},
+      {q:"In the Many-to-One model, one thread blocking causes all threads to block.",ans:true,exp:"In Many-to-One, all user threads map to ONE kernel thread. If that kernel thread blocks on a system call, the entire process blocks - all user threads must wait.",src:"Lecture 4 > Many-to-One"},
+      {q:"The One-to-One model provides more concurrency than the Many-to-One model.",ans:true,exp:"One-to-One provides more concurrency because each user thread maps to its own kernel thread. Multiple kernel threads can run in parallel on multicore systems, unlike Many-to-One's single kernel thread.",src:"Lecture 4 > One-to-One Model"},
+      {q:"Parallelism and concurrency mean the same thing.",ans:false,exp:"They are DIFFERENT: Parallelism = multiple tasks running simultaneously on multiple cores. Concurrency = more than one task making progress (may be on a single core via time-slicing).",src:"Lecture 4 > Concurrency vs. Parallelism"},
+      {q:"POSIX Pthreads is a user-level thread library.",ans:true,exp:"POSIX Pthreads is a user-level thread library that provides an API for creating and managing threads without requiring OS changes. It is one of the three primary thread libraries.",src:"Lecture 4 > Thread Libraries"},
+      {q:"Amdahl's Law shows that performance gains are unlimited when adding more cores.",ans:false,exp:"Amdahl's Law shows diminishing returns. Maximum speedup = 1/S where S is the serial fraction. With any S > 0, adding infinite cores still gives limited speedup - performance gains are NOT unlimited.",src:"Lecture 4 > Amdahl's Law"},
+      {q:"Data parallelism distributes the same data subset to each core performing the same operation.",ans:true,exp:"Data parallelism distributes SUBSETS of the same data across multiple cores, each performing the SAME operation. The lecture describes it as: distributing subsets of the same data across multiple cores.",src:"Lecture 4 > Multicore Programming - Data Parallelism"},
+      {q:"Kernel threads are managed by user-level thread libraries.",ans:false,exp:"Kernel threads are managed by the OPERATING SYSTEM, not user-level libraries. User-level thread libraries (Pthreads, Java threads) manage user threads. Kernel threads are OS-managed and scheduled by the kernel.",src:"Lecture 4 > Thread Libraries - Kernel Threads"},
+      {q:"The Many-to-Many model is the most commonly used model today.",ans:false,exp:"The Many-to-Many model is NOT commonly used today. Windows and Linux both use the One-to-One model. Many-to-Many (via ThreadFiber on Windows) is rare.",src:"Lecture 4 > Many-to-Many Model"},
+      {q:"Economy is one of the benefits of multithreading because thread switching has lower overhead than context switching.",ans:true,exp:"Economy: thread switching has lower overhead than context switching between processes because threads share the same address space - no need to switch page tables or flush TLB entries.",src:"Lecture 4 > Benefits - Economy"},
+      {q:"According to Amdahl's Law, a fully parallelizable application (S=0) achieves linear speedup with N cores.",ans:true,exp:"With S=0 (no serial portion), Amdahl's formula gives speedup = 1/(0 + 0/N) = N - so yes, linear speedup with N cores. Only a fully parallelizable application achieves this theoretical maximum.",src:"Lecture 4 > Amdahl's Law"},
+      {q:"In the One-to-One model, the number of threads per process is sometimes restricted due to overhead.",ans:true,exp:"Creating too many kernel threads in the One-to-One model causes excessive overhead. Operating systems sometimes impose limits on the number of kernel threads per process for this reason.",src:"Lecture 4 > One-to-One Model"},
+      {q:"A race condition occurs when the outcome of execution depends on the relative timing of threads accessing shared data.",ans:true,exp:"A race condition: two or more threads access shared data concurrently and the result depends on the order/timing of access. Without synchronization, the outcome is unpredictable.",src:"Lecture 4 > Multicore Programming - Race Conditions"},
+      {q:"Task parallelism distributes the same data to multiple cores each performing the same operation.",ans:false,exp:"That describes DATA parallelism. TASK parallelism distributes different THREADS across different cores, where each thread performs a UNIQUE/DIFFERENT operation.",src:"Lecture 4 > Multicore Programming - Task Parallelism"},
+      {q:"A single-threaded process can exploit multiple cores for parallel execution.",ans:false,exp:"A single-threaded process can run on only ONE processor regardless of how many are available. Multiple threads are required to exploit parallel hardware.",src:"Lecture 4 > Scalability"},
+    ]
+  },
+  {
+    id: 5,
+    title: "CPU Scheduling",
+    mc: [
+      {q:"What is Burst Time?",opts:["Time a process waits in ready queue","Time required by a process to complete execution","Time from arrival to completion","Time for a context switch"],ans:1,exp:["Time waiting in the ready queue is Waiting Time.", "Burst Time (Execution Time/Running Time): the time required by the process to complete execution.", "Time from arrival to completion is Turnaround Time.", "Time for a context switch is Dispatch Latency."],src:"Lecture 5 > Important CPU Scheduling Terminologies"},
+      {q:"Turnaround Time is calculated as:",opts:["Burst Time + Waiting Time","Completion Time – Arrival Time","Completion Time – Burst Time","Arrival Time + Burst Time"],ans:1,exp:["Burst Time + Waiting Time is an equivalent formula for Turnaround Time - both are correct.", "Turnaround Time = Completion Time - Arrival Time. Total time from submission to completion.", "Completion minus Burst Time gives approximately Waiting Time, not Turnaround.", "Arrival plus Burst ignores waiting time - it is not the formula."],src:"Lecture 5 > CPU Scheduling Criteria"},
+      {q:"Waiting Time is calculated as:",opts:["Completion Time – Arrival Time","Burst Time + Arrival Time","Turnaround Time – Burst Time","Response Time – Burst Time"],ans:2,exp:["Completion minus Arrival = Turnaround Time, not Waiting Time.", "Burst plus Arrival is not a scheduling formula.", "Waiting Time = Turnaround Time - Burst Time. Time spent waiting in the ready queue.", "Response Time minus Burst is not the Waiting Time formula."],src:"Lecture 5 > CPU Scheduling Criteria"},
+      {q:"Which scheduling algorithm is considered optimal for minimum average waiting time?",opts:["FCFS","Round Robin","SJF (Shortest Job First)","Priority Scheduling"],ans:2,exp:["FCFS is simple but not optimal - it suffers from the Convoy Effect.", "Round Robin is fair but not optimal for minimum waiting time.", "SJF is optimal - it gives the minimum average waiting time for any given set of processes.", "Priority Scheduling optimizes by importance, not minimum waiting time."],src:"Lecture 5 > Shortest-Job-First (SJF)"},
+      {q:"What is the Convoy Effect in FCFS?",opts:["Short processes run before long ones","Short processes get stuck behind long processes","Processes run in reverse order","All processes have equal waiting time"],ans:1,exp:["Short processes running first describes SJF, not FCFS.", "Convoy Effect: short processes get stuck behind a long process in FCFS, causing high average waiting time.", "FCFS runs processes in arrival order, not reverse.", "FCFS is non-preemptive and arrival-order based - waiting times are very unequal."],src:"Lecture 5 > FCFS Scheduling"},
+      {q:"In Round Robin scheduling, what happens after a process uses its time quantum?",opts:["It terminates","It is moved to wait queue","It is preempted and added to end of ready queue","It gets a higher priority"],ans:2,exp:["The process does not terminate when its quantum expires unless it naturally finishes.", "Moving to wait queue happens when a process requests I/O, not when its quantum expires.", "After the time quantum expires, the process is preempted and added to the end of the ready queue.", "Priority is not changed by time quantum expiry in basic Round Robin."],src:"Lecture 5 > Round Robin (RR)"},
+      {q:"What is Starvation in priority scheduling?",opts:["A process consuming too much memory","Low priority processes may never execute","A process blocked on I/O","CPU being idle"],ans:1,exp:["Memory consumption is not related to priority starvation.", "Starvation: low priority processes may never execute if higher-priority processes keep arriving.", "I/O blocking is the Waiting state - not starvation.", "CPU idle time is a utilization concern, not starvation."],src:"Lecture 5 > Priority Scheduling"},
+      {q:"What is Aging in priority scheduling?",opts:["Decreasing priority over time","Increasing priority of processes as time progresses","Removing old processes","Resetting priorities to zero"],ans:1,exp:["Decreasing priority over time would worsen starvation.", "Aging gradually increases the priority of waiting processes over time, preventing starvation.", "Removing old processes is not aging.", "Resetting priorities to zero defeats the purpose of priority scheduling."],src:"Lecture 5 > Priority Scheduling - Aging"},
+      {q:"The Dispatcher is responsible for:",opts:["Choosing which process to run next","Giving control of the CPU to the selected process","Managing memory allocation","Handling I/O requests"],ans:1,exp:["Choosing which process runs next is the CPU Scheduler's job, not the Dispatcher.", "The Dispatcher gives control of the CPU to the selected process - handles context switching, mode switching, and jumping to the correct program location.", "Memory allocation is the Memory Manager's job.", "I/O requests are handled by the I/O Management component."],src:"Lecture 5 > Dispatcher"},
+      {q:"Dispatch latency is:",opts:["Time for a process to complete","Time to stop one process and start another","Time for a context switch to complete memory operations","Time between two I/O bursts"],ans:1,exp:["Time for a process to complete is Turnaround Time.", "Dispatch latency: the time it takes the dispatcher to stop one process and start another running.", "Memory operations during context switching are part of the overhead but not the definition of dispatch latency.", "Time between I/O bursts is part of the CPU/I/O burst cycle."],src:"Lecture 5 > Dispatcher - Dispatch Latency"},
+      {q:"In FCFS with P1=24, P2=3, P3=3 arriving in order P1,P2,P3, what is the average waiting time?",opts:["3","17","27","9"],ans:1},
+      {q:"SRTF (Shortest Remaining Time First) is the preemptive version of which algorithm?",opts:["FCFS","Round Robin","Priority Scheduling","SJF"],ans:3,exp:["The preemptive version of FCFS is not a standard algorithm.", "Preemptive Round Robin is just Round Robin with a quantum.", "Preemptive Priority is a different algorithm.", "SRTF is the preemptive version of SJF."],src:"Lecture 5 > Shortest Remaining Time First"},
+      {q:"Which scheduling criterion should be minimized?",opts:["CPU utilization","Throughput","Turnaround time","None of the above"],ans:2,exp:["CPU utilization should be maximized, not minimized.", "Throughput should be maximized, not minimized.", "Turnaround time should be minimized - total time from job submission to completion.", "All criteria have defined optimization directions."],src:"Lecture 5 > Scheduling Algorithm Optimization Criteria"},
+      {q:"If q is very large in Round Robin scheduling, it behaves like:",opts:["SJF","Priority Scheduling","FCFS","SRTF"],ans:2,exp:["SJF orders processes by burst length - large q in RR does not reorder them.", "Priority scheduling uses priorities - RR with large q does not implement priorities.", "When q is large in RR, each process runs to completion before preemption - this is FCFS/FIFO behavior.", "SRTF requires knowing burst lengths - not related to q size in RR."],src:"Lecture 5 > Round Robin"},
+      {q:"Response Time is calculated as:",opts:["Completion Time – Arrival Time","Time when process first gets CPU – Arrival Time","Burst Time – Waiting Time","Turnaround Time – Burst Time"],ans:1,exp:["Completion minus Arrival = Turnaround Time.", "Response Time = Time when process first gets CPU - Arrival Time. Measures how quickly the process first responds.", "Burst minus Waiting is not a standard formula.", "Turnaround minus Burst = Waiting Time."],src:"Lecture 5 > CPU Scheduling Criteria"},
+      {q:"Processes: P1 (burst=5, priority=3), P2 (burst=3, priority=1), P3 (burst=1, priority=4), P4 (burst=4, priority=2). All arrive at t=0. Using non-preemptive priority (lower number = higher priority), what is the order of execution?",opts:["P1→P2→P3→P4","P2→P4→P1→P3","P3→P1→P4→P2","P2→P3→P1→P4"],ans:1},
+      {q:"With Round Robin (q=3), processes P1(burst=7), P2(burst=4), P3(burst=3) all arrive at t=0. When does P3 finish?",opts:["t=6","t=7","t=9","t=10"],ans:2,exp:["t=6 is when P3 gets the CPU - it still needs 3ms.", "t=7 is when P2 finishes.", "With q=3: P1(0-3), P2(3-6), P3(6-9). P3 finishes at t=9.", "t=10 would require scheduling delays."],src:"Lecture 5 > Round Robin - Calculation"},
+      {q:"In preemptive priority scheduling, P1(burst=10, priority=3) arrives at t=0. P2(burst=1, priority=1) arrives at t=1. What happens at t=1?",opts:["P1 continues until completion","P2 preempts P1 immediately","P2 joins the ready queue and waits","The scheduler ignores P2 until P1 finishes"],ans:1,exp:["Preemptive scheduling does not wait.", "P2 arrives at t=1 with priority 1, higher than P1's priority 3. P2 immediately preempts P1.", "P2 does not wait in preemptive scheduling.", "The scheduler uses the new priority immediately."],src:"Lecture 5 > Preemptive Priority Scheduling"},
+      {q:"Why does preemptive scheduling risk race conditions?",opts:["Processes run for too long","A process can be interrupted while modifying shared data leaving it in an inconsistent state","The ready queue grows too large","Context switches are too slow"],ans:1,exp:["Long-running processes are a fairness issue, not the cause of race conditions.", "A process can be interrupted mid-update to shared data, leaving it in an inconsistent state for the next process.", "Queue size is a performance concern, not the cause of race conditions.", "Context switches themselves don't cause race conditions - the problem is accessing shared data mid-modification."],src:"Lecture 5 > Preemptive Scheduling and Race Conditions"},
+      {q:"P1 arrives at t=0 with burst=8, P2 arrives at t=1 with burst=4 (SRTF). At t=1, P1 has 7 remaining. What happens?",opts:["P1 continues since it arrived first","P2 preempts P1 because P2's burst (4) < P1's remaining (7)","Both run concurrently","P2 must wait for P1 to finish"],ans:1},
+      {q:"CPU utilization range for a Real-Time Operating System (RTOS) is:",opts:["0–50%","40–90%","60–100%","10–40%"],ans:1,exp:["0-50% is too low for RTOS requirements.", "RTOS CPU utilization ranges from 40% for low-level to 90% for high-level systems.", "60-100% does not match the stated RTOS range.", "10-40% is too low for RTOS requirements."],src:"Lecture 5 > CPU Scheduling Criteria - CPU Utilization"},
+      {q:"Which statement correctly distinguishes response time from turnaround time?",opts:["They are identical metrics","Response time is when the process first gets CPU minus arrival; turnaround is total time from submission to completion","Turnaround time is always shorter","Response time includes I/O wait time"],ans:1,exp:["They are not identical - they measure different things.", "Response time: when process first gets CPU minus arrival. Turnaround: total time from submission to completion.", "Turnaround time is always >= Response time, not shorter.", "Response time does not include I/O wait after the first response."],src:"Lecture 5 > CPU Scheduling Criteria"},
+    ],
+    tf: [
+      {q:"SJF scheduling is optimal as it gives minimum average waiting time.",ans:true,exp:"SJF is provably optimal - it gives the minimum average waiting time for any given set of processes. Serving the shortest job first minimizes total queue wait.",src:"Lecture 5 > SJF Scheduling"},
+      {q:"FCFS is a preemptive scheduling algorithm.",ans:false,exp:"FCFS is NONPREEMPTIVE - once the CPU is allocated to a process, that process keeps it until it terminates or blocks for I/O. There is no forced preemption in FCFS.",src:"Lecture 5 > FCFS Scheduling"},
+      {q:"Turnaround Time equals Burst Time plus Waiting Time.",ans:true,exp:"Turnaround Time = Completion Time - Arrival Time = Burst Time + Waiting Time. Both formulas are equivalent and correct.",src:"Lecture 5 > CPU Scheduling Criteria"},
+      {q:"Starvation can be solved using Aging.",ans:true,exp:"Aging is the solution to starvation in priority scheduling. As time progresses, the OS gradually increases the priority of waiting processes, ensuring they eventually receive CPU time.",src:"Lecture 5 > Priority Scheduling - Aging"},
+      {q:"In Round Robin, if time quantum q is very small, it behaves like FCFS.",ans:false,exp:"When q is LARGE in RR, it behaves like FCFS (each process runs to completion). When q is SMALL, overhead from frequent context switches increases - more like pure round-robin.",src:"Lecture 5 > Round Robin"},
+      {q:"The Dispatcher is the module that selects which process runs next from the ready queue.",ans:false,exp:"The CPU SCHEDULER selects which process runs next. The DISPATCHER is the module that gives control of the CPU to the selected process - it handles context switching, mode switching, and jumping to the correct location.",src:"Lecture 5 > Dispatcher"},
+      {q:"Preemptive scheduling can result in race conditions when data is shared among processes.",ans:true,exp:"Preemptive scheduling can cause race conditions: a process updating shared data gets preempted mid-update, and the next scheduled process reads inconsistent (partially updated) data.",src:"Lecture 5 > Preemptive Scheduling and Race Conditions"},
+      {q:"Nonpreemptive scheduling: once CPU is allocated, the process keeps it until it terminates or waits.",ans:true,exp:"Under nonpreemptive scheduling, a process keeps the CPU until it either terminates (exit) or switches to the waiting state (e.g., requests I/O). It is never forcibly removed.",src:"Lecture 5 > Nonpreemptive Scheduling"},
+      {q:"Throughput should be maximized in CPU scheduling.",ans:true,exp:"Throughput (number of processes completing per unit time) should be MAXIMIZED. Higher throughput means the system is efficiently processing work.",src:"Lecture 5 > Scheduling Algorithm Optimization Criteria"},
+      {q:"Response time should be maximized in CPU scheduling criteria.",ans:false,exp:"Response time should be MINIMIZED, not maximized. Minimizing response time means the system responds to requests as quickly as possible, improving user experience.",src:"Lecture 5 > Scheduling Algorithm Optimization Criteria"},
+      {q:"In non-preemptive SJF, if two processes have equal burst time, FCFS order breaks the tie.",ans:true,exp:"When two processes have equal burst time in SJF, the tie is broken by arrival order (FCFS) - the process that arrived first runs first.",src:"Lecture 5 > SJF Scheduling"},
+      {q:"The convoy effect in FCFS can be avoided by reordering processes so shortest jobs run first.",ans:true,exp:"Reordering so shortest jobs run first is exactly SJF, which does avoid the convoy effect. The FCFS example in the lecture shows that changing order from P1,P2,P3 to P2,P3,P1 reduces average waiting time from 17 to 3.",src:"Lecture 5 > FCFS Scheduling - Convoy Effect"},
+      {q:"A process with the lowest priority number has the highest scheduling priority.",ans:true,exp:"In priority scheduling, the smallest integer = highest priority. Priority 1 runs before priority 2, 3, etc. This convention is used throughout the lecture examples.",src:"Lecture 5 > Priority Scheduling"},
+      {q:"Round Robin guarantees that no process waits more than (n-1)×q time units.",ans:true,exp:"In RR with n processes and time quantum q, each process gets CPU time in chunks of q. In the worst case, a process waits while all n-1 other processes run - so maximum wait = (n-1) x q time units.",src:"Lecture 5 > Round Robin"},
+      {q:"Dispatch latency is included in the useful CPU utilization time.",ans:false,exp:"Dispatch latency is OVERHEAD - it is the time the dispatcher spends stopping one process and starting another. During this time, no useful user work is done. It should be minimized, not counted as useful work.",src:"Lecture 5 > Dispatcher"},
+    ]
+  },
+  {
+    id: 6,
+    title: "Memory Management Part 1",
+    mc: [
+      {q:"What is the job of the Memory Manager?",opts:["Manage CPU scheduling","Track memory usage, allocate/deallocate memory, manage swapping","Handle file system operations","Control device drivers"],ans:1,exp:["CPU scheduling is the CPU Scheduler's job.", "The memory manager tracks memory usage, allocates/deallocates memory, and manages swapping between main memory and disk.", "File system operations are the File System component's job.", "Device drivers are managed by the Device Management component."],src:"Lecture 6 > Introduction - Memory Manager"},
+      {q:"Monoprogramming without Swapping or Paging means:",opts:["Multiple programs run at the same time","Only one program runs at a time sharing memory with OS","Programs are swapped between disk and RAM","Virtual memory is used"],ans:1,exp:["Running multiple programs simultaneously requires multiprogramming.", "Monoprogramming: only one process at a time, sharing memory between the OS and that one program.", "Swapping between disk and RAM is a different technique.", "Virtual memory allows partial loading - Monoprogramming is simpler."],src:"Lecture 6 > Monoprogramming"},
+      {q:"What is the Relocation Problem?",opts:["Programs using wrong file paths","Programs referencing absolute addresses that change when loaded at different locations","Memory being full","Programs crashing due to bugs"],ans:1,exp:["File paths are unrelated to the relocation problem.", "Relocation Problem: programs reference absolute addresses, but these become wrong when loaded at different memory locations.", "Full memory is a capacity problem, not the relocation problem.", "Programs crashing due to bugs is a software error."],src:"Lecture 6 > Relocation and Protection"},
+      {q:"Base and Limit Registers solve which two problems?",opts:["Fragmentation and Deadlock","Relocation and Protection","Swapping and Paging","Scheduling and I/O"],ans:1,exp:["Fragmentation and deadlock are different problems.", "Base and Limit Registers solve both relocation (adding base to every address) and protection (checking against the limit).", "Swapping and paging are memory management techniques.", "Scheduling and I/O are unrelated to base/limit registers."],src:"Lecture 6 > Base and Limit Registers"},
+      {q:"What does the Base Register contain when a process runs?",opts:["The length of the program","The physical address where the program begins in memory","The process priority","The page table address"],ans:1,exp:["The length/size is in the Limit Register, not the Base.", "The base register holds the physical address where the program begins in memory.", "Process priority is stored in the PCB, not a memory register.", "Page table address is used in paging, not the base register approach."],src:"Lecture 6 > Base and Limit Registers"},
+      {q:"What does the Limit Register contain?",opts:["The starting address of the program","The length/size of the program","The base address","The page frame number"],ans:1,exp:["The starting physical address is in the Base Register.", "The limit register contains the length/size of the program. Access beyond base+limit triggers a fault.", "The base address is in the Base Register.", "Page frame number is a paging concept."],src:"Lecture 6 > Base and Limit Registers"},
+      {q:"What is MFT?",opts:["Memory Fragmentation Technique","Multiprogramming with a Fixed number of Tasks","Main Frame Technology","Memory Fault Trap"],ans:1,exp:["Memory Fragmentation Technique is not a real OS concept.", "MFT = Multiprogramming with a Fixed number of Tasks - used by OS/360 on IBM mainframes.", "Main Frame Technology is not what MFT stands for.", "Memory Fault Trap is not what MFT stands for."],src:"Lecture 6 > Multiprogramming with Fixed Partitions - MFT"},
+      {q:"In Multiprogramming with Fixed Partitions, what happens to space in a partition not used by a job?",opts:["It is given to another job","It is swapped to disk","It is wasted while that job runs","It becomes a hole"],ans:2},
+      {q:"Static Relocation means:",opts:["Programs are loaded at fixed addresses always","Adding a constant to every address as the program loads","Dynamically adjusting addresses at runtime","Using virtual memory"],ans:1,exp:["Programs being loaded at fixed addresses always would eliminate relocation.", "Static relocation adds the load address constant to every program address during loading. JMP 28 becomes JMP 16412 if loaded at 16384.", "Dynamic adjustment at runtime describes dynamic relocation with base registers.", "Virtual memory is a different technique."],src:"Lecture 6 > Relocation and Protection - Static Relocation"},
+      {q:"What is the PSW in the context of IBM 360 memory protection?",opts:["Page Size Word","Program Status Word","Process State Write","Primary Storage Word"],ans:1,exp:["Page Size Word is not what PSW stands for.", "PSW = Program Status Word - it contained a 4-bit key for the IBM 360 memory protection scheme.", "Process State Write is not what PSW stands for.", "Primary Storage Word is not what PSW stands for."],src:"Lecture 6 > Relocation and Protection - IBM 360"},
+      {q:"What is the main disadvantage of using base and limit registers?",opts:["They require too much memory","Addition and comparison must be performed on every memory reference","They do not support multiple processes","They are not supported by modern hardware"],ans:1,exp:["Base and limit registers use very little memory.", "Every memory reference requires adding the base (relocation) and comparing with the limit (protection) - additions are slow due to carry-propagation time.", "Base/limit registers work with multiple processes - they are how multiprogramming memory protection works.", "Modern hardware does support base/limit registers."],src:"Lecture 6 > Base and Limit Registers"},
+      {q:"In early computers without memory abstraction, programs could:",opts:["Use virtual memory","Access only their own memory","Access any physical memory address","Only run one at a time with protection"],ans:2,exp:["Virtual memory did not exist in early computers without memory abstraction.", "Only accessing their own memory would require protection mechanisms - which did not exist.", "Without memory abstraction, every program sees physical memory directly - any program could write to any address.", "Running one at a time with protection is Monoprogramming - but early systems had no protection."],src:"Lecture 6 > Monoprogramming - No Memory Abstraction"},
+      {q:"Program A is loaded at address 16,384. It executes JMP 28. With base register = 16,384, what physical address does it jump to?",opts:["28","16,384","16,412","16,356"],ans:2},
+      {q:"The IBM 360 had 1MB of memory with 2KB protection blocks. How many 4-bit protection keys were needed?",opts:["256","512","1024","2048"],ans:1,exp:["256 blocks would be for 4KB block size.", "1MB / 2KB = 512 blocks, needing 512 four-bit protection keys.", "1024 blocks would be for 1KB block size.", "2048 blocks would be for 512-byte blocks."],src:"Lecture 6 > IBM 360 Memory Protection"},
+      {q:"A process generates address 500. Base register = 10,000. Limit register = 1,000. What happens?",opts:["Physical address 10,500 is accessed","A fault is generated — address exceeds limit","Physical address 500 is accessed","The OS swaps the process out"],ans:0,exp:["Physical address 10,500 is accessed (500 < limit 1000 - access is valid).", "500 < 1000 (limit) so access is valid. Physical = 10,000 + 500 = 10,500.", "10,500 is the physical address - this IS the correct answer.", "No swap occurs."],src:"Lecture 6 > Base and Limit Registers"},
+      {q:"Why is static relocation not a general solution to the relocation problem?",opts:["It is too slow","It requires extra metadata in executables to distinguish addresses from constants, and is error-prone","It cannot handle large programs","It only works on IBM hardware"],ans:1,exp:["Speed is not the main reason.", "Static relocation requires extra metadata in executables to distinguish addresses from constants, and is error-prone.", "Memory usage is not why static relocation fails.", "Static relocation does not require special hardware - but it requires extra effort in executable files."],src:"Lecture 6 > Relocation and Protection - Static Relocation"},
+      {q:"In Fixed Partition multiprogramming, a rule states a job can be skipped at most k times. What is the purpose of this rule?",opts:["To improve CPU utilization","To prevent small jobs from being indefinitely skipped by always choosing the largest fitting job","To reduce fragmentation","To speed up context switching"],ans:1,exp:["CPU utilization improvement is a general goal.", "The k-times rule prevents small jobs from being indefinitely bypassed when the scheduler always picks the largest fitting job.", "Fragmentation is not related to this rule.", "Context switching speed is not related to this rule."],src:"Lecture 6 > Multiprogramming with Fixed Partitions"},
+      {q:"Two 16KB programs are loaded consecutively starting at address 0. The second program executes JMP 28. Without relocation, where does it jump?",opts:["Address 28 in its own space","Address 16,412","Address 28 in the first program's code","Address 16,384"],ans:2},
+      {q:"What happens when a running process tries to access an address beyond its Limit Register value?",opts:["The address is rounded down to the limit","A hardware fault is generated and the access is aborted","The OS expands the limit register","The process is moved to a new partition"],ans:1,exp:["The address is not rounded down.", "A hardware fault is generated and the access is aborted.", "The OS does not expand the limit register.", "The process is not moved."],src:"Lecture 6 > Base and Limit Registers"},
+    ],
+    tf: [
+      {q:"In Monoprogramming, two programs can run simultaneously in memory.",ans:false,exp:"In Monoprogramming, only ONE process can run at a time. The OS and one program share memory. The second program must wait until the first completes.",src:"Lecture 6 > Monoprogramming"},
+      {q:"Base and Limit registers solve both the relocation and protection problems.",ans:true,exp:"The base register handles RELOCATION (adds base to every address), and the limit register handles PROTECTION (rejects addresses beyond the limit). Together they solve both problems.",src:"Lecture 6 > Base and Limit Registers"},
+      {q:"The Limit Register holds the physical starting address of the program in memory.",ans:false,exp:"The Limit Register holds the LENGTH/SIZE of the program. The BASE Register holds the physical starting address. These are two separate registers with different roles.",src:"Lecture 6 > Base and Limit Registers"},
+      {q:"MFT stands for Multiprogramming with a Fixed number of Tasks.",ans:true,exp:"MFT = Multiprogramming with a Fixed number of Tasks. It was used by OS/360 on IBM mainframes - jobs are queued until a suitable fixed partition is available.",src:"Lecture 6 > Multiprogramming with Fixed Partitions - MFT"},
+      {q:"Static relocation adds a constant to every program address during the load process.",ans:true,exp:"Static relocation adds the load address constant to every program address during loading. For example, loading at 16,384 means 'JMP 28' becomes 'JMP 16,412' - the constant is added to every address.",src:"Lecture 6 > Relocation and Protection - Static Relocation"},
+      {q:"In early computers without memory abstraction, two programs could safely run simultaneously.",ans:false,exp:"Without memory abstraction, two programs running simultaneously would corrupt each other's memory immediately. If program 1 writes to location 2000, it erases what program 2 stored there.",src:"Lecture 6 > Monoprogramming - No Memory Abstraction"},
+      {q:"IBM 360 divided memory into 2-KB blocks and assigned a 4-bit protection code to each.",ans:true,exp:"IBM 360 divided memory into 2-KB blocks, each with a 4-bit protection code. A 1-MB memory needs 512 blocks = 512 four-bit keys = 256 bytes of key storage inside the CPU.",src:"Lecture 6 > IBM 360 Memory Protection"},
+      {q:"The PSW stands for Program Status Word.",ans:true,exp:"PSW = Program Status Word. In IBM 360, the PSW contained a 4-bit key. Hardware trapped any attempt by a running process to access memory with a different protection code.",src:"Lecture 6 > IBM 360 - PSW"},
+      {q:"Memory managers in most systems reside in the kernel.",ans:true,exp:"The memory manager resides in the kernel in most systems - it needs privileged access to manage all physical memory, enforce protection, and control swapping.",src:"Lecture 6 > Introduction - Memory Manager"},
+      {q:"Fixed partitions waste no memory since jobs always fill their partition completely.",ans:false,exp:"Fixed partitions DO waste memory. Any unused space within a partition cannot be given to another job while the current job runs - this is called internal fragmentation.",src:"Lecture 6 > Multiprogramming with Fixed Partitions"},
+      {q:"Every memory reference in a base-register system requires an addition of the base value.",ans:true,exp:"Every time a process references memory (fetch instruction, read data, write data), the CPU hardware automatically adds the base register value to the address before it goes onto the memory bus.",src:"Lecture 6 > Base and Limit Registers"},
+      {q:"Static relocation fully solves the protection problem by preventing programs from accessing each other's memory.",ans:false,exp:"Static relocation does NOT solve the protection problem. A malicious program can always construct a new instruction and jump to any absolute address in memory - there is no prevention mechanism.",src:"Lecture 6 > Relocation and Protection"},
+      {q:"In multiprogramming with fixed partitions, using a single queue is always more efficient than multiple separate queues.",ans:false,exp:"It is a trade-off, not always more efficient. With separate queues, a large partition queue can be empty while small queues are full. A single queue with 'skip if too large' also discriminates against small jobs.",src:"Lecture 6 > Multiprogramming with Fixed Partitions"},
+      {q:"The base register value is automatically added by the CPU hardware to every address a process generates.",ans:true,exp:"Every time a process references memory, the CPU hardware automatically adds the base register value to the generated address before sending it on the memory bus - this is fully transparent to software.",src:"Lecture 6 > Base and Limit Registers"},
+      {q:"A program that uses only relative addresses never needs relocation.",ans:true,exp:"A program using only relative addresses (offsets from a base) is self-consistent regardless of where it is loaded. Relocation is needed only for programs that use absolute physical memory addresses.",src:"Lecture 6 > Relocation and Protection"},
+    ]
+  },
+  {
+    id: 7,
+    title: "Memory Management Part 2",
+    mc: [
+      {q:"What are the two general approaches to dealing with memory overload?",opts:["Paging and Segmentation","Swapping and Virtual Memory","Compaction and Fragmentation","Bitmap and Linked List"],ans:1,exp:["Paging and Segmentation are memory addressing techniques.", "Two approaches to memory overload: Swapping (bring whole process to memory, run, swap back) and Virtual Memory (run partially in memory).", "Compaction and Fragmentation describe memory states.", "Bitmap and Linked List are memory tracking data structures."],src:"Lecture 7 > Introduction"},
+      {q:"What is Swapping?",opts:["Dividing memory into pages","Bringing a process entirely into memory, running it, then putting it back on disk","Mapping virtual addresses to physical addresses","Dividing memory into fixed partitions"],ans:1,exp:["Dividing into pages is paging, not swapping.", "Swapping: bring the entire process into memory, run it, then put it back on disk. Idle processes stay on disk.", "Mapping virtual to physical addresses is paging/MMU work.", "Fixed partitions is a memory partitioning scheme."],src:"Lecture 7 > Swapping"},
+      {q:"What is Memory Compaction?",opts:["Dividing memory into pages","Combining all holes by moving all processes downward","Swapping processes to disk","Using a bitmap to track memory"],ans:1,exp:["Dividing memory into pages is paging.", "Memory compaction moves all processes downward to combine scattered holes into one large contiguous hole.", "Swapping processes to disk is swapping, not compaction.", "Bitmap tracking is a memory management data structure."],src:"Lecture 7 > Swapping - Memory Compaction"},
+      {q:"Why is memory compaction usually not done?",opts:["It is too complex to implement","It requires a lot of CPU time","It is not supported by modern OS","It increases fragmentation"],ans:1,exp:["Complexity is not the primary reason.", "Compaction on a 16GB machine copying 8 bytes per 8 nsec takes about 16 seconds - too much CPU time.", "Modern OSes do support compaction in concept.", "Compaction reduces fragmentation - it does not increase it."],src:"Lecture 7 > Swapping - Memory Compaction"},
+      {q:"In the First-Fit memory allocation algorithm, the memory manager:",opts:["Searches the entire list for the smallest hole","Takes the largest available hole","Scans until it finds the first hole big enough","Starts searching from where it left off last time"],ans:2,exp:["Searching for the smallest hole is Best-Fit.", "Taking the largest hole is Worst-Fit.", "First-Fit scans the list from the beginning and takes the first hole that is big enough.", "Starting from where it left off is Next-Fit."],src:"Lecture 7 > Memory Management with Linked Lists - First-Fit"},
+      {q:"What is the difference between First-Fit and Next-Fit?",opts:["Next-Fit always takes the smallest hole","Next-Fit starts searching from where it left off last time","Next-Fit takes the largest hole","Next-Fit searches the entire list"],ans:1,exp:["Always taking the smallest hole is Best-Fit.", "Next-Fit works like First-Fit but starts searching from where it left off last time.", "Taking the largest hole is Worst-Fit.", "Searching the entire list is Best-Fit."],src:"Lecture 7 > Memory Management with Linked Lists - Next-Fit"},
+      {q:"Best-Fit algorithm searches for:",opts:["The largest hole","The first hole big enough","The smallest hole that is adequate","A hole exactly equal to the process size"],ans:2,exp:["Taking the largest hole is Worst-Fit.", "Taking the first adequate hole is First-Fit.", "Best-Fit searches the entire list and takes the smallest hole that is adequate.", "An exact match would be ideal but Best-Fit settles for the smallest adequate hole."],src:"Lecture 7 > Memory Management with Linked Lists - Best-Fit"},
+      {q:"Which allocation algorithm is considered worst in terms of storage utilization?",opts:["First-Fit","Best-Fit","Next-Fit","Worst-Fit"],ans:3,exp:["First-Fit is better than Worst-Fit in storage utilization.", "Best-Fit is better than Worst-Fit in storage utilization.", "Next-Fit is a variant of First-Fit - also better than Worst-Fit.", "Worst-Fit always takes the largest available hole. Simulation shows it has the worst storage utilization."],src:"Lecture 7 > Memory Management with Linked Lists"},
+      {q:"External Fragmentation occurs when:",opts:["A process uses more memory than allocated","There is enough total memory but available spaces are not contiguous","The page table is too large","A process swaps too frequently"],ans:1,exp:["Using more memory than allocated is not fragmentation.", "External fragmentation: enough total free memory exists but it is broken into non-contiguous pieces that cannot satisfy a large request.", "Page table size is a paging concern.", "Swap frequency is a performance issue."],src:"Lecture 7 > Fragmentation"},
+      {q:"What solution does paging provide for external fragmentation?",opts:["It compacts memory holes","It allows noncontiguous allocation of physical memory","It increases physical memory size","It eliminates the need for page tables"],ans:1,exp:["Compacting holes is memory compaction - paging does not compact.", "Paging permits logical address space to be noncontiguous - a process can be allocated physical memory wherever frames are available.", "Increasing physical memory is a hardware solution.", "Paging does not eliminate page tables - it relies on them."],src:"Lecture 7 > Fragmentation - Solution: Paging"},
+      {q:"In memory management with bitmaps, what does a 0 bit indicate?",opts:["The unit is occupied","The unit is free","A page fault has occurred","The unit is protected"],ans:1,exp:["A 1 bit indicates occupied - not free.", "In a bitmap: 0 = unit is free, 1 = unit is occupied.", "A page fault is a virtual memory concept.", "Protection is handled by page table entries, not bitmap bits."],src:"Lecture 7 > Memory Management with Bitmaps"},
+      {q:"What is the main problem with bitmap memory management?",opts:["Bitmaps use too much memory","Searching for a run of k consecutive 0 bits is slow","Bitmaps cannot track large memory","Bitmaps require special hardware"],ans:1,exp:["A 32-bit-per-4-byte bitmap uses only 1/32 of memory.", "The main problem: searching for k consecutive 0 bits to find a k-unit hole is a slow operation.", "Bitmaps scale with memory size - they can track large memory.", "Bitmaps are a software data structure - no special hardware needed."],src:"Lecture 7 > Memory Management with Bitmaps"},
+      {q:"Memory has holes of sizes 100KB, 500KB, 200KB, 300KB, 600KB in order. A process needs 212KB. Which hole does First-Fit choose?",opts:["100KB","500KB","200KB","300KB"],ans:1},
+      {q:"Using the same holes (100, 500, 200, 300, 600KB) and a request of 212KB, which hole does Best-Fit choose?",opts:["200KB","300KB","500KB","600KB"],ans:1,exp:["200KB is the smallest hole that fits 212KB... actually 212 > 200, so it doesn't fit.", "300KB is the smallest hole that is adequate for 212KB in Best-Fit (300 > 212, 200 < 212).", "500KB fits but Best-Fit takes the smallest adequate hole, which is 300KB.", "600KB fits but it is larger than needed."],src:"Lecture 7 > Memory Management with Linked Lists - Best-Fit"},
+      {q:"A process is swapped out, then swapped back in at a different memory address. What must be adjusted?",opts:["The process priority","All memory addresses in the process (relocation)","The process's file handles","The PCB state field"],ans:1,exp:["Process priority is stored in the PCB - not what needs to be adjusted for relocation.", "All memory addresses in the process must be adjusted (relocation) when loaded at a new address.", "File handles are not memory addresses.", "The PCB state field tracks execution state, not address relocation."],src:"Lecture 7 > Swapping"},
+      {q:"Memory has 16GB, copying speed is 8 bytes per 8 nsec. How long does full compaction take?",opts:["About 1 sec","About 8 sec","About 16 sec","About 32 sec"],ans:2,exp:["1 second would require 16 GB/sec.", "4 seconds would require 4 GB/sec.", "At 8 bytes/8 nsec = 1 GB/sec, copying 16 GB takes approximately 16 seconds.", "32 seconds is too slow."],src:"Lecture 7 > Swapping - Memory Compaction"},
+      {q:"After process B terminates, the linked list shows: [Hole|Process A|Hole]. What happens?",opts:["Three separate entries remain","The two holes are merged into one larger hole","Process A is moved to fill the holes","The list is rebuilt from scratch"],ans:0,exp:["Three separate entries remain - the two holes on either side of Process A are separate holes (not adjacent to each other).", "The two holes are not adjacent - Process A is between them. No merge is possible.", "Process A is not moved - it stays in place.", "The list is not rebuilt from scratch."],src:"Lecture 7 > Memory Management with Linked Lists"},
+      {q:"A bitmap uses 1-bit per 4-byte allocation unit. What fraction of memory does the bitmap itself consume?",opts:["1/8","1/16","1/32","1/64"],ans:2,exp:["1/8 would be for a 1-bit-per-1-byte allocation unit.", "1/16 would be for a 1-bit-per-2-byte allocation unit.", "1-bit per 4-byte unit means 1 bit tracks 4 bytes = 1/32 of memory used by the bitmap.", "1/64 would be for a 1-bit-per-8-byte allocation unit."],src:"Lecture 7 > Memory Management with Bitmaps"},
+      {q:"In which scenario would Worst-Fit potentially outperform Best-Fit?",opts:["When processes are uniform in size","When large holes are needed after allocation so leftover holes remain usable","When memory is nearly full","When all holes are the same size"],ans:1,exp:["When processes are uniform in size, all algorithms perform similarly.", "When large holes are needed after allocation so leftover holes remain large and usable - Worst-Fit leaves the largest remainders.", "When memory is nearly full, Worst-Fit still performs poorly.", "When all holes are the same size, all algorithms perform similarly."],src:"Lecture 7 > Memory Management with Linked Lists"},
+    ],
+    tf: [
+      {q:"Swapping involves bringing the entire process into memory before running it.",ans:true,exp:"Swapping brings the ENTIRE process into memory, runs it for a while, then puts it back on disk. This is distinct from virtual memory which runs programs only partially in memory.",src:"Lecture 7 > Swapping"},
+      {q:"Memory compaction is frequently performed because it is fast and cheap.",ans:false,exp:"Memory compaction is usually NOT performed because it requires a lot of CPU time. On a 16-GB machine copying 8 bytes per 8 nsec, it would take about 16 seconds to compact all of memory.",src:"Lecture 7 > Swapping - Memory Compaction"},
+      {q:"First-Fit is generally faster than Best-Fit.",ans:true,exp:"First-Fit is faster because it stops searching as soon as it finds the first adequate hole. Best-Fit must scan the entire list every time to find the smallest adequate hole.",src:"Lecture 7 > Memory Management with Linked Lists"},
+      {q:"Worst-Fit has better storage utilization than First-Fit and Best-Fit.",ans:false,exp:"Simulation has shown that Worst-Fit has the WORST storage utilization. Both First-Fit and Best-Fit are better than Worst-Fit in terms of storage efficiency.",src:"Lecture 7 > Memory Management with Linked Lists"},
+      {q:"External fragmentation is when available spaces are not contiguous despite having enough total free memory.",ans:true,exp:"External fragmentation: there is enough total free memory to satisfy a request, but the available spaces are not contiguous - storage is fragmented into many small scattered holes.",src:"Lecture 7 > Fragmentation"},
+      {q:"In a bitmap, a bit value of 1 means the allocation unit is free.",ans:false,exp:"In a bitmap, 0 = unit is FREE and 1 = unit is OCCUPIED (or vice versa depending on convention - the lecture states 0 if free). A value of 1 indicates the unit is in use.",src:"Lecture 7 > Memory Management with Bitmaps"},
+      {q:"Best-Fit searches the entire memory list every time it is called.",ans:true,exp:"Best-Fit searches the ENTIRE list from beginning to end every time it is called to find the smallest adequate hole. This makes it slower than First-Fit but potentially more space-efficient.",src:"Lecture 7 > Memory Management with Linked Lists - Best-Fit"},
+      {q:"Virtual memory allows programs to run even when only partially in main memory.",ans:true,exp:"Virtual memory allows programs to run even when only partially in main memory - the OS keeps active parts in RAM and the rest on disk, swapping pages in and out as needed.",src:"Lecture 7 > Introduction"},
+      {q:"Next-Fit always starts searching from the beginning of the memory list.",ans:false,exp:"Next-Fit starts searching from where it LEFT OFF last time - not from the beginning. This distributes allocations more evenly across memory compared to First-Fit.",src:"Lecture 7 > Memory Management with Linked Lists - Next-Fit"},
+      {q:"Paging solves external fragmentation by allowing noncontiguous memory allocation.",ans:true,exp:"Paging permits the logical address space to be noncontiguous - a process can be allocated physical memory wherever page frames are available, eliminating external fragmentation.",src:"Lecture 7 > Fragmentation - Solution: Paging"},
+      {q:"When swapping a process back in, it must always return to the same physical memory location it previously occupied.",ans:false},
+      {q:"Best-Fit minimizes wasted space per allocation but can create many tiny unusable holes over time.",ans:true,exp:"Best-Fit tries to find the smallest hole adequate for a request. While it minimizes wasted space per allocation, it can leave many tiny leftover holes too small to be useful over time.",src:"Lecture 7 > Memory Management with Linked Lists - Best-Fit"},
+      {q:"A bitmap's size depends only on the total memory size and the allocation unit size — not on the number of processes.",ans:true,exp:"The bitmap size = total memory / allocation unit size. It does not depend on the number of processes or how memory is currently used. This makes it a fixed, predictable overhead.",src:"Lecture 7 > Memory Management with Bitmaps"},
+      {q:"First-Fit and Best-Fit perform equally well in terms of storage utilization.",ans:false,exp:"Simulation has shown that neither First-Fit nor Best-Fit is clearly better than the other in storage utilization. However, First-Fit is generally faster because it searches less.",src:"Lecture 7 > Memory Management with Linked Lists"},
+      {q:"Processes swapped to disk still occupy main memory space while on disk.",ans:false,exp:"When a process is swapped to disk, it no longer occupies any main memory space. Only processes currently in memory use RAM. Swapped processes use only disk space.",src:"Lecture 7 > Swapping"},
+    ]
+  },
+  {
+    id: 8,
+    title: "Memory Management Part 3",
+    mc: [
+      {q:"What is Virtual Memory?",opts:["Physical memory installed in a computer","A technique that allows programs to run even when only partially in main memory","Memory stored on disk permanently","Cache memory in the CPU"],ans:1,exp:["Physical memory is RAM installed in the machine - not virtual memory.", "Virtual memory allows programs to run even when only partially in main memory - the OS keeps the rest on disk.", "Memory permanently on disk is storage, not virtual memory.", "Cache memory is a hardware speed buffer."],src:"Lecture 8 > Virtual Memory"},
+      {q:"What were early solutions to programs too big to fit in memory called?",opts:["Segments","Overlays","Pages","Frames"],ans:1,exp:["Segments are a memory addressing technique.", "Overlays were the early solution: programs split into pieces, loaded as needed. The programmer had to manually decide the split.", "Pages are the modern virtual memory unit - they came after overlays.", "Frames are the physical memory counterpart of pages."],src:"Lecture 8 > Virtual Memory - History"},
+      {q:"What is Paging?",opts:["Storing processes entirely on disk","Dividing virtual address space into units called pages mapped to page frames in physical memory","Compacting memory holes into one","Allocating fixed partitions to processes"],ans:1,exp:["Storing processes entirely on disk is swapping.", "Paging divides the virtual address space into fixed-size pages, mapped to page frames in physical memory via the MMU.", "Compacting memory holes is memory compaction.", "Fixed partitions is a simpler memory management scheme."],src:"Lecture 8 > Paging"},
+      {q:"What is an MMU?",opts:["Main Memory Unit","Memory Management Unit that maps virtual to physical addresses","Multiple Memory Utility","Maximum Memory Usage"],ans:1,exp:["Main Memory Unit is not what MMU stands for.", "MMU = Memory Management Unit - hardware that maps virtual addresses to physical addresses before they go onto the memory bus.", "Multiple Memory Utility is not what MMU stands for.", "Maximum Memory Usage is not what MMU stands for."],src:"Lecture 8 > Paging - MMU"},
+      {q:"In the paging example with 16-bit addresses and 4KB pages, how many virtual pages are there?",opts:["8","12","16","32"],ans:2},
+      {q:"What is a Page Fault?",opts:["A hardware malfunction in RAM","A trap to the OS when a program accesses an unmapped page","A full page table","An error in the page size calculation"],ans:1,exp:["Hardware RAM malfunction is a different type of error.", "A page fault is a trap to the OS when a program tries to access an unmapped (absent) page not currently in physical memory.", "A full page table would be a table overflow.", "Page size errors are detected at compile/link time."],src:"Lecture 8 > Paging - Page Fault"},
+      {q:"What happens when the OS handles a page fault?",opts:["The process is terminated","A little-used page frame is written to disk and the referenced page is loaded","The program restarts from the beginning","More physical memory is installed"],ans:1,exp:["The process is not terminated for a page fault.", "The OS picks a little-used page frame, writes it to disk if dirty, fetches the needed page, updates the page table, and restarts the instruction.", "The program restarts only the one trapped instruction, not from the beginning.", "The OS manages virtual memory - adding physical memory requires hardware changes."],src:"Lecture 8 > Paging - Page Fault Handling"},
+      {q:"The present/absent bit in a page table entry being 0 means:",opts:["The page is in physical memory","The page is not currently in physical memory","The page is read-only","The page is being modified"],ans:1},
+      {q:"What is the 'dirty bit' in a page table entry?",opts:["A bit indicating a hardware error","The modified bit, indicating the page has been written to","A bit for page protection","The referenced bit"],ans:1,exp:["A hardware error bit is a parity/ECC concept.", "The dirty bit (modified bit) is set automatically by hardware when a page is written to.", "Access permission is the protection bits field.", "The referenced bit tracks reads and writes."],src:"Lecture 8 > Structure of a Page Table Entry - Modified Bit"},
+      {q:"In a 16-bit virtual address with 4-bit page number and 12-bit offset, how many bytes can be addressed within one page?",opts:["256","1024","4096","65536"],ans:2,exp:["256 bytes would be an 8-bit offset.", "1024 bytes would be a 10-bit offset.", "With a 12-bit offset: 2^12 = 4096 bytes = 4KB per page.", "65536 bytes would be a 16-bit offset."],src:"Lecture 8 > MMU - Page Number and Offset"},
+      {q:"What does the Referenced bit in a page table entry track?",opts:["Whether the page has been modified","Whether the page has been accessed (read or written)","Whether the page is in memory","Whether caching is enabled"],ans:1,exp:["Whether a page has been modified is tracked by the dirty/modified bit.", "The referenced bit is set whenever a page is accessed - the OS uses it to choose which page to evict.", "Whether the page is in memory is tracked by the present/absent bit.", "Whether caching is enabled is tracked by the cache-disable bit."],src:"Lecture 8 > Structure of a Page Table Entry - Referenced Bit"},
+      {q:"The Cache Disable bit in a page table is important for pages that map onto:",opts:["Regular memory","Device registers","Network buffers","Stack memory"],ans:1,exp:["Regular memory benefits from caching.", "The cache disable bit prevents stale cached values when the OS reads device registers.", "Network buffers do not map directly into page table entries.", "Stack memory benefits from caching."],src:"Lecture 8 > Structure of a Page Table Entry - Cache Disable Bit"},
+      {q:"What are the two major issues with page tables?",opts:["Page size and page number","The page table can be extremely large and the mapping must be fast","Virtual address size and physical address size","Page faults and dirty bits"],ans:1,exp:["Page size and page number are design parameters.", "The two issues: (1) page tables can be extremely large and (2) the mapping must be done on every memory reference and must be very fast.", "Address size and physical address size are hardware design choices.", "Page faults and dirty bits are features."],src:"Lecture 8 > Page Tables - Two Major Issues"},
+      {q:"With a 32-bit address space and 4KB page size, how many page table entries are needed?",opts:["1 thousand","1 million","1 billion","4 million"],ans:1},
+      {q:"Transfers between RAM and disk in paging always occur in units of:",opts:["Bytes","Sectors","A page","A segment"],ans:2,exp:["Byte-level transfers would be too slow.", "Sectors are disk storage units - paging transfers occur in page-sized units.", "Transfers between RAM and disk in paging always happen in units of a page.", "Segments are a different memory addressing scheme."],src:"Lecture 8 > Paging"},
+      {q:"Virtual address 8196 (binary: 0010000000000100) is processed by an MMU with 4-bit page number and 12-bit offset. What is the page number?",opts:["0","1","2","3"],ans:2,exp:["0 would be 0000 in the top 4 bits.", "1 would be 0001 in the top 4 bits.", "8196 = 0010 000000000100 in binary. Top 4 bits = 0010 = 2.", "3 would be 0011 in the top 4 bits."],src:"Lecture 8 > MMU Address Translation"},
+      {q:"Virtual address 20500 is in virtual page 5 (starts at 20480). Page 5 maps to physical frame 3 (starts at 12288). What is the physical address?",opts:["12268","12308","20500","12288"],ans:1},
+      {q:"A 16-bit address space with 4KB pages: virtual page 2 maps to physical frame 6 (starts at 24576). Virtual address 8192 translates to:",opts:["8192","24576","12288","16384"],ans:1,exp:["8192 is the virtual address.", "Virtual address 8192 = page 2, offset 0. Page 2 maps to frame 6 (starts 24576). Physical = 24576.", "12288 is physical frame 3.", "16384 is physical frame 4."],src:"Lecture 8 > Paging - Address Translation"},
+      {q:"The OS must evict a page frame. One candidate page is dirty, another is clean. Which should it prefer to evict?",opts:["The dirty page — it has more recent data","The clean page — it can be discarded without writing to disk","Either, it makes no difference","The larger page"],ans:1,exp:["The dirty page must be written to disk first.", "Evict the clean page - it can be discarded without writing to disk since the disk copy is still valid.", "It does make a significant difference.", "Page size is the same for all pages."],src:"Lecture 8 > Structure of a Page Table Entry - Modified Bit"},
+      {q:"A page table lookup takes 100ns and a memory access takes 200ns. Without TLB, how long does one memory reference take?",opts:["200ns","300ns","400ns","100ns"],ans:1,exp:["200ns ignores the page table lookup.", "Without TLB: page table lookup (100ns) + memory access (200ns) = 300ns total.", "400ns would apply if the page table itself required a full memory access.", "100ns is only the lookup time."],src:"Lecture 8 > Page Tables - Mapping Must Be Fast"},
+      {q:"If the page table must be fast and a 32-bit address space with 4KB pages needs 1 million entries at 4 bytes each, how much memory does the page table need?",opts:["1MB","2MB","4MB","8MB"],ans:2,exp:["1MB = 1 million entries x 1 byte.", "2MB = 1 million x 2 bytes.", "1 million entries x 4 bytes each = 4 MB of memory for the page table.", "8MB = 1 million x 8 bytes."],src:"Lecture 8 > Page Tables - Large Size"},
+      {q:"Virtual page 8 is unmapped (absent). The instruction MOV REG,32780 is executed. What is the sequence of events?",opts:["The instruction executes normally","MMU detects unmapped page, causes CPU to trap to OS (page fault), OS loads the page","The process is terminated immediately","The address is rounded down to a mapped page"],ans:1,exp:["An unmapped page cannot execute normally.", "MMU detects the unmapped page, causes CPU to trap to OS (page fault), OS loads the page, restarts the instruction.", "The process is not terminated.", "The address is not rounded down."],src:"Lecture 8 > Paging - Page Fault Sequence"},
+    ],
+    tf: [
+      {q:"Virtual memory allows a 512-MB program to run on a 256-MB machine.",ans:true,exp:"Virtual memory allows a 512-MB program to run on a 256-MB machine by keeping the currently used 256 MB in memory and swapping the rest to disk as needed.",src:"Lecture 8 > Virtual Memory"},
+      {q:"Pages and page frames are always the same size.",ans:true,exp:"Pages (virtual memory units) and page frames (physical memory units) are always the same size. In the lecture example they are both 4 KB.",src:"Lecture 8 > Paging"},
+      {q:"A page fault occurs when a program accesses a page that is currently mapped in memory.",ans:false,exp:"A page fault occurs when a program accesses an UNMAPPED (absent) page - one NOT currently in physical memory. If the page IS mapped/present, the access proceeds normally without a fault.",src:"Lecture 8 > Paging - Page Fault"},
+      {q:"The dirty bit is set when a page is written to.",ans:true,exp:"The dirty bit (modified bit) is set automatically by hardware when a page is written to. It tells the OS whether the page needs to be written back to disk before eviction.",src:"Lecture 8 > Structure of a Page Table Entry - Modified Bit"},
+      {q:"The MMU maps virtual addresses directly onto the memory bus without translation.",ans:false,exp:"Virtual addresses do NOT go directly to the memory bus. They go to the MMU (Memory Management Unit) which translates them to physical addresses before placing them on the memory bus.",src:"Lecture 8 > Paging - MMU"},
+      {q:"The present/absent bit being 0 causes a page fault trap to the OS.",ans:true,exp:"When the present/absent bit is 0, the page is not in physical memory. The MMU causes the CPU to trap to the OS - this trap is called a page fault, which then loads the missing page.",src:"Lecture 8 > Paging - Present/Absent Bit"},
+      {q:"The referenced bit helps the OS choose which page to evict during a page fault.",ans:true,exp:"The referenced bit is set whenever a page is accessed (read or write). Pages that have not been recently referenced are better candidates for eviction - this bit plays an important role in page replacement algorithms.",src:"Lecture 8 > Structure of a Page Table Entry - Referenced Bit"},
+      {q:"The cache disable bit is useful for pages that map onto device registers.",ans:true,exp:"The cache disable bit is important for device register pages. If the OS waits for a device to respond, it must read fresh values from the device - not stale cached copies. The cache disable bit prevents caching.",src:"Lecture 8 > Structure of a Page Table Entry - Cache Disable Bit"},
+      {q:"In paging, the virtual page number is used as an index into the page table.",ans:true,exp:"The virtual address is split into: virtual page number (high-order bits, used as index into page table) + offset (low-order bits, copied unchanged to physical address). The page number finds the frame.",src:"Lecture 8 > MMU - Address Translation"},
+      {q:"With a 64-bit address space and 4KB pages, the number of page table entries is manageable without special techniques.",ans:false,exp:"With 64-bit addresses and 4KB pages: 2^64 / 2^12 = 2^52 entries - an astronomically large number. Special techniques like multi-level page tables or inverted page tables are REQUIRED.",src:"Lecture 8 > Page Tables - Large Size"},
+      {q:"A clean page can be evicted without writing it back to disk because the disk copy is still valid.",ans:true,exp:"A clean (unmodified) page can be evicted without a disk write - the disk copy is still valid and identical to what is in memory. Evicting a dirty page requires writing it back first.",src:"Lecture 8 > Structure of a Page Table Entry - Modified Bit"},
+      {q:"The offset portion of a virtual address is copied unchanged into the physical address.",ans:true,exp:"The offset (low-order bits) is copied UNCHANGED into the physical address. Only the virtual page number (high-order bits) is replaced by the physical frame number found in the page table.",src:"Lecture 8 > MMU - Address Translation"},
+      {q:"If the MMU page table lookup takes 100ns and memory access takes 200ns, a single memory reference without TLB takes 300ns total.",ans:true,exp:"Without TLB: page table lookup (100ns) + actual memory access (200ns) = 300ns per memory reference. This makes page table lookups a significant bottleneck.",src:"Lecture 8 > Page Tables - Mapping Must Be Fast"},
+      {q:"With a 32-bit address space and 4KB pages, the page table requires 4MB of memory (1M entries × 4 bytes).",ans:true,exp:"2^32 / 2^12 = 2^20 = 1 million entries. At 4 bytes per entry: 1 million x 4 = 4 MB just for the page table of one process.",src:"Lecture 8 > Page Tables - Large Size"},
+      {q:"After a page fault is handled, the trapped instruction must be re-executed from the beginning.",ans:true,exp:"After the OS handles a page fault (loads the missing page), the TRAPPED INSTRUCTION (the specific instruction that caused the fault) must be re-executed from the beginning of that instruction.",src:"Lecture 8 > Paging - Page Fault Handling"},
+    ]
+  }
+];
+
+// State per lecture
+const state = lectures.map(l => ({
+  mcAnswered: {},
+  tfAnswers: {},
+  mcScores: 0,
+  tfScores: 0,
+  submitted: false
+}));
+
+let activeLec = 0;
+
+function totalForLec(li) {
+  return lectures[li].mc.length + lectures[li].tf.length;
+}
+
+function answeredForLec(li) {
+  return Object.keys(state[li].mcAnswered).length + Object.keys(state[li].tfAnswers).length;
+}
+
+function updateProgress() {
+  const total = totalForLec(activeLec);
+  const answered = answeredForLec(activeLec);
+  const pct = total > 0 ? Math.round(answered / total * 100) : 0;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = answered + ' / ' + total + ' answered — Lecture ' + activeLec;
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+function getGrade(pct) {
+  if(pct>=90) return 'A+'; if(pct>=85) return 'A'; if(pct>=80) return 'B+';
+  if(pct>=75) return 'B'; if(pct>=70) return 'C+'; if(pct>=65) return 'C';
+  if(pct>=60) return 'D+'; if(pct>=50) return 'D'; return 'F';
+}
+
+function revealMC(li, qi) {
+  const item = lectures[li].mc[qi];
+  const chosen = state[li].mcAnswered[qi];
+  const card = document.getElementById(`l${li}-mc-card-${qi}`);
+  item.opts.forEach((_,j) => {
+    const opt = document.getElementById(`l${li}-mc-opt-${qi}-${j}`);
+    opt.style.pointerEvents = 'none';
+    if(j === item.ans) opt.classList.add('correct-opt');
+    else if(j === chosen && chosen !== item.ans) { opt.classList.add('wrong-opt'); opt.classList.remove('selected'); }
+  });
+  const fb = document.getElementById(`l${li}-mc-fb-${qi}`);
+  if(chosen === item.ans) {
+    state[li].mcScores++;
+    card.classList.add('correct-card');
+    fb.textContent = '✓ Correct!'; fb.className = 'q-feedback show-correct';
+  } else {
+    card.classList.add('wrong-card');
+    fb.textContent = '✗ Incorrect — correct: ' + letters[item.ans] + ') ' + item.opts[item.ans];
+    fb.className = 'q-feedback show-wrong';
+    if(item.exp) {
+      const btn = document.getElementById(`l${li}-mc-explain-${qi}`);
+      const panel = document.getElementById(`l${li}-mc-panel-${qi}`);
+      if(btn) btn.classList.add('visible');
+      if(panel && item.exp[chosen] !== undefined) {
+        const src = item.src || '';
+        panel.innerHTML = `${src ? `<div class="explain-source">${src}</div>` : ''}<div class="explain-why">${item.exp[chosen]}</div>`;
+      }
+    }
+  }
+  updateScoreCard(li);
+}
+
+function revealTF(li, i) {
+  const item = lectures[li].tf[i];
+  const chosen = state[li].tfAnswers[i];
+  const card = document.getElementById(`l${li}-tf-card-${i}`);
+  const tBtn = document.getElementById(`l${li}-tf-t-${i}`);
+  const fBtn = document.getElementById(`l${li}-tf-f-${i}`);
+  tBtn.style.pointerEvents = 'none'; fBtn.style.pointerEvents = 'none';
+  const correctBtn = item.ans ? tBtn : fBtn;
+  correctBtn.classList.add('correct-tf');
+  if(chosen !== item.ans) (chosen ? tBtn : fBtn).classList.add('wrong-tf');
+  const fb = document.getElementById(`l${li}-tf-fb-${i}`);
+  if(chosen === item.ans) {
+    state[li].tfScores++;
+    card.classList.add('correct-card');
+    fb.textContent = '✓ Correct!'; fb.className = 'q-feedback show-correct';
+  } else {
+    card.classList.add('wrong-card');
+    fb.textContent = '✗ Incorrect — correct: ' + (item.ans ? 'True' : 'False');
+    fb.className = 'q-feedback show-wrong';
+    if(item.exp) {
+      const btn = document.getElementById(`l${li}-tf-explain-${i}`);
+      const panel = document.getElementById(`l${li}-tf-panel-${i}`);
+      if(btn) btn.classList.add('visible');
+      if(panel) {
+        const src = item.src || '';
+        panel.innerHTML = `${src ? `<div class="explain-source">${src}</div>` : ''}<div class="explain-why">${item.exp}</div>`;
+      }
+    }
+  }
+  updateScoreCard(li);
+}
+
+function toggleExplain(id) {
+  const panel = document.getElementById(id);
+  if(!panel) return;
+  const btn = panel.previousElementSibling;
+  const isOpen = panel.classList.contains('visible');
+  panel.classList.toggle('visible', !isOpen);
+  if(btn) btn.textContent = isOpen ? '📖 Explain' : '✕ Close';
+}
+
+function selectMC(li, qi, oi) {
+  if(state[li].mcAnswered[qi] !== undefined) return;
+  state[li].mcAnswered[qi] = oi;
+  document.getElementById(`l${li}-mc-opt-${qi}-${oi}`).classList.add('selected');
+  document.getElementById(`l${li}-mc-card-${qi}`).classList.add('answered');
+  updateProgress();
+  revealMC(li, qi);
+}
+
+function selectTF(li, i, val) {
+  if(state[li].tfAnswers[i] !== undefined) return;
+  state[li].tfAnswers[i] = val;
+  document.getElementById(`l${li}-tf-${val ? 't' : 'f'}-${i}`).classList.add('selected');
+  document.getElementById(`l${li}-tf-card-${i}`).classList.add('answered');
+  updateProgress();
+  revealTF(li, i);
+}
+
+function updateScoreCard(li) {
+  const total = totalForLec(li);
+  const answered = answeredForLec(li);
+  const totalCorrect = state[li].mcScores + state[li].tfScores;
+  const pct = answered > 0 ? Math.round(totalCorrect / answered * 100) : 0;
+  const sc = document.getElementById(`l${li}-score`);
+  sc.style.display = 'block';
+  document.getElementById(`l${li}-sc-pct`).textContent = pct + '%';
+  document.getElementById(`l${li}-sc-sub`).textContent = totalCorrect + ' correct out of ' + answered + ' answered';
+  document.getElementById(`l${li}-sc-grade`).textContent = getGrade(pct);
+  const mcAns = Object.keys(state[li].mcAnswered).length;
+  const tfAns = Object.keys(state[li].tfAnswers).length;
+  document.getElementById(`l${li}-sc-mc`).textContent = state[li].mcScores + ' / ' + mcAns;
+  document.getElementById(`l${li}-sc-mc-pct`).textContent = mcAns > 0 ? Math.round(state[li].mcScores/mcAns*100) + '% accuracy' : '—';
+  document.getElementById(`l${li}-sc-tf`).textContent = state[li].tfScores + ' / ' + tfAns;
+  document.getElementById(`l${li}-sc-tf-pct`).textContent = tfAns > 0 ? Math.round(state[li].tfScores/tfAns*100) + '% accuracy' : '—';
+  document.getElementById(`l${li}-sc-skip`).textContent = total - answered;
+}
+
+function resetLecture(li) {
+  state[li].mcAnswered = {}; state[li].tfAnswers = {};
+  state[li].mcScores = 0; state[li].tfScores = 0;
+  buildLecture(li);
+  updateProgress();
+}
+
+function scrollToScore(li) {
+  document.getElementById(`l${li}-score`).scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function buildLecture(li) {
+  const lec = lectures[li];
+  const container = document.getElementById(`lec-${li}-content`);
+  container.innerHTML = '';
+
+  // MC section
+  const mcHeader = document.createElement('div');
+  mcHeader.className = 'section-header';
+  mcHeader.innerHTML = `<div class="section-icon mc">MC</div><div><div class="section-title">Multiple Choice</div><div class="section-meta">${lec.mc.length} questions — select the best answer</div></div>`;
+  container.appendChild(mcHeader);
+
+  lec.mc.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'q-card'; card.id = `l${li}-mc-card-${i}`;
+    const opts = item.opts.map((o,j) => `
+      <label class="option" id="l${li}-mc-opt-${i}-${j}" onclick="selectMC(${li},${i},${j})">
+        <input type="radio" name="l${li}-mc-${i}" value="${j}">
+        <div class="option-dot"></div>
+        <span class="option-letter">${letters[j]})</span>
+        <span class="option-text">${o}</span>
+      </label>`).join('');
+    const explainHtml = item.exp ? `
+      <button class="btn-explain" id="l${li}-mc-explain-${i}" onclick="toggleExplain('l${li}-mc-panel-${i}')">📖 Explain</button>
+      <div class="explain-panel" id="l${li}-mc-panel-${i}"></div>` : '';
+    card.innerHTML = `<div class="q-header"><span class="q-badge">${i+1}</span><span class="q-text">${item.q}</span></div><div class="options">${opts}</div><div class="q-feedback" id="l${li}-mc-fb-${i}"></div>${explainHtml}`;
+    container.appendChild(card);
+  });
+
+  // Divider
+  const div = document.createElement('div'); div.className = 'divider';
+  container.appendChild(div);
+
+  // TF section
+  const tfHeader = document.createElement('div');
+  tfHeader.className = 'section-header';
+  tfHeader.innerHTML = `<div class="section-icon tf">T/F</div><div><div class="section-title">True or False</div><div class="section-meta">${lec.tf.length} questions</div></div>`;
+  container.appendChild(tfHeader);
+
+  lec.tf.forEach((item, i) => {
+    const n = i + 1;
+    const card = document.createElement('div');
+    card.className = 'q-card'; card.id = `l${li}-tf-card-${i}`;
+    const explainHtml = item.exp ? `
+      <button class="btn-explain" id="l${li}-tf-explain-${i}" onclick="toggleExplain('l${li}-tf-panel-${i}')">📖 Explain</button>
+      <div class="explain-panel" id="l${li}-tf-panel-${i}"></div>` : '';
+    card.innerHTML = `<div class="q-header"><span class="q-badge">${n}</span><span class="q-text">${item.q}</span></div>
+      <div class="tf-wrap">
+        <button class="tf-btn" id="l${li}-tf-t-${i}" onclick="selectTF(${li},${i},true)"><div class="tf-dot"></div>True</button>
+        <button class="tf-btn" id="l${li}-tf-f-${i}" onclick="selectTF(${li},${i},false)"><div class="tf-dot"></div>False</button>
+      </div>
+      <div class="q-feedback" id="l${li}-tf-fb-${i}"></div>${explainHtml}`;
+    container.appendChild(card);
+  });
+
+  // Actions
+  const actions = document.createElement('div');
+  actions.className = 'actions';
+  actions.innerHTML = `<button class="btn-primary" onclick="scrollToScore(${li})">View Score</button><button class="btn-secondary" onclick="resetLecture(${li})">Reset</button>`;
+  container.appendChild(actions);
+
+  // Score card
+  const sc = document.createElement('div');
+  sc.className = 'score-card'; sc.id = `l${li}-score`;
+  sc.innerHTML = `<div class="score-card-inner">
+    <div class="score-top">
+      <div><div class="score-label">Score</div><div class="score-big" id="l${li}-sc-pct">—</div><div class="score-sub" id="l${li}-sc-sub">—</div></div>
+      <div style="text-align:right"><div class="score-label">Grade</div><div class="score-grade" id="l${li}-sc-grade">—</div></div>
+    </div>
+    <div class="score-breakdown">
+      <div class="score-section"><div class="score-section-label">Multiple Choice</div><div class="score-section-val" id="l${li}-sc-mc">—</div><div class="score-section-pct" id="l${li}-sc-mc-pct">—</div></div>
+      <div class="score-section"><div class="score-section-label">True / False</div><div class="score-section-val" id="l${li}-sc-tf">—</div><div class="score-section-pct" id="l${li}-sc-tf-pct">—</div></div>
+      <div class="score-section"><div class="score-section-label">Remaining</div><div class="score-section-val" id="l${li}-sc-skip">—</div><div class="score-section-pct" style="color:rgba(255,255,255,.35)">not yet answered</div></div>
+    </div>
+  </div>`;
+  container.appendChild(sc);
+}
+
+function buildNav() {
+  const tabs = document.getElementById('lec-tabs');
+  const main = document.getElementById('main-content');
+  lectures.forEach((lec, li) => {
+    // Tab
+    const tab = document.createElement('button');
+    tab.className = 'lec-tab' + (li === 0 ? ' active' : '');
+    tab.textContent = 'Lec ' + li;
+    tab.onclick = () => switchLecture(li);
+    tab.id = `tab-${li}`;
+    tabs.appendChild(tab);
+
+    // Section
+    const section = document.createElement('div');
+    section.className = 'lec-section' + (li === 0 ? ' active' : '');
+    section.id = `lec-section-${li}`;
+    const total = lec.mc.length + lec.tf.length;
+    section.innerHTML = `
+      <div class="lec-header">
+        <div class="lec-num">Lecture ${li}</div>
+        <div class="lec-title">${lec.title}</div>
+        <div class="lec-stats">
+          <span class="lec-stat">${total} total questions</span>
+          <span class="lec-stat">${lec.mc.length} multiple choice</span>
+          <span class="lec-stat">${lec.tf.length} true / false</span>
+        </div>
+      </div>
+      <div id="lec-${li}-content"></div>`;
+    main.appendChild(section);
+
+    buildLecture(li);
+  });
+}
+
+function switchLecture(li) {
+  document.getElementById(`lec-section-${activeLec}`).classList.remove('active');
+  document.getElementById(`tab-${activeLec}`).classList.remove('active');
+  activeLec = li;
+  document.getElementById(`lec-section-${li}`).classList.add('active');
+  document.getElementById(`tab-${li}`).classList.add('active');
+  updateProgress();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+window.addEventListener('scroll', () => {
+  document.getElementById('scroll-btn').classList.toggle('visible', window.scrollY > 400);
+});
+
+buildNav();
+updateProgress();
+</script>
+</body>
+</html>

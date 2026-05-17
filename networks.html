@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Networks 1 — Lectures 1, 2, 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d1117;
+    --ink-soft: #3a4455;
+    --ink-muted: #6e7a8a;
+    --paper: #f0f4f8;
+    --paper-warm: #e8edf3;
+    --paper-card: #ffffff;
+    --accent: #0ea5e9;
+    --accent-light: #e0f2fe;
+    --accent-deep: #0369a1;
+    --teal: #14b8a6;
+    --teal-light: #ccfbf1;
+    --success: #059669;
+    --success-light: #d1fae5;
+    --danger: #dc2626;
+    --danger-light: #fee2e2;
+    --border: #d1dce8;
+    --border-strong: #a8b8cc;
+    --shadow-sm: 0 1px 3px rgba(13,17,23,0.08);
+    --shadow-md: 0 4px 16px rgba(13,17,23,0.12);
+    --shadow-lg: 0 12px 40px rgba(13,17,23,0.18);
+    --radius: 10px;
+    --radius-sm: 6px;
+    /* difficulty colors */
+    --easy: #16a34a;
+    --easy-light: #dcfce7;
+    --medium: #d97706;
+    --medium-light: #fef3c7;
+    --hard: #dc2626;
+    --hard-light: #fee2e2;
+    --ch2: #7c4dff;
+    --ch2-light: #f3eaff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--ink);
+    color: white;
+    padding: 56px 40px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 90% at 95% 40%, rgba(14,165,233,0.22) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 60% at 5% 90%, rgba(20,184,166,0.14) 0%, transparent 55%),
+      radial-gradient(ellipse 30% 40% at 60% 10%, rgba(14,165,233,0.08) 0%, transparent 50%);
+  }
+  /* circuit lines decoration */
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 380px; height: 100%;
+    background-image:
+      linear-gradient(rgba(14,165,233,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14,165,233,0.08) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: linear-gradient(to left, rgba(0,0,0,0.4), transparent);
+  }
+  .hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--accent); }
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 10px;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+  }
+  .hero-title em { font-style: normal; color: var(--accent); }
+  .hero-sub { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 32px; font-weight: 300; letter-spacing: 0.03em; }
+  .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; }
+  .stat { display: flex; flex-direction: column; gap: 2px; }
+  .stat-num { font-family: 'DM Sans', sans-serif; font-size: 26px; font-weight: 600; color: rgba(255,255,255,0.85); line-height: 1; }
+  .stat-label { font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; font-family: 'DM Sans', sans-serif; }
+  .hero-disclaimer {
+    margin-top: 20px;
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px; padding: 7px 12px;
+    font-size: 12px; color: rgba(255,255,255,0.45); font-weight: 400;
+  }
+  .hero-disclaimer span { color: rgba(255,255,255,0.65); }
+
+  /* TABS */
+  .tabs-wrap {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+  }
+  .tabs-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: stretch; overflow-x: auto; }
+  .tab-btn {
+    flex: 1; padding: 0 20px; height: 48px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+    color: var(--ink-muted); cursor: pointer; border: none; background: transparent;
+    border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+  .tab-btn:hover { color: var(--ink); background: var(--paper-warm); }
+  .tab-btn.active { color: var(--ink); border-bottom-color: var(--accent); }
+  .tab-btn.active.easy { border-bottom-color: var(--easy); color: var(--easy); }
+  .tab-btn.active.medium { border-bottom-color: var(--medium); color: var(--medium); }
+  .tab-btn.active.hard { border-bottom-color: var(--hard); color: var(--hard); }
+  .tab-btn.active.ch2 { border-bottom-color: var(--ch2); color: var(--ch2); }
+  .tab-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .tab-dot.easy { background: var(--easy); }
+  .tab-dot.medium { background: var(--medium); }
+  .tab-dot.hard { background: var(--hard); }
+  .tab-dot.ch2 { background: var(--ch2); }
+
+  /* PROGRESS */
+  .progress-wrap {
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 40px;
+    position: sticky;
+    top: 48px;
+    z-index: 99;
+  }
+  .progress-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 14px; }
+  .progress-text { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--ink-muted); white-space: nowrap; min-width: 120px; }
+  .progress-track { flex: 1; height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+  .progress-fill.easy { background: linear-gradient(90deg, var(--easy), var(--teal)); }
+  .progress-fill.medium { background: linear-gradient(90deg, var(--medium), #f59e0b); }
+  .progress-fill.hard { background: linear-gradient(90deg, var(--hard), #f97316); }
+  .progress-fill.ch2 { background: var(--ch2); }
+  .progress-pct { font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700; min-width: 36px; text-align: right; }
+  .progress-pct.easy { color: var(--easy); }
+  .progress-pct.medium { color: var(--medium); }
+  .progress-pct.hard { color: var(--hard); }
+  .progress-pct.ch2 { color: var(--ch2); }
+
+  /* MAIN */
+  .main { max-width: 900px; margin: 0 auto; padding: 36px 40px 80px; }
+  .section-panel { display: none; }
+  .section-panel.active { display: block; }
+
+  .section-header { display: flex; align-items: center; gap: 14px; margin: 0 0 24px; }
+  .section-badge {
+    padding: 4px 14px; border-radius: 99px;
+    font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .section-badge.easy { background: var(--easy-light); color: var(--easy); }
+  .section-badge.medium { background: var(--medium-light); color: var(--medium); }
+  .section-badge.hard { background: var(--hard-light); color: var(--hard); }
+  .section-badge.ch2 { background: var(--ch2-light); color: var(--ch2); }
+  .section-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--ink); }
+  .section-meta { font-size: 12px; color: var(--ink-muted); margin-top: 1px; font-family: 'Space Mono', monospace; }
+
+  /* INNER DISCLAIMER */
+  .inner-disclaimer {
+    margin-bottom: 24px;
+    padding: 10px 16px;
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    color: #795548;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+  }
+
+  /* CARDS */
+  .q-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .q-card:hover { box-shadow: var(--shadow-md); }
+  .q-card.correct-card { border-color: #86efac; background: #f0fdf4; }
+  .q-card.wrong-card { border-color: #fca5a5; background: #fff5f5; }
+
+  .q-header { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px; }
+  .q-badge {
+    background: var(--ink); color: white;
+    font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+    padding: 3px 9px; border-radius: 4px; flex-shrink: 0; margin-top: 3px;
+    letter-spacing: 0.04em;
+  }
+  .q-text { font-size: 14.5px; color: var(--ink); line-height: 1.65; font-weight: 400; }
+
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 14px; border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; position: relative;
+    user-select: none;
+  }
+  .option:hover { border-color: var(--accent); background: var(--accent-light); }
+  .option input[type=radio] { display: none; }
+  .option-dot {
+    width: 18px; height: 18px; border: 1.5px solid var(--border-strong);
+    border-radius: 50%; flex-shrink: 0; margin-top: 1px;
+    display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+  }
+  .option-dot::after {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent); opacity: 0; transition: opacity 0.15s;
+  }
+  .option.selected { border-color: var(--accent); background: var(--accent-light); }
+  .option.selected .option-dot { border-color: var(--accent); }
+  .option.selected .option-dot::after { opacity: 1; }
+  .option.correct-opt { border-color: var(--success); background: var(--success-light); pointer-events: none; }
+  .option.correct-opt .option-dot { border-color: var(--success); }
+  .option.correct-opt .option-dot::after { opacity: 1; background: var(--success); }
+  .option.correct-opt .option-text { color: var(--success); font-weight: 500; }
+  .option.correct-opt .option-letter { color: var(--success); }
+  .option.wrong-opt { border-color: var(--danger); background: var(--danger-light); pointer-events: none; }
+  .option.wrong-opt .option-dot { border-color: var(--danger); }
+  .option.wrong-opt .option-dot::after { opacity: 1; background: var(--danger); }
+  .option.wrong-opt .option-text { color: var(--danger); }
+  .option.wrong-opt .option-letter { color: var(--danger); }
+  .option-letter { font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; color: var(--ink-muted); margin-top: 3px; flex-shrink: 0; min-width: 14px; }
+  .option-text { font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
+
+  .q-feedback { display: none; margin-top: 10px; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 4px; width: fit-content; font-family: 'Space Mono', monospace; }
+  .q-feedback.show-correct { display: block; background: var(--success-light); color: var(--success); }
+  .q-feedback.show-wrong { display: block; background: var(--danger-light); color: var(--danger); }
+
+  /* HINT SYSTEM */
+  .hint-container { margin-top: 15px; border-top: 1px dashed var(--border); padding-top: 10px; }
+  .hint-btn {
+    background: var(--paper-warm); border: 1px solid var(--border-strong);
+    padding: 4px 10px; border-radius: 4px; font-size: 11px; font-family: 'Space Mono', monospace;
+    cursor: pointer; color: var(--ink-muted);
+  }
+  .hint-btn:hover { background: var(--border); color: var(--ink); }
+  .hint-content {
+    display: none; margin-top: 8px; padding: 10px; background: #fdf9e7;
+    border-left: 3px solid #eab308; font-size: 12px; font-family: 'Space Mono', monospace; color: #854d0e;
+  }
+
+  /* SCORE AREA */
+  .actions { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: white; border: none;
+    padding: 12px 30px; border-radius: var(--radius-sm);
+    font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: background 0.15s, transform 0.1s;
+    box-shadow: 0 2px 8px rgba(14,165,233,0.35); letter-spacing: 0.02em;
+  }
+  .btn-primary:hover { background: var(--accent-deep); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-secondary {
+    background: white; color: var(--ink-soft); border: 1.5px solid var(--border-strong);
+    padding: 12px 26px; border-radius: var(--radius-sm);
+    font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--ink-soft); color: var(--ink); background: var(--paper-warm); }
+
+  .score-card {
+    display: none; background: var(--ink); color: white;
+    border-radius: var(--radius); padding: 32px 36px; margin-top: 36px;
+    position: relative; overflow: hidden; box-shadow: var(--shadow-lg);
+  }
+  .score-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 80% at 90% 40%, rgba(14,165,233,0.22) 0%, transparent 65%);
+  }
+  .score-card-inner { position: relative; }
+  .score-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-bottom: 28px; }
+  .score-label { font-family: 'Space Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.16em; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
+  .score-big { font-family: 'Syne', sans-serif; font-size: 54px; font-weight: 800; line-height: 1; color: white; }
+  .score-sub { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+  .score-grade { font-family: 'Syne', sans-serif; font-size: 40px; font-weight: 800; color: var(--accent); line-height: 1; }
+  .score-breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+  .score-section { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-sm); padding: 14px 16px; }
+  .score-section-label { font-family: 'Space Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.38); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.12em; }
+  .score-section-val { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; color: white; }
+  .score-section-pct { font-size: 11px; color: rgba(255,255,255,0.38); margin-top: 2px; }
+
+  .scroll-top {
+    position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px;
+    background: var(--ink); color: white; border: none; border-radius: 50%;
+    font-size: 18px; cursor: pointer; box-shadow: var(--shadow-md);
+    opacity: 0; transition: opacity 0.3s; z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+  }
+  .scroll-top.visible { opacity: 1; }
+  .scroll-top:hover { background: var(--accent); }
+
+  @media (max-width: 620px) {
+    .hero { padding: 36px 20px 32px; }
+    .main { padding: 24px 20px 60px; }
+    .progress-wrap { padding: 10px 20px; }
+    .tab-btn { font-size: 12px; padding: 0 12px; }
+    .hero-stats { gap: 20px; }
+    .q-card { padding: 16px; }
+    .score-card { padding: 24px 20px; }
+    .score-big { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Capital University — Computer Science Department</div>
+    <h1 class="hero-title">Computer Networks <em>1</em></h1>
+    <p class="hero-sub">Lectures 1, 2, 3 &nbsp;·&nbsp; OSI Model · DNS · NAT &nbsp;·&nbsp; Practice Quiz</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">105</span><span class="stat-label">Questions</span></div>
+      <div class="stat"><span class="stat-num">25</span><span class="stat-label">Easy</span></div>
+      <div class="stat"><span class="stat-num">35</span><span class="stat-label">Medium</span></div>
+      <div class="stat"><span class="stat-num">30</span><span class="stat-label">Hard</span></div>
+      <div class="stat"><span class="stat-num">15</span><span class="stat-label">Subnetting</span></div>
+    </div>
+    <div class="hero-disclaimer">⚠ Disclaimer: <span>All questions were answerd by Gemini AI.</span></div>
+  </div>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs-inner">
+    <button class="tab-btn easy active" onclick="switchTab('easy')">
+      <span class="tab-dot easy"></span> Easy (1–25)
+    </button>
+    <button class="tab-btn medium" onclick="switchTab('medium')">
+      <span class="tab-dot medium"></span> Medium (26–60)
+    </button>
+    <button class="tab-btn hard" onclick="switchTab('hard')">
+      <span class="tab-dot hard"></span> Hard (61–90)
+    </button>
+    <button class="tab-btn ch2" onclick="switchTab('ch2')">
+      <span class="tab-dot ch2"></span> Subnetting Problems
+    </button>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <span class="progress-text" id="prog-text">0 / 25 answered</span>
+    <div class="progress-track"><div class="progress-fill easy" id="prog-fill"></div></div>
+    <span class="progress-pct easy" id="prog-pct">0%</span>
+  </div>
+</div>
+
+<main class="main">
+
+  <!-- EASY -->
+  <div class="section-panel active" id="panel-easy">
+    <div class="section-header">
+      <span class="section-badge easy">Easy</span>
+      <div>
+        <div class="section-title">Fundamentals</div>
+        <div class="section-meta">Questions 1 – 25 · OSI basics, DNS records, NAT types</div>
+      </div>
+    </div>
+    <div id="easy-container"></div>
+    <div class="actions">
+      <button class="btn-primary" onclick="submitSection('easy')">View Score</button>
+      <button class="btn-secondary" onclick="resetSection('easy')">Reset</button>
+    </div>
+    <div class="score-card" id="score-easy">
+      <div class="score-card-inner">
+        <div class="score-top">
+          <div>
+            <div class="score-label">Section Score</div>
+            <div class="score-big" id="score-pct-easy">—</div>
+            <div class="score-sub" id="score-sub-easy">—</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="score-label">Grade</div>
+            <div class="score-grade" id="score-grade-easy">—</div>
+          </div>
+        </div>
+        <div class="score-breakdown">
+          <div class="score-section">
+            <div class="score-section-label">Correct</div>
+            <div class="score-section-val" id="score-correct-easy">—</div>
+            <div class="score-section-pct" id="score-acc-easy">—</div>
+          </div>
+          <div class="score-section">
+            <div class="score-section-label">Unanswered</div>
+            <div class="score-section-val" id="score-skip-easy">—</div>
+            <div class="score-section-pct" style="color:rgba(255,255,255,0.35);">not yet answered</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEDIUM -->
+  <div class="section-panel" id="panel-medium">
+    <div class="section-header">
+      <span class="section-badge medium">Medium</span>
+      <div>
+        <div class="section-title">Intermediate</div>
+        <div class="section-meta">Questions 26 – 60 · DNS hierarchy, NAT behavior, OSI layers</div>
+      </div>
+    </div>
+    <div id="medium-container"></div>
+    <div class="actions">
+      <button class="btn-primary" onclick="submitSection('medium')">View Score</button>
+      <button class="btn-secondary" onclick="resetSection('medium')">Reset</button>
+    </div>
+    <div class="score-card" id="score-medium">
+      <div class="score-card-inner">
+        <div class="score-top">
+          <div>
+            <div class="score-label">Section Score</div>
+            <div class="score-big" id="score-pct-medium">—</div>
+            <div class="score-sub" id="score-sub-medium">—</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="score-label">Grade</div>
+            <div class="score-grade" id="score-grade-medium">—</div>
+          </div>
+        </div>
+        <div class="score-breakdown">
+          <div class="score-section">
+            <div class="score-section-label">Correct</div>
+            <div class="score-section-val" id="score-correct-medium">—</div>
+            <div class="score-section-pct" id="score-acc-medium">—</div>
+          </div>
+          <div class="score-section">
+            <div class="score-section-label">Unanswered</div>
+            <div class="score-section-val" id="score-skip-medium">—</div>
+            <div class="score-section-pct" style="color:rgba(255,255,255,0.35);">not yet answered</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HARD -->
+  <div class="section-panel" id="panel-hard">
+    <div class="section-header">
+      <span class="section-badge hard">Hard</span>
+      <div>
+        <div class="section-title">Advanced</div>
+        <div class="section-meta">Questions 61 – 90 · Scenario-based, security, analysis</div>
+      </div>
+    </div>
+    <div id="hard-container"></div>
+    <div class="actions">
+      <button class="btn-primary" onclick="submitSection('hard')">View Score</button>
+      <button class="btn-secondary" onclick="resetSection('hard')">Reset</button>
+    </div>
+    <div class="score-card" id="score-hard">
+      <div class="score-card-inner">
+        <div class="score-top">
+          <div>
+            <div class="score-label">Section Score</div>
+            <div class="score-big" id="score-pct-hard">—</div>
+            <div class="score-sub" id="score-sub-hard">—</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="score-label">Grade</div>
+            <div class="score-grade" id="score-grade-hard">—</div>
+          </div>
+        </div>
+        <div class="score-breakdown">
+          <div class="score-section">
+            <div class="score-section-label">Correct</div>
+            <div class="score-section-val" id="score-correct-hard">—</div>
+            <div class="score-section-pct" id="score-acc-hard">—</div>
+          </div>
+          <div class="score-section">
+            <div class="score-section-label">Unanswered</div>
+            <div class="score-section-val" id="score-skip-hard">—</div>
+            <div class="score-section-pct" style="color:rgba(255,255,255,0.35);">not yet answered</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBNETTING -->
+  <div class="section-panel" id="panel-ch2">
+    <div class="section-header">
+      <span class="section-badge ch2">Subnetting & CIDR</span>
+      <div>
+        <div class="section-title">Practice Problems</div>
+        <div class="section-meta">15 Applied Calculation Problems</div>
+      </div>
+    </div>
+    <div class="inner-disclaimer">⚠ The problems in this section have been created and answered by AI.</div>
+    <div id="ch2-container"></div>
+    <div class="actions">
+      <button class="btn-primary" onclick="submitSection('ch2')">View Score</button>
+      <button class="btn-secondary" onclick="resetSection('ch2')">Reset</button>
+    </div>
+    <div class="score-card" id="score-ch2">
+      <div class="score-card-inner">
+        <div class="score-top">
+          <div>
+            <div class="score-label">Section Score</div>
+            <div class="score-big" id="score-pct-ch2">—</div>
+            <div class="score-sub" id="score-sub-ch2">—</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="score-label">Grade</div>
+            <div class="score-grade" id="score-grade-ch2">—</div>
+          </div>
+        </div>
+        <div class="score-breakdown">
+          <div class="score-section">
+            <div class="score-section-label">Correct</div>
+            <div class="score-section-val" id="score-correct-ch2">—</div>
+            <div class="score-section-pct" id="score-acc-ch2">—</div>
+          </div>
+          <div class="score-section">
+            <div class="score-section-label">Unanswered</div>
+            <div class="score-section-val" id="score-skip-ch2">—</div>
+            <div class="score-section-pct" style="color:rgba(255,255,255,0.35);">not yet answered</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<button class="scroll-top" id="scroll-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const easyQs = [
+  {q:"How many layers does the OSI model have?", opts:["5","6","7","8"], ans:2},
+  {q:"Which layer is responsible for end-to-end communication?", opts:["Network","Transport","Session","Data Link"], ans:0},
+  {q:"Which layer converts data into bits?", opts:["Presentation","Physical","Data Link","Network"], ans:1},
+  {q:"What does DNS stand for?", opts:["Dynamic Network Service","Domain Name System","Data Name Server","Domain Network System"], ans:1},
+  {q:"What does NAT stand for?", opts:["Network Address Translation","Network Access Transfer","Node Address Table","Network Allocation Tool"], ans:0},
+  {q:"Which of these is a private IP range?", opts:["200.168.0.0","172.16.0.0","100.0.0.0","8.8.8.0"], ans:1},
+  {q:"What does TTL stand for?", opts:["Time To Load","Transfer To Layer","Time To Live","Table To Lookup"], ans:2},
+  {q:"What is a Cache Hit?", opts:["The DNS server is down","The IP is found in cache and still valid","The router blocks the request","The TTL has expired"], ans:1},
+  {q:"Which DNS record maps a domain to an IPv4 address?", opts:["AAAA","MX","A","PTR"], ans:2},
+  {q:"Which DNS record is used for email servers?", opts:["A","NS","CNAME","MX"], ans:3},
+  {q:"What is the job of the Authoritative Name Server?", opts:["Cache DNS results","Give the final real IP address","Block invalid requests","Assign private IPs"], ans:1},
+  {q:"What type of NAT is used in home routers?", opts:["Static NAT","Dynamic NAT","PAT","Reverse NAT"], ans:2},
+  {q:"What does PAT use to track multiple connections?", opts:["MAC addresses","IP addresses","Port numbers","TTL values"], ans:2},
+  {q:"Which DNS record does reverse lookup?", opts:["A","CNAME","NS","PTR"], ans:3},
+  {q:"What is the Local Resolver?", opts:["A server at the ISP","Software on your device that manages DNS lookup","The Root DNS server","A firewall"], ans:1},
+  {q:"How many public IPs does a PAT network need minimum?", opts:["One per device","Two","One","Depends on devices"], ans:2},
+  {q:"Which layer handles logical addressing (IP)?", opts:["Transport","Data Link","Network","Session"], ans:2},
+  {q:"What does CNAME record do?", opts:["Maps domain to IPv6","Creates an alias for another domain","Points to a mail server","Does reverse lookup"], ans:1},
+  {q:"What is a Recursive Query?", opts:["The client asks the resolver to find the full answer","The server asks another server directly","A query that loops forever","A query inside the cache"], ans:0},
+  {q:"Which private IP range is most common in homes?", opts:["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16","169.254.0.0/16"], ans:2},
+  {q:"What does the NS record point to?", opts:["Mail server","IPv6 address","The authoritative name server for a domain","An alias"], ans:2},
+  {q:"What happens when TTL expires?", opts:["The device restarts","The cache entry is deleted","The IP changes","NAT resets"], ans:1},
+  {q:"Which layer is responsible for encryption and data formatting?", opts:["Session","Transport","Presentation","Application"], ans:2},
+  {q:"What is Static NAT?", opts:["Many private IPs share one public IP","One private IP is always mapped to one public IP","IPs are assigned from a pool","NAT with no translation table"], ans:1},
+  {q:"Why can't private IPs be used on the Internet?", opts:["They are too short","They are not routable on the Internet","They are blocked by DNS","They don't support IPv6"], ans:1},
+];
+
+const mediumQs = [
+  {q:"What is the correct order of DNS resolution?", opts:["Root -> Authoritative -> TLD","TLD -> Root -> Authoritative","Root -> TLD -> Authoritative","Authoritative -> TLD -> Root"], ans:2},
+  {q:"What does the NAT Translation Table store?", opts:["Domain names and IPs","Private IP + port mapped to public IP + port","MAC addresses only","TTL values"], ans:1},
+  {q:"A company has 500 devices but only 10 public IPs. Which NAT type is best?", opts:["Static NAT","PAT","Dynamic NAT","Reverse NAT"], ans:1},
+  {q:"What is Propagation Delay in DNS?", opts:["Slow internet connection","Old IP stays in cache until TTL expires after IP change","DNS server is overloaded","TTL is set to zero"], ans:1},
+  {q:"Which layer of OSI handles flow control and error correction?", opts:["Network","Data Link","Transport","Session"], ans:2},
+  {q:"What is an Iterative Query in DNS?", opts:["The resolver finds the answer itself","Each server refers the resolver to the next server","The client repeats the query until answered","A query sent to the cache"], ans:1},
+  {q:"In outbound NAT traffic, what does the router change?", opts:["Destination IP and port","Source IP and port","TTL value","MAC address"], ans:1},
+  {q:"In inbound NAT traffic, what does the router change?", opts:["Source IP and port","TTL value","Destination IP and port","MAC address"], ans:2},
+  {q:"Which DNS record maps a domain to an IPv6 address?", opts:["A","PTR","AAAA","NS"], ans:2},
+  {q:"What is the main benefit of DNS caching?", opts:["Increases TTL","Reduces repeated queries and speeds up lookup","Encrypts DNS traffic","Assigns private IPs"], ans:1},
+  {q:"What is 'Security Through Obscurity' in NAT?", opts:["NAT encrypts all traffic","NAT hides internal network structure from Internet","NAT blocks all incoming connections","NAT assigns random ports"], ans:1},
+  {q:"What RFC defines private IP ranges?", opts:["RFC 1918","RFC 2616","RFC 793","RFC 1035"], ans:0},
+  {q:"A Short TTL is useful when:", opts:["The service is stable and never changes","You want to reduce DNS traffic","You expect frequent IP changes or failover","The cache is full"], ans:2},
+  {q:"Which layer handles physical MAC addressing?", opts:["Network","Physical","Data Link","Transport"], ans:2},
+  {q:"What is the Root Server's job in DNS?", opts:["Give the final IP address","Refer the resolver to the correct TLD server","Cache all DNS results","Assign TTL values"], ans:1},
+  {q:"Why does FTP have problems with NAT?", opts:["FTP uses IPv6","FTP embeds IP addresses inside its data","FTP doesn't use ports","FTP bypasses the translation table"], ans:1},
+  {q:"What is Performance Overhead in NAT?", opts:["NAT uses too much RAM","Every packet must be examined and modified by NAT","NAT blocks some packets","NAT increases TTL"], ans:1},
+  {q:"Which type of NAT is best for hosting a server inside your network?", opts:["PAT","Dynamic NAT","Static NAT","Reverse NAT"], ans:2},
+  {q:"What is the job of the TLD server in DNS?", opts:["Give the final IP","Cache DNS results","Refer the resolver to the Authoritative Name Server","Assign TTL"], ans:2},
+  {q:"What does 'Breaks End-to-End Connectivity' mean in NAT?", opts:["NAT slows the connection","Devices behind NAT cannot be reached directly from outside","NAT blocks all UDP traffic","NAT removes port numbers"], ans:1},
+  {q:"Where is DNS cache stored? (best answer)", opts:["Only on your device","Only at the ISP","On device, router, and ISP","Only on the Root Server"], ans:2},
+  {q:"What is Dynamic NAT's main limitation?", opts:["Only one device can connect","If the IP pool is full, new devices cannot connect","It requires IPv6","It doesn't use a translation table"], ans:1},
+  {q:"Which Google DNS server is mentioned as a public Recursive Resolver?", opts:["1.1.1.1","9.9.9.9","8.8.8.8","4.4.4.4"], ans:2},
+  {q:"What is the difference between Static and Dynamic NAT?", opts:["Static uses ports, Dynamic doesn't","Static is fixed one-to-one, Dynamic uses a pool of IPs","Dynamic is faster than Static","Static supports more devices"], ans:1},
+  {q:"In the DNS hierarchy, what comes after the Root Server?", opts:["Authoritative Name Server","Local Resolver","TLD Server","Recursive Resolver"], ans:2},
+  {q:"What does the translation table allow NAT to do?", opts:["Encrypt packets","Know which private device to send replies to","Block unwanted traffic","Assign TTL values"], ans:1},
+  {q:"A Long TTL is useful when:", opts:["The IP changes frequently","You want fast failover","The service is stable and rarely changes","The cache is empty"], ans:2},
+  {q:"Which layer is responsible for establishing, managing, and terminating sessions?", opts:["Transport","Presentation","Application","Session"], ans:3},
+  {q:"What is the first step in the DNS query process?", opts:["Ask the Root Server","Check the local cache","Send a recursive query","Check the TLD server"], ans:1},
+  {q:"Why does NAT make it hard to track users?", opts:["NAT encrypts all traffic","Many users share one public IP so it's hard to identify individuals","NAT deletes logs automatically","NAT uses random IPs"], ans:1},
+  {q:"What is the benefit of NAT for ISP changes?", opts:["You get a faster connection","Internal IPs don't need to change when you change ISP","NAT automatically finds a new ISP","TTL resets automatically"], ans:1},
+  {q:"Which OSI layer does IP addressing belong to?", opts:["Layer 2","Layer 3","Layer 4","Layer 5"], ans:1},
+  {q:"What is a Cache Miss?", opts:["The cache is full","IP not found in cache or TTL expired — must query external server","The DNS server is down","The router blocks the request"], ans:1},
+  {q:"What is the job of DHCP mentioned in the lecture?", opts:["Translate domain names to IPs","Automatically assign IP addresses to devices","Manage the translation table","Set TTL values"], ans:1},
+  {q:"Which private IP range is the largest?", opts:["192.168.0.0/16","172.16.0.0/12","10.0.0.0/8","169.254.0.0/16"], ans:2},
+];
+
+const hardQs = [
+  {q:"A DNS resolver receives a reply with TTL=300. After 200 seconds, another device asks for the same domain. What TTL will the second device receive?", opts:["300","200","100","0"], ans:2},
+  {q:"Which attack exploits the DNS cache to redirect users to fake websites?", opts:["Port Scanning","DNS Cache Poisoning","NAT Overload","ARP Spoofing"], ans:1},
+  {q:"Device A (192.168.1.5:44321) and Device B (192.168.1.8:44321) both send packets through PAT. The router assigns port 61001 to A and 61002 to B. A reply comes to 200.24.5.8:61002. Which device gets it?", opts:["Device A","Device B","Both devices","Neither"], ans:1},
+  {q:"A hacker does a reverse DNS lookup on your server's IP. Which DNS record does he use?", opts:["A","CNAME","PTR","MX"], ans:2},
+  {q:"Which statement about NAT and firewalls is correct?", opts:["NAT is a full replacement for a firewall","NAT provides complete security","NAT hides IPs but is not a real firewall — a firewall is still needed","Firewalls are not needed if NAT is used"], ans:2},
+  {q:"A company website moves to a new server (new IP). They set TTL=86400 (1 day). What problem will users face?", opts:["DNS stops working completely","Users will see the old IP for up to 1 day — Propagation Delay","The cache deletes immediately","The Authoritative server crashes"], ans:1},
+  {q:"In the OSI model, data at Layer 2 is called:", opts:["Packet","Segment","Frame","Bit"], ans:2},
+  {q:"Which NAT type requires one public IP per internal device?", opts:["PAT","Dynamic NAT","Static NAT","NAT Overload"], ans:2},
+  {q:"Why is the Authoritative Name Server called 'the ultimate source of truth'?", opts:["It has the largest cache","It is the only server with the real, official IP for a domain","It manages all TLD servers","It assigns TTL values"], ans:1},
+  {q:"A forensics investigator wants to find which device behind NAT visited a malicious website. What does he need?", opts:["The public IP only","The NAT translation table logs with timestamps","The DNS cache only","The TTL value"], ans:1},
+  {q:"What happens if two devices behind PAT use the same internal port?", opts:["Connection fails for both","NAT assigns different external ports to each device to avoid conflict","NAT blocks one device","Both devices get the same external port"], ans:1},
+  {q:"Which attack uses open ports discovered by scanning to find vulnerabilities?", opts:["DNS Poisoning","NAT Overload","Port Scanning followed by exploitation","TTL Manipulation"], ans:2},
+  {q:"A website has CNAME: www -> server1.example.com and A record: server1.example.com -> 93.184.216.34. What IP does www.example.com resolve to?", opts:["Cannot be resolved","server1.example.com","93.184.216.34","Depends on TTL"], ans:2},
+  {q:"Which of these best describes an Iterative vs Recursive query?", opts:["Iterative = client does all work, Recursive = server does all work","Recursive = client asks resolver to do all work, Iterative = each server refers to next","Both are the same","Iterative is faster than Recursive always"], ans:1},
+  {q:"A company uses Dynamic NAT with a pool of 10 public IPs. 11 devices try to connect at the same time. What happens to the 11th device?", opts:["It gets a shared IP","It uses PAT automatically","It cannot connect until a public IP becomes available","It uses a private IP directly"], ans:2},
+  {q:"What is the main difference between PAT and Dynamic NAT?", opts:["PAT uses IP pools, Dynamic NAT uses ports","Dynamic NAT uses IP pools, PAT uses ports to allow many devices on one IP","PAT is slower than Dynamic NAT","Dynamic NAT is used in homes, PAT in enterprises"], ans:1},
+  {q:"An attacker modifies the /etc/hosts file on your device. What attack is this?", opts:["DNS Cache Poisoning","Port Scanning","Host File Poisoning","NAT Traversal Attack"], ans:2},
+  {q:"In DNS, what is the difference between the Recursive Resolver and the Authoritative Name Server?", opts:["Both do the same job","Recursive Resolver finds the answer by asking others, Authoritative has the real answer","Authoritative Resolver asks others, Recursive has the real answer","Recursive Resolver only checks cache"], ans:1},
+  {q:"Which layer of the OSI model does NAT operate at?", opts:["Layer 2","Layer 3","Layer 4","Layer 5"], ans:1},
+  {q:"A device behind NAT tries to host a game server. Players outside cannot connect. Why?", opts:["NAT blocks all UDP traffic","NAT breaks end-to-end connectivity — outside devices cannot reach inside directly","The game uses IPv6","TTL is too low"], ans:1},
+  {q:"What is the purpose of NAT Helpers?", opts:["Speed up NAT translation","Fix protocols like FTP that embed IPs inside data","Replace the translation table","Assign public IPs automatically"], ans:1},
+  {q:"A DNS record has TTL=0. What does this mean?", opts:["The record never expires","The record should never be cached","The domain is deleted","The server is offline"], ans:1},
+  {q:"Which statement about the Root Server is correct?", opts:["There is only one Root Server in the world","Root Servers know the final IP of every domain","Root Servers refer resolvers to TLD servers but don't know final IPs","Root Servers only work with IPv6"], ans:2},
+  {q:"An organization wants employees' internet traffic to be traceable to individual users. Which NAT type helps most?", opts:["PAT because it uses ports","Static NAT because each user has a unique public IP","Dynamic NAT because IPs rotate","No NAT — direct public IPs only"], ans:1},
+  {q:"Why is PAT also called 'NAT Overload'?", opts:["It overloads the CPU","It overloads the translation table","It allows one public IP to handle many connections — overloading one IP with many sessions","It overloads the DNS server"], ans:2},
+  {q:"A packet arrives at the NAT router with Destination 200.24.5.8:62005 but no matching entry exists in the translation table. What happens?", opts:["NAT creates a new entry automatically","The packet is forwarded to all internal devices","The packet is dropped","NAT asks the DNS server"], ans:2},
+  {q:"Which of these is NOT a benefit of DNS caching?", opts:["Reduces DNS server load","Speeds up repeated lookups","Prevents IP changes from propagating quickly","Reduces network traffic"], ans:2},
+  {q:"In cybersecurity, why is knowing NAT types important for penetration testers?", opts:["NAT types determine encryption strength","NAT type affects whether direct connections can be made to internal devices","NAT types determine TTL values","NAT types affect DNS records"], ans:1},
+  {q:"A resolver gets a response from the TLD server. What does the TLD server's response contain?", opts:["The final IP address","The address of the Authoritative Name Server for the domain","The cached result","A list of all Root Servers"], ans:1},
+  {q:"Which combination correctly describes PAT?", opts:["One-to-one mapping, fixed, uses IP pool","Many private IPs → one public IP, uses port numbers, most common type","Many private IPs -> pool of public IPs, no ports used","One private IP -> many public IPs"], ans:1},
+];
+
+const ch2Qs = [
+  {q: "A company needs a subnet for exactly 60 hosts within 192.168.50.0/24. What is the minimum (tightest) prefix length that satisfies this?", hint: "Formula: 2ⁿ − 2 ≥ required hosts. Find smallest n, then prefix = 32 − n", opts: ["/25 (126 hosts)", "/26 (62 hosts)", "/27 (30 hosts)", "/28 (14 hosts)"], ans: 1},
+  {q: "Network 10.0.0.0/24 is subnetted with /26 masks. How many subnets are created, and how many usable hosts does each have?", hint: "Borrowed bits = 26 − 24 = 2. Subnets = 2² = 4. Hosts = 2⁶−2 = 62", opts: ["2 subnets, 126 hosts each", "4 subnets, 62 hosts each", "8 subnets, 30 hosts each", "4 subnets, 64 hosts each"], ans: 1},
+  {q: "Given subnet 192.168.1.128/26 — what are the Network Address, Broadcast Address, and usable host range?", hint: "Block size = 2⁶ = 64. Net = .128, BC = .128+64-1 = .191", opts: ["Net: .128 | BC: .191 | Hosts: .129–.190", "Net: .128 | BC: .192 | Hosts: .129–.191", "Net: .128 | BC: .255 | Hosts: .129–.254", "Net: .0 | BC: .127 | Hosts: .1–.126"], ans: 0},
+  {q: "You have 172.16.0.0/16 and need subnets each supporting at least 500 hosts. What prefix length gives the minimum fit?", hint: "2⁹-2 = 510 >= 500. Host bits = 9. Prefix = 32-9 = /23", opts: ["/22 (1022 hosts)", "/23 (510 hosts)", "/24 (254 hosts)", "/25 (126 hosts)"], ans: 1},
+  {q: "Which of the following is a valid usable host address in subnet 10.0.0.192/27?", hint: "Block size = 32. Range = .192 to .223. Usable = .193 to .222", opts: ["10.0.0.192 (Net)", "10.0.0.210 (Host)", "10.0.0.223 (BC)", "10.0.0.224 (Next)"], ans: 1},
+  {q: "Four /24 networks (192.168.4.0 to .7.0) summarized into a single block. What is the route?", hint: "Total 4 * 256 = 1024 addresses = 2¹⁰. Prefix = 32-10 = /22", opts: ["192.168.4.0/22", "192.168.4.0/23", "192.168.0.0/22", "192.168.4.0/21"], ans: 0},
+  {q: "Summarize 10.0.0.0/25, 10.0.0.128/26, and 10.0.0.192/26.", hint: ".0-127, .128-191, .192-255 combined = .0-255 = 256 = 2⁸. Prefix = /24", opts: ["10.0.0.0/23", "10.0.0.0/24", "10.0.0.0/25", "10.0.0.128/25"], ans: 1},
+  {q: "Case Study: Company assigned 192.168.10.0/24. Engineering needs ~100 hosts. What is the assigned subnet?", hint: "Dr. Islam Zakaria Lec 2: (2⁷-2)=126 usable hosts needed. Mask is /25 (32-7)", opts: ["192.168.10.0/24", "192.168.10.0/25", "192.168.10.128/25", "192.168.10.0/26"], ans: 1},
+  {q: "Case Study: Eng and Sales (/26) assigned. Admin needs ~25 hosts starting at .192. What is the subnet?", hint: "Dr. Islam Zakaria Lec 2: (2⁵-2)=30 hosts. Prefix /27 starts at .192", opts: ["192.168.10.192/26", "192.168.10.0/27", "192.168.10.192/27", "192.168.10.192/28"], ans: 2},
+  {q: "Problem: A company needs 300 host addresses. If they used Class B (/16), how many addresses would be wasted?", hint: "Dr. Islam Zakaria Lec 2: Class B provides 65,534 hosts. 65,534 - 300 = 65,234 wasted", opts: ["~254", "~65,000+", "~16,000,000", "~300"], ans: 1},
+  {q: "Subnetting Problem: You borrow 3 bits from a /24 network. How many subnets are created and what is the new CIDR mask?", hint: "Borrowed bits = 3. Subnets = 2³ = 8. Mask = 24 + 3 = /27", opts: ["4 subnets, /26", "8 subnets, /27", "16 subnets, /28", "8 subnets, /26"], ans: 1},
+  {q: "Calculation: A network has the prefix /29. How many usable host addresses are available per subnet?", hint: "Host bits = 32 - 29 = 3. Usable hosts = 2³ - 2 = 6", opts: ["2", "6", "14", "30"], ans: 1},
+  {q: "Subnet Range: For the network 172.16.0.0/22, what is the block size in the third octet and the broadcast address of the first subnet?", hint: "32 - 22 = 10 host bits. Third octet block size = 2^(10-8) = 4. Range: 172.16.0.0 to 172.16.3.255", opts: ["Block size 2, BC .1.255", "Block size 4, BC .3.255", "Block size 8, BC .7.255", "Block size 1, BC .0.255"], ans: 1},
+  {q: "CIDR Aggregation: Summarize 192.168.0.0/24 and 192.168.1.0/24.", hint: "Total addresses = 2 * 256 = 512 = 2⁹. Prefix = 32 - 9 = /23", opts: ["192.168.0.0/23", "192.168.0.0/22", "192.168.1.0/23", "192.168.0.0/25"], ans: 0},
+  {q: "Usable Host Problem: If you need a subnet for 10 hosts, what is the tightest prefix length possible?", hint: "2ⁿ - 2 >= 10. smallest n is 4 (16-2=14). Prefix = 32 - 4 = /28", opts: ["/27", "/28", "/29", "/30"], ans: 1},
+];
+
+const sections = {
+  easy:   { qs: easyQs,   answered: {}, correct: 0, built: false },
+  medium: { mediumQs, qs: mediumQs, answered: {}, correct: 0, built: false },
+  hard:   { qs: hardQs,  answered: {}, correct: 0, built: false },
+  ch2:    { qs: ch2Qs,   answered: {}, correct: 0, built: false },
+};
+const letters = ['A','B','C','D'];
+let currentTab = 'easy';
+
+function getGrade(pct) {
+  if (pct >= 90) return 'A+';
+  if (pct >= 85) return 'A';
+  if (pct >= 80) return 'B+';
+  if (pct >= 75) return 'B';
+  if (pct >= 70) return 'C+';
+  if (pct >= 65) return 'C';
+  if (pct >= 60) return 'D+';
+  if (pct >= 50) return 'D';
+  return 'F';
+}
+
+function toggleHint(tab, idx) {
+    const el = document.getElementById(`${tab}-hint-${idx}`);
+    el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+}
+
+function updateProgress(tab) {
+  const sec = sections[tab];
+  const total = sec.qs.length;
+  const count = Object.keys(sec.answered).length;
+  const pct = Math.round(count / total * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-fill').className = 'progress-fill ' + tab;
+  document.getElementById('prog-text').textContent = count + ' / ' + total + ' answered';
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-pct').className = 'progress-pct ' + tab;
+}
+
+function buildSection(tab) {
+  const sec = sections[tab];
+  if (sec.built) return;
+  sec.built = true;
+  const container = document.getElementById(tab + '-container');
+  sec.qs.forEach((item, i) => {
+    const globalNum = tab === 'easy' ? i+1 : tab === 'medium' ? i+26 : tab === 'hard' ? i+61 : i+1;
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = tab + '-card-' + i;
+
+    const hintHtml = (tab === 'ch2' && item.hint) ? `
+        <div class="hint-container">
+            <button class="hint-btn" onclick="toggleHint('${tab}', ${i})">💡 Show Hint</button>
+            <div class="hint-content" id="${tab}-hint-${i}">${item.hint}</div>
+        </div>
+    ` : '';
+
+    const opts = item.opts.map((o, j) => `
+      <label class="option" id="${tab}-opt-${i}-${j}" onclick="selectOpt('${tab}',${i},${j})">
+        <input type="radio" name="${tab}-${i}" value="${j}">
+        <div class="option-dot"></div>
+        <span class="option-letter">${letters[j]})</span>
+        <span class="option-text">${o}</span>
+      </label>`).join('');
+    card.innerHTML = `
+      <div class="q-header">
+        <span class="q-badge">${globalNum}</span>
+        <span class="q-text">${item.q}</span>
+      </div>
+      <div class="options">${opts}</div>
+      ${hintHtml}
+      <div class="q-feedback" id="${tab}-fb-${i}"></div>`;
+    container.appendChild(card);
+  });
+}
+
+function selectOpt(tab, qi, oi) {
+  const sec = sections[tab];
+  if (sec.answered[qi] !== undefined) return;
+  sec.answered[qi] = oi;
+  const item = sec.qs[qi];
+  document.getElementById(`${tab}-opt-${qi}-${oi}`).classList.add('selected');
+  updateProgress(tab);
+
+  // reveal
+  const card = document.getElementById(tab + '-card-' + qi);
+  const fb = document.getElementById(tab + '-fb-' + qi);
+  item.opts.forEach((_, j) => {
+    const opt = document.getElementById(`${tab}-opt-${qi}-${j}`);
+    opt.style.pointerEvents = 'none';
+    if (j === item.ans) opt.classList.add('correct-opt');
+    else if (j === oi && oi !== item.ans) { opt.classList.add('wrong-opt'); opt.classList.remove('selected'); }
+  });
+  if (oi === item.ans) {
+    sec.correct++;
+    card.classList.add('correct-card');
+    fb.textContent = '✓ Correct!';
+    fb.className = 'q-feedback show-correct';
+  } else {
+    card.classList.add('wrong-card');
+    fb.textContent = '✗ Incorrect — correct: ' + letters[item.ans] + ') ' + item.opts[item.ans];
+    fb.className = 'q-feedback show-wrong';
+  }
+  updateScoreCard(tab);
+}
+
+function updateScoreCard(tab) {
+  const sec = sections[tab];
+  const total = sec.qs.length;
+  const totalAns = Object.keys(sec.answered).length;
+  const pct = totalAns > 0 ? Math.round(sec.correct / totalAns * 100) : 0;
+  document.getElementById('score-' + tab).style.display = 'block';
+  document.getElementById('score-pct-' + tab).textContent = pct + '%';
+  document.getElementById('score-sub-' + tab).textContent = sec.correct + ' correct out of ' + totalAns + ' answered';
+  document.getElementById('score-grade-' + tab).textContent = getGrade(pct);
+  document.getElementById('score-correct-' + tab).textContent = sec.correct + ' / ' + totalAns;
+  document.getElementById('score-acc-' + tab).textContent = totalAns > 0 ? pct + '% accuracy' : '—';
+  document.getElementById('score-skip-' + tab).textContent = total - totalAns;
+}
+
+function submitSection(tab) {
+  document.getElementById('score-' + tab).scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetSection(tab) {
+  const sec = sections[tab];
+  sec.answered = {};
+  sec.correct = 0;
+  sec.built = false;
+  document.getElementById(tab + '-container').innerHTML = '';
+  document.getElementById('score-' + tab).style.display = 'none';
+  buildSection(tab);
+  updateProgress(tab);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.tab-btn.${tab}`).classList.add('active');
+  buildSection(tab);
+  updateProgress(tab);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.addEventListener('scroll', () => {
+  document.getElementById('scroll-btn').classList.toggle('visible', window.scrollY > 400);
+});
+
+// init
+buildSection('easy');
+updateProgress('easy');
+</script>
+</body>
+</html>
