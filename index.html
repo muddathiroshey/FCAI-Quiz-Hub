@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capital University — Quiz Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0f172a;
+  --ink-soft: #334155;
+  --ink-muted: #64748b;
+  --paper: #f8fafc;
+  --paper-warm: #f1f5f9;
+  --paper-card: #ffffff;
+  --accent: #0f766e;
+  --accent-light: #ccfbf1;
+  --accent-deep: #115e59;
+  --gold: #b45309;
+  --gold-light: #fef3c7;
+  --indigo: #4338ca;
+  --indigo-light: #e0e7ff;
+  --rose: #be123c;
+  --rose-light: #ffe4e6;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --shadow-sm: 0 1px 3px rgba(15,23,42,0.06);
+  --shadow-md: 0 4px 16px rgba(15,23,42,0.10);
+  --shadow-lg: 0 12px 40px rgba(15,23,42,0.14);
+  --radius: 12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--ink);
+  color: white;
+  padding: 64px 40px 56px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55% 90% at 90% 40%, rgba(15,118,110,0.2) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 60% at 5% 85%,  rgba(180,83,9,0.13) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 50% at 50% 0%,  rgba(67,56,202,0.1) 0%, transparent 55%);
+}
+/* subtle grid overlay */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.hero-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: #99f6e4;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: #99f6e4;
+}
+.hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(28px, 5vw, 46px);
+  line-height: 1.12;
+  margin-bottom: 10px;
+  color: #fff;
+}
+.hero-title em {
+  font-style: italic;
+  color: #99f6e4;
+}
+.hero-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.45);
+  font-weight: 300;
+  max-width: 480px;
+}
+
+/* ── GRID ── */
+.grid-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 52px 40px 80px;
+}
+
+.grid-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.grid-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--paper-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 26px 24px;
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow .22s, border-color .22s, transform .22s;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--card-accent, var(--accent));
+  border-radius: var(--radius) var(--radius) 0 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s cubic-bezier(.4,0,.2,1);
+}
+.card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+.card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 18px;
+  flex-shrink: 0;
+  background: var(--card-icon-bg, var(--accent-light));
+  color: var(--card-icon-color, var(--accent));
+}
+
+.card-course {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 6px;
+}
+
+.card-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.card-doctor {
+  font-size: 12.5px;
+  color: var(--ink-muted);
+  margin-bottom: 18px;
+  font-weight: 400;
+}
+
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 22px;
+}
+.chip {
+  font-size: 11.5px;
+  padding: 3px 9px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--paper-warm);
+  color: var(--ink-muted);
+  font-family: 'DM Mono', monospace;
+  white-space: nowrap;
+}
+
+.card-cta {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--card-accent, var(--accent));
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  transition: gap .2s;
+}
+.card:hover .card-cta { gap: 10px; }
+.card-cta svg {
+  width: 14px; height: 14px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+.card:hover .card-cta svg { transform: translateX(3px); }
+
+/* ── FOOTER NOTE ── */
+.footer-note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink-muted);
+  padding: 0 40px 48px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: .04em;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .hero { padding: 48px 24px 44px; }
+  .grid-wrap { padding: 40px 20px 60px; }
+  .cards { grid-template-columns: 1fr; }
+  .footer-note { padding: 0 20px 40px; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Capital University &mdash; CS &amp; Accounting</div>
+    <h1 class="hero-title">Course <em>Quiz Hub</em></h1>
+    <p class="hero-sub">Pick a course below to start practicing. Each quiz bank is organized by lecture with multiple choice and true/false questions.</p>
+  </div>
+</header>
+
+<main class="grid-wrap">
+  <div class="grid-label">Available courses</div>
+
+  <div class="cards">
+
+    <!-- SE-1 -->
+    <a class="card" href="SE-1_test.html" style="--card-accent:#0f766e; --card-icon-bg:#ccfbf1; --card-icon-color:#0f766e;">
+      <div class="card-icon">SE</div>
+      <div class="card-course">CS251</div>
+      <div class="card-title">Software Engineering 1</div>
+      <div class="card-doctor">Dr. Amr S. Ghoneim</div>
+      <div class="card-meta">
+        <span class="chip">11 lectures</span>
+        <span class="chip">550 questions</span>
+        <span class="chip">MC + T/F</span>
+      </div>
+      <div class="card-cta">
+        Open quiz
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+    <!-- OS-1 -->
+    <a class="card" href="OS-1_test.html" style="--card-accent:#4338ca; --card-icon-bg:#e0e7ff; --card-icon-color:#4338ca;">
+      <div class="card-icon">OS</div>
+      <div class="card-course">CS — Operating Systems</div>
+      <div class="card-title">Operating Systems 1</div>
+      <div class="card-doctor">Capital University</div>
+      <div class="card-meta">
+        <span class="chip">Lectures</span>
+        <span class="chip">MC + T/F</span>
+      </div>
+      <div class="card-cta">
+        Open quiz
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+    <!-- Accounting -->
+    <a class="card" href="accounting_test.html" style="--card-accent:#b45309; --card-icon-bg:#fef3c7; --card-icon-color:#b45309;">
+      <div class="card-icon">AC</div>
+      <div class="card-course">Accounting Principles 1</div>
+      <div class="card-title">Accounting</div>
+      <div class="card-doctor">Dr. Hamdy Habl</div>
+      <div class="card-meta">
+        <span class="chip">Ch. 1–2</span>
+        <span class="chip">MC + T/F</span>
+      </div>
+      <div class="card-cta">
+        Open quiz
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+    <!-- Networks-1 -->
+    <a class="card" href="networks_test.html" style="--card-accent:#be123c; --card-icon-bg:#ffe4e6; --card-icon-color:#be123c;">
+      <div class="card-icon">CN</div>
+      <div class="card-course">Computer Networks 1</div>
+      <div class="card-title">Networks 1</div>
+      <div class="card-doctor">Dr. Islam Zakaria</div>
+      <div class="card-meta">
+        <span class="chip">90 questions</span>
+        <span class="chip">Subnetting</span>
+        <span class="chip">MC + T/F</span>
+      </div>
+      <div class="card-cta">
+        Open quiz
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+
+  </div>
+</main>
+
+<p class="footer-note">Capital University &mdash; Study tools &mdash; Not an official university resource</p>
+
+</body>
+</html>
