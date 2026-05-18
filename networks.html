@@ -342,6 +342,49 @@
     .score-card { padding: 24px 20px; }
     .score-big { font-size: 40px; }
   }
+
+  /* Theme toggle and dark-mode overrides */
+  #theme-toggle { position:absolute; top:16px; right:18px; z-index:20; padding:8px 10px; border-radius:8px; cursor:pointer; background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.06); }
+  [data-theme="dark"] {
+    --ink: #e2e8f0;
+    --ink-soft: #cbd5e1;
+    --ink-muted: #94a3b8;
+    --paper: #0f172a;
+    --paper-warm: #1e293b;
+    --paper-card: #1e293b;
+    --accent: #60a5fa;
+    --accent-light: #1e3a5f;
+    --accent-deep: #3b82f6;
+    --gold: #fbbf24;
+    --gold-light: #2d2010;
+    --success: #4ade80;
+    --success-light: #052e16;
+    --danger: #f87171;
+    --danger-light: #2d0707;
+    --border: #334155;
+    --border-strong: #475569;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+    --shadow-lg: 0 12px 40px rgba(0,0,0,0.5);
+  }
+  /* Keep header appearance unchanged in dark mode */
+  [data-theme="dark"] .hero{background:#020617;color:white}
+  [data-theme="dark"] .hero .hero-sub{color:rgba(255,255,255,0.45)}
+  /* Keep answered question cards dark in dark mode */
+  [data-theme="dark"] .q-card.correct-card{border-color:rgba(134,239,172,0.12);background:var(--paper-card)}
+  [data-theme="dark"] .q-card.wrong-card{border-color:rgba(248,113,113,0.12);background:var(--paper-card)}
+  [data-theme="dark"] .q-badge{background:var(--accent);color:#ffffff;border-color:rgba(255,255,255,0.08)}
+  /* Tabs and progress bar match dark theme */
+  [data-theme="dark"] .tabs-wrap, [data-theme="dark"] .tabs-inner{background:var(--paper);border-bottom-color:var(--border);box-shadow:none}
+  [data-theme="dark"] .tab-btn{color:var(--ink-soft)}
+  [data-theme="dark"] .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+  [data-theme="dark"] .progress-wrap{background:var(--paper);border-bottom-color:var(--border);box-shadow:none}
+  [data-theme="dark"] .progress-track{background:rgba(255,255,255,0.03)}
+  [data-theme="dark"] .score-card{background:#020617;color:white}
+  [data-theme="dark"] .score-card::before{background:radial-gradient(ellipse 70% 80% at 90% 40%, rgba(59,130,246,0.18) 0%, transparent 65%)}
+  [data-theme="dark"] .score-section{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.08)}
+  /* Dark-mode for hint / explain content */
+  [data-theme="dark"] .hint-content{background:var(--paper-card);border-left:3px solid var(--gold);color:var(--ink-soft)}
 </style>
 </head>
 <body>
@@ -360,6 +403,7 @@
     </div>
     <div class="hero-disclaimer">⚠ Disclaimer: <span>All questions were answerd by Gemini AI.</span></div>
   </div>
+  <button id="theme-toggle">🌙</button>
 </header>
 
 <div class="tabs-wrap">
@@ -837,6 +881,19 @@ window.addEventListener('scroll', () => {
 // init
 buildSection('easy');
 updateProgress('easy');
+</script>
+
+<script>
+;(function(){
+  const key = 'fchai_theme';
+  const el = document.documentElement;
+  const btn = document.getElementById('theme-toggle');
+  function set(theme){ if(theme==='dark'){ el.setAttribute('data-theme','dark'); btn.textContent='☀️'; } else { el.removeAttribute('data-theme'); btn.textContent='🌙'; } }
+  let stored = localStorage.getItem(key);
+  if(!stored) stored = 'light';
+  set(stored);
+  btn.addEventListener('click', function(){ const now = el.getAttribute('data-theme')==='dark' ? 'light' : 'dark'; localStorage.setItem(key, now); set(now); });
+})();
 </script>
 </body>
 </html>

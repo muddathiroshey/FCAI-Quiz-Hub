@@ -277,16 +277,61 @@ body {
   .cards { grid-template-columns: 1fr; }
   .footer-note { padding: 0 20px 40px; }
 }
+
+/* Theme toggle styles and dark-mode variable overrides */
+#theme-toggle {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  z-index: 20;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+[data-theme="dark"] {
+  --ink: #e2e8f0;
+  --ink-soft: #cbd5e1;
+  --ink-muted: #94a3b8;
+  --paper: #0f172a;
+  --paper-warm: #1e293b;
+  --paper-card: #1e293b;
+  --accent: #60a5fa;
+  --accent-light: #1e3a5f;
+  --accent-deep: #3b82f6;
+  --gold: #fbbf24;
+  --gold-light: #2d2010;
+  --success: #4ade80;
+  --success-light: #052e16;
+  --danger: #f87171;
+  --danger-light: #2d0707;
+  --border: #334155;
+  --border-strong: #475569;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.5);
+}
+[data-theme="dark"] .hero{background:#020617;color:white}
+[data-theme="dark"] .hero .hero-sub{color:rgba(255,255,255,0.45)}
+[data-theme="dark"] .card{background:var(--paper-card);border-color:var(--border)}
+[data-theme="dark"] .card .chip{background:var(--paper-warm);border-color:var(--border);color:var(--ink-muted)}
+[data-theme="dark"] .card-cta{border-top-color:var(--border)}
+[data-theme="dark"] .progress-wrap{background:var(--paper);border-bottom-color:var(--border);box-shadow:none}
+[data-theme="dark"] .progress-track{background:rgba(255,255,255,0.03)}
+[data-theme="dark"] .progress-fill{background:linear-gradient(90deg,var(--accent),var(--gold))}
 </style>
 </head>
 <body>
 
 <header class="hero">
   <div class="hero-inner">
-    <div class="hero-eyebrow">Capital University &mdash; CS &amp; Accounting</div>
+    <div class="hero-eyebrow">Capital University &mdash; Faculty of Computing &amp; Artificial Intelligence</div>
     <h1 class="hero-title">Course <em>Quiz Hub</em></h1>
     <p class="hero-sub">Pick a course below to start practicing. Each quiz bank is organized by lecture with multiple choice and true/false questions.</p>
   </div>
+  <button id="theme-toggle" aria-label="Toggle theme">🌙</button>
 </header>
 
 <main class="grid-wrap">
@@ -311,6 +356,27 @@ body {
       </div>
     </a>
 
+    <script>
+    ;(function(){
+      const key = 'fchai_theme';
+      const el = document.documentElement;
+      const btn = document.getElementById('theme-toggle');
+      function set(theme){
+        if(theme === 'dark'){ el.setAttribute('data-theme','dark'); btn.textContent = '☀️'; }
+        else { el.removeAttribute('data-theme'); btn.textContent = '🌙'; }
+      }
+      let stored = localStorage.getItem(key);
+      if(!stored){ stored = 'light'; }
+      set(stored);
+      btn.addEventListener('click', function(){
+        const now = el.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        localStorage.setItem(key, now);
+        set(now);
+      });
+    })();
+    </script>
+    
+    </body>
     <!-- Accounting -->
     <a class="card" href="accounting.html" style="--card-accent:#b45309; --card-icon-bg:#fef3c7; --card-icon-color:#b45309;">
       <div class="card-icon">AC</div>
