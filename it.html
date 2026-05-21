@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT 223 — Internet Technology Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0e1117;
+  --ink-soft: #2d3340;
+  --ink-muted: #6b7480;
+  --paper: #f5f0eb;
+  --paper-warm: #ede8e1;
+  --paper-card: #faf8f5;
+  --accent: #c05f0a;
+  --accent-light: #fdecd8;
+  --accent-deep: #8f4407;
+  --teal: #0f766e;
+  --teal-light: #ccfbf1;
+  --success: #166534;
+  --success-light: #dcfce7;
+  --danger: #991b1b;
+  --danger-light: #fee2e2;
+  --border: #ddd6cc;
+  --border-strong: #c5bdb2;
+  --shadow-sm: 0 1px 3px rgba(14,17,23,0.07);
+  --shadow-md: 0 4px 20px rgba(14,17,23,0.10);
+  --shadow-lg: 0 12px 48px rgba(14,17,23,0.14);
+  --radius: 12px;
+  --radius-sm: 7px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* HERO */
+.hero {
+  background: var(--ink);
+  color: white;
+  padding: 60px 40px 52px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 92% 40%, rgba(192,95,10,0.22) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 5% 90%, rgba(15,118,110,0.12) 0%, transparent 55%);
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 300px; height: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 18px,
+    rgba(192,95,10,0.05) 18px,
+    rgba(192,95,10,0.05) 19px
+  );
+}
+.hero-inner { max-width: 920px; margin: 0 auto; position: relative; z-index: 1; }
+.hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+  color: #fdba74; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: #fdba74; }
+.hero-title {
+  font-family: 'Lora', serif;
+  font-size: clamp(30px, 5.5vw, 50px);
+  line-height: 1.12; margin-bottom: 10px; color: #fff; font-weight: 600;
+}
+.hero-title em { font-style: italic; color: #fb923c; }
+.hero-sub { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 28px; font-weight: 300; max-width: 500px; }
+.hero-stats { display: flex; gap: 28px; flex-wrap: wrap; }
+.stat { display: flex; flex-direction: column; gap: 2px; }
+.stat-num { font-family: 'Lora', serif; font-size: 30px; color: white; line-height: 1; font-weight: 600; }
+.stat-label { font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: .1em; }
+
+/* TABS */
+.tabs-wrap {
+  background: var(--paper-card);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+.tabs-inner {
+  max-width: 920px; margin: 0 auto;
+  display: flex; align-items: stretch; overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs-inner::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex: 1; padding: 0 18px; height: 50px;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600;
+  color: var(--ink-muted); cursor: pointer; border: none; background: transparent;
+  border-bottom: 2.5px solid transparent; transition: all .2s; white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ink); background: var(--paper-warm); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); opacity: .5; flex-shrink: 0; }
+.tab-btn.active .tab-dot { opacity: 1; }
+
+/* PROGRESS */
+.progress-wrap {
+  background: var(--paper-warm);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 40px;
+  position: sticky; top: 50px; z-index: 99;
+}
+.progress-inner { max-width: 920px; margin: 0 auto; display: flex; align-items: center; gap: 14px; }
+.progress-text { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-muted); white-space: nowrap; min-width: 120px; }
+.progress-track { flex: 1; height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.progress-fill {
+  height: 100%; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), #f97316);
+  transition: width .4s cubic-bezier(.4,0,.2,1); width: 0%;
+}
+.progress-pct { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); font-weight: 600; min-width: 36px; text-align: right; }
+
+/* MAIN */
+.main { max-width: 920px; margin: 0 auto; padding: 36px 40px 80px; }
+.section-panel { display: none; }
+.section-panel.active { display: block; }
+
+.chapter-header { margin-bottom: 26px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+.chapter-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); margin-bottom: 6px; }
+.chapter-title { font-family: 'Lora', serif; font-size: 26px; color: var(--ink); font-weight: 600; }
+.chapter-meta { font-size: 12px; color: var(--ink-muted); margin-top: 6px; }
+
+.q-card {
+  background: var(--paper-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .2s, border-color .2s;
+}
+.q-card:hover { box-shadow: var(--shadow-md); }
+.q-card.correct-card { border-color: #86efac; background: #f0fdf4; }
+.q-card.wrong-card { border-color: #fca5a5; background: #fff5f5; }
+
+.q-header { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px; }
+.q-badge {
+  background: var(--ink); color: white;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600;
+  padding: 3px 8px; border-radius: 4px; flex-shrink: 0; margin-top: 3px;
+}
+.q-text { font-size: 14.5px; color: var(--ink); line-height: 1.65; }
+
+.options { display: flex; flex-direction: column; gap: 7px; }
+.option {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 9px 14px; border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); cursor: pointer; transition: all .15s;
+  user-select: none;
+}
+.option:hover { border-color: var(--accent); background: var(--accent-light); }
+.option input[type=radio] { display: none; }
+.option-dot {
+  width: 17px; height: 17px; border: 1.5px solid var(--border-strong);
+  border-radius: 50%; flex-shrink: 0; margin-top: 2px;
+  display: flex; align-items: center; justify-content: center; transition: all .15s;
+}
+.option-dot::after {
+  content: ''; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent); opacity: 0; transition: opacity .15s;
+}
+.option.selected { border-color: var(--accent); background: var(--accent-light); }
+.option.selected .option-dot { border-color: var(--accent); }
+.option.selected .option-dot::after { opacity: 1; }
+.option.correct-opt { border-color: var(--success); background: var(--success-light); pointer-events: none; }
+.option.correct-opt .option-dot { border-color: var(--success); }
+.option.correct-opt .option-dot::after { opacity: 1; background: var(--success); }
+.option.correct-opt .option-text { color: var(--success); font-weight: 500; }
+.option.correct-opt .option-letter { color: var(--success); }
+.option.wrong-opt { border-color: var(--danger); background: var(--danger-light); pointer-events: none; }
+.option.wrong-opt .option-dot { border-color: var(--danger); }
+.option.wrong-opt .option-dot::after { opacity: 1; background: var(--danger); }
+.option.wrong-opt .option-text { color: var(--danger); }
+.option.wrong-opt .option-letter { color: var(--danger); }
+.option-letter { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--ink-muted); margin-top: 3px; flex-shrink: 0; min-width: 14px; }
+.option-text { font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
+
+.q-feedback { display: none; margin-top: 9px; font-size: 12px; font-weight: 600; padding: 5px 11px; border-radius: 4px; width: fit-content; font-family: 'JetBrains Mono', monospace; }
+.q-feedback.show-correct { display: block; background: var(--success-light); color: var(--success); }
+.q-feedback.show-wrong { display: block; background: var(--danger-light); color: var(--danger); }
+
+.actions { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--accent); color: white; border: none;
+  padding: 12px 28px; border-radius: var(--radius-sm);
+  font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: background .15s, transform .1s;
+  box-shadow: 0 2px 8px rgba(192,95,10,.25);
+}
+.btn-primary:hover { background: var(--accent-deep); transform: translateY(-1px); }
+.btn-secondary {
+  background: var(--paper-card); color: var(--ink-soft); border: 1.5px solid var(--border-strong);
+  padding: 12px 24px; border-radius: var(--radius-sm);
+  font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: all .15s;
+}
+.btn-secondary:hover { border-color: var(--ink-soft); color: var(--ink); background: var(--paper-warm); }
+
+.score-card {
+  display: none; background: var(--ink); color: white;
+  border-radius: var(--radius); padding: 28px 32px; margin-top: 32px;
+  position: relative; overflow: hidden; box-shadow: var(--shadow-lg);
+}
+.score-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 80% at 88% 40%, rgba(192,95,10,0.28) 0%, transparent 65%);
+}
+.score-card-inner { position: relative; }
+.score-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-bottom: 24px; }
+.score-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .16em; color: rgba(255,255,255,.4); margin-bottom: 5px; }
+.score-big { font-family: 'Lora', serif; font-size: 50px; line-height: 1; color: white; font-weight: 600; }
+.score-sub { font-size: 13px; color: rgba(255,255,255,.5); margin-top: 3px; }
+.score-grade { font-family: 'Lora', serif; font-size: 38px; color: #fb923c; line-height: 1; font-weight: 600; }
+.score-breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+.score-section { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: var(--radius-sm); padding: 12px 14px; }
+.score-section-label { font-size: 10px; color: rgba(255,255,255,.4); margin-bottom: 3px; text-transform: uppercase; letter-spacing: .1em; font-family: 'JetBrains Mono', monospace; }
+.score-section-val { font-family: 'Lora', serif; font-size: 20px; color: white; font-weight: 600; }
+.score-section-pct { font-size: 11px; color: rgba(255,255,255,.4); margin-top: 1px; }
+
+.scroll-top {
+  position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px;
+  background: var(--ink); color: white; border: none; border-radius: 50%;
+  font-size: 17px; cursor: pointer; box-shadow: var(--shadow-md);
+  opacity: 0; transition: opacity .3s; z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+}
+.scroll-top.visible { opacity: 1; }
+.scroll-top:hover { background: var(--accent); }
+
+#theme-toggle { position: absolute; top: 16px; right: 18px; z-index: 20; padding: 8px 10px; border-radius: 8px; cursor: pointer; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); font-size: 16px; }
+
+[data-theme="dark"] {
+  --ink: #e8e3dc;
+  --ink-soft: #ccc5bb;
+  --ink-muted: #8a8278;
+  --paper: #121010;
+  --paper-warm: #1a1714;
+  --paper-card: #1e1b17;
+  --accent: #f97316;
+  --accent-light: #2a1a0a;
+  --accent-deep: #fb923c;
+  --success: #4ade80;
+  --success-light: #052e16;
+  --danger: #f87171;
+  --danger-light: #2d0707;
+  --border: #302a24;
+  --border-strong: #3d3530;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.4);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.5);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,.6);
+}
+[data-theme="dark"] .hero { background: #0a0806; }
+[data-theme="dark"] .q-card.correct-card { background: #052e16; border-color: #166534; }
+[data-theme="dark"] .q-card.wrong-card { background: #2d0707; border-color: #991b1b; }
+[data-theme="dark"] .tabs-wrap { background: var(--paper-card); border-bottom-color: var(--border); }
+[data-theme="dark"] .progress-wrap { background: var(--paper); border-bottom-color: var(--border); }
+[data-theme="dark"] .score-card { background: #0a0806; }
+[data-theme="dark"] .btn-secondary { background: var(--paper-card); }
+
+@media (max-width: 620px) {
+  .hero { padding: 40px 20px 34px; }
+  .main { padding: 24px 20px 60px; }
+  .tabs-wrap { top: 0; }
+  .progress-wrap { top: 50px; padding: 10px 20px; }
+  .tab-btn { font-size: 12px; padding: 0 12px; }
+  .q-card { padding: 16px; }
+  .score-card { padding: 22px 18px; }
+  .score-big { font-size: 38px; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Capital University — Information Technology Department</div>
+    <h1 class="hero-title">IT 223 — <em>Internet Technology</em></h1>
+    <p class="hero-sub">Chapters 1–6 · Protocols, Networks, Addressing, Wireless &amp; More · Practice Quiz</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num" id="total-stat">209</span><span class="stat-label">Questions</span></div>
+      <div class="stat"><span class="stat-num">6</span><span class="stat-label">Chapters</span></div>
+      <div class="stat"><span class="stat-num">MC</span><span class="stat-label">Format</span></div>
+    </div>
+  </div>
+  <button id="theme-toggle">🌙</button>
+</header>
+
+<div class="tabs-wrap">
+  <div class="tabs-inner">
+    <button class="tab-btn active" onclick="switchTab('ch1')"><span class="tab-dot"></span>Ch. 1</button>
+    <button class="tab-btn" onclick="switchTab('ch2')"><span class="tab-dot"></span>Ch. 2</button>
+    <button class="tab-btn" onclick="switchTab('ch3')"><span class="tab-dot"></span>Ch. 3</button>
+    <button class="tab-btn" onclick="switchTab('ch4')"><span class="tab-dot"></span>Ch. 4</button>
+    <button class="tab-btn" onclick="switchTab('ch5')"><span class="tab-dot"></span>Ch. 5</button>
+    <button class="tab-btn" onclick="switchTab('ch6')"><span class="tab-dot"></span>Ch. 6</button>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <span class="progress-text" id="prog-text">0 answered</span>
+    <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+    <span class="progress-pct" id="prog-pct">0%</span>
+  </div>
+</div>
+
+<main class="main" id="main-content"></main>
+
+<button class="scroll-top" id="scroll-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const chapters = [
+  {
+    id: 'ch1',
+    title: 'Internet Fundamentals',
+    subtitle: 'IP, TCP, DNS, Web, Protocols & Internet Services',
+    qs: [
+      {q:"IP is ……….",opts:["Extranet Protocol Address","Intranet Protocol","Internet Protocol"],ans:2},
+      {q:"Networks use ………… to exchange information.",opts:["Procedures","Standards","Protocols"],ans:2},
+      {q:"All computers that are connected to networks use ………",opts:["TPC/IP","UPD","TCP/IP"],ans:2},
+      {q:"Networks are classified as ……………..",opts:["Packet Switching","circuit Switching","A&B"],ans:2},
+      {q:"We use a direct physical connection in ……………….",opts:["Circuit-Switched Network","Packet switched network","Internet Protocol"],ans:0},
+      {q:"TCP is …………",opts:["Transfer Control Protocol","Transmission Control Protocol"],ans:1},
+      {q:"In …………… data is divided into small units.",opts:["Packet Switching","circuit Switching","A&B"],ans:0},
+      {q:"Data is divided into small units called ……….",opts:["Datagram","Data frames","Data packets"],ans:2},
+      {q:"…………… refers to a group of networks that are connected to each others",opts:["Intranet","Extranet","Internet"],ans:2},
+      {q:"ARPA created a network called ……….",opts:["APRANet","ARPANet","RAPANet"],ans:1},
+      {q:"…………… refers to the global network of networks refers to a group of networks that are connected to each.",opts:["Intranet","Extranet","Internet"],ans:2},
+      {q:"WWW is …………",opts:["web world wide","world web wide","world wide web"],ans:2},
+      {q:"FTP is …………",opts:["File transmit protocol","file transfer protocol","file transact protocol"],ans:1},
+      {q:"IRC is …………",opts:["Internet Relay Chat","Intranet Relay Chat","Intranet Relay connection"],ans:0},
+      {q:"………………… are technologies that are essential in connecting computers and assigning space on internet.",opts:["DNS","IP","A&B"],ans:2},
+      {q:"DNS is …………….",opts:["Domain Name System","Domain Number system","Domain Net System"],ans:0},
+      {q:"………… must be unique.",opts:["IP","DNS","A&B"],ans:0},
+      {q:"…………………… is a private version of the Internet which have the same architecture as in Internet.",opts:["Intranet","Extranet","Internet"],ans:0},
+      {q:"……………………… is an Intranet for outside authorized users using same internet technology.",opts:["Intranet","Extranet","Internet"],ans:1},
+      {q:"ISP is …………….",opts:["Intranet Service provider","Internet Service Provider","A&B"],ans:1},
+      {q:"…………………… is a protocol making it possible for two remote computers to without having IP address.",opts:["PPP","UPD","TCP/IP"],ans:0},
+      {q:"The main new access technology is …………….",opts:["Digital subscriber line","Wireless internet access","Both"],ans:2},
+      {q:"…………………… is the most common type of DSL, it is asymmetric since downstream is faster than upstream.",opts:["ADSL","VDSL","PPP"],ans:0},
+      {q:"…………………… is a digital subscriber line (DSL) standard approved in 2001.",opts:["ADSL","VDSL","PPP"],ans:1},
+      {q:"…………… is type of Wireless internet access.",opts:["Fixed wireless","Mobile internet access","WAP","All of them"],ans:3},
+      {q:"…………… was the first generation of the Web.",opts:["Web 1.0","Web 2.0","Web 3.0"],ans:0},
+      {q:"…………… was popularized by Tim O'Reilly at the O'Reilly Media in 2004.",opts:["Web 1.0","Web 2.0","Web 3.0"],ans:1},
+      {q:"Apache HTTP Server and Microsoft IIS are two of the world's most popular …………….",opts:["Web servers","Network servers","Data servers"],ans:0},
+      {q:"…………… used to describe the general form and layout of document like Paragraphs, blocks, lists, images, tables.",opts:["Php","HTML","java"],ans:1},
+      {q:"XML is …………….",opts:["Extensible Markup Language","Hypertext Markup Language","Extensible Markup Level"],ans:0},
+      {q:"HTML is …………….",opts:["Hypertext Markup Language","Extensible Markup Language","Hypertext Markup Level"],ans:0},
+      {q:"………………is a meta-markup language that specifies rules for creating markup languages.",opts:["Extensible Markup Language","Hypertext Markup Language","Extensible Markup Level"],ans:0},
+      {q:"…………… provides a standard way to allow the information to be stored and interchanged among any internet-connected devices.",opts:["Extensible Markup Language","Hypertext Markup Language","Extensible Markup Level"],ans:0},
+      {q:"…………………… Consists all HTML 4.0.1 predefined components combined with XML standards.",opts:["javascript","XHTML","PHP"],ans:1},
+      {q:"………………tells the browser how to change the web page in response to events that happen.",opts:["javascript","XHTML","PHP"],ans:0},
+      {q:"One of the functions that Web Server provides is …………….",opts:["Controlling access to the server","Monitoring and logging all access","both of them"],ans:2},
+      {q:"…………… is considered as an Large-Organizational information system.",opts:["intranet","extranet","none of them"],ans:1},
+      {q:"…………………… IS a company provides users/companies access to the Internet.",opts:["ISP","ISS","IPS"],ans:0},
+      {q:"…………………… is responsible for serving pages.",opts:["Server","client","browser"],ans:0},
+      {q:"…………………… displays request pages to the user.",opts:["server","client","browser"],ans:1},
+      {q:"……………………surfs the web and watch videos.",opts:["Isp","programmer","user"],ans:2},
+      {q:"……………………is a task of client side.",opts:["display pages-process input","make interactive pages"],ans:1},
+      {q:"……………………is/are popular server/servers.",opts:["Apache","IIs","Both"],ans:2},
+      {q:"URL protocols include……….",opts:["http","ftp","both"],ans:2},
+      {q:"……………is a web page with a search box.",opts:["URL","IP","search engine"],ans:2},
+      {q:"……………………is the client/server program used to retrieve the document.",opts:["Browser","protocol","HTML"],ans:1},
+      {q:"……………process user input.",opts:["Server","Client","PC"],ans:0},
+      // Book Questions Ch1
+      {q:"The Internet was originally a project for this government agency.",opts:["ARPA","NSF","NSA","FCC"],ans:0},
+      {q:"The Internet is",opts:["Network of networks","Web site","Host","Server"],ans:0},
+      {q:"Which of the following identifies a specific web page and its computer on the Web?",opts:["Web site","Web site address","URL","Domain Name"],ans:2},
+      {q:"Which of the following terms applies to all the web pages for Amazon.com?",opts:["Top-level domain","Web site","Web site address","Web domain"],ans:1},
+      {q:"HTML is a",opts:["Programming Language","Web Browser","Scripting Language","Network Protocol"],ans:2},
+      {q:"Which one of the following is NOT an example of an extension in a URL?",opts:[".gov",".cdu",".npr",".com"],ans:2},
+      {q:"A domain name ending with 'org' is",opts:["A commercial website","A network site","An organization","A site which has very high traffic"],ans:2},
+      {q:"Which of the following is a web server?",opts:["Mozilla Firefox","Postfix","Bind","Apache"],ans:3},
+      {q:"Which of the following is not a scripting language?",opts:["HTML","XML","Postscript","Javascripts"],ans:2},
+      {q:"A computer on the Internet that hosts data that can be accessed by web browsers using HTTP is known as:",opts:["Web Rack","Web Space","Web Computer","Web Server"],ans:3},
+      {q:"The speed of your net access is defined in terms of",opts:["MHz","Megabytes","RAM","Kbps"],ans:3},
+      {q:"ISP stands for",opts:["Integrated Service Provider","Internet Service Provider","Internet Security Protocol","Internet Survey Period"],ans:1},
+      {q:"HTML is used to",opts:["Plot complicated graphs","Solve equations","Author webpages","Translate one language into another"],ans:2},
+      {q:"The first part of a complete URL is the ……… needed to access the web resource.",opts:["address","name","location","protocol"],ans:3},
+    ]
+  },
+  {
+    id: 'ch2',
+    title: 'Network Hardware & Topology',
+    subtitle: 'NIC, Repeaters, Bridges, Routers, Media, LAN/WAN, Protocols',
+    qs: [
+      {q:"The basic requirements that the computer need for sending/receiving data through the internet………",opts:["Channel","Protocol","Address","all them"],ans:3},
+      {q:"………is Computer connected to a network Called clients",opts:["Workstation","NIC","Repeaters"],ans:0},
+      {q:"………given a unique hardware address",opts:["IP","NIC","DNS"],ans:1},
+      {q:"………used to regenerate the signals",opts:["NIC","Repeaters","Bridges"],ans:1},
+      {q:"………do not replicate noise",opts:["Routers","Repeaters","Bridges"],ans:2},
+      {q:"……… determine the best path for sending data",opts:["Routers","Repeaters","Bridges"],ans:0},
+      {q:"……… are used to connect two dissimilar networks",opts:["Routers","Switches","Bridges"],ans:1},
+      {q:"……… use electronics to amplify and clean up the signal before it's broadcast to the other ports",opts:["Bridges","Passive hubs","Active hubs"],ans:2},
+      {q:"……… Can convert data used by one protocol to a format that is compatible with a different protocol",opts:["Routers","hubs","Gateways"],ans:2},
+      {q:"Networks can be classified based on ……… to Wired and Wireless",opts:["transmission media","network geography","Network topology"],ans:0},
+      {q:"………is kind of unguided Transmission Media",opts:["Twisted pair","Coaxial","wireless"],ans:2},
+      {q:"………cables are common for telephone interconnection at home",opts:["Twisted pair","Coaxial","Fiber optic"],ans:0},
+      {q:"……… cables are common for TV cable",opts:["Twisted pair","Coaxial","Fiber optic"],ans:1},
+      {q:"……… cables are made from thin, flexible glass tubing",opts:["Twisted pair","Coaxial","Fiber optic"],ans:2},
+      {q:"………is a computer network covering a small geographic area",opts:["LAN","WAN","MAN"],ans:0},
+      {q:"………is a network that encompasses a city or town",opts:["LAN","WAN","MAN"],ans:2},
+      {q:"………is a computer network that covers a large geographical area",opts:["LAN","WAN","MAN"],ans:1},
+      {q:"WAN is ………",opts:["Wireless Area Network","Wire Area Network","Wide Area Network"],ans:2},
+      {q:"………topology is kind of physical topology",opts:["bus","peer to peer","client/server"],ans:0},
+      {q:"………It consists of a single cable that runs to every workstation in one direction",opts:["Bus Topology","Star Topology","Ring Topology"],ans:0},
+      {q:"In……… topology each node is connected to a central device called a hub",opts:["Bus Topology","Star Topology","Ring Topology"],ans:1},
+      {q:"………… network is composed of two or more self-sufficient computers",opts:["Bus Topology","peer to peer","client/server"],ans:1},
+      {q:"………… network is composed of a server and one or more clients",opts:["Bus Topology","peer to peer","client/server"],ans:2},
+      {q:"………… services the network by storing data",opts:["Client","Server","client/server"],ans:1},
+      {q:"………Is set of rules and procedures for transmitting data between two or more devices",opts:["Services","Protocols","IPs"],ans:1},
+      {q:"NNTP is ………",opts:["Network News Transport Protocol","Network News Transcript Protocol","Network News Transfer Protocol"],ans:2},
+      {q:"………… move a named file from one computer to another",opts:["NNTP","FTP","HTTP"],ans:1},
+      {q:"……… is used to control the flow of data in the network, for reporting error",opts:["ICMP","FTP","ARP"],ans:0},
+      {q:"………is ask a host if it knows about a particular username",opts:["Telnet","Finger","SCP"],ans:1},
+      {q:"………is used when one host needs to send data to many destination hosts",opts:["ICMP","IGMP","ARP"],ans:1},
+      // Book Questions Ch2
+      {q:"A computer communication technology that provides a way to interconnect multiple computer across short distance is",opts:["LAN","MAN","WAN","Wireless network"],ans:0},
+      {q:"A device that forwards data packet from one network to another is called",opts:["Bridge","Switch","Hub","Gateway"],ans:1},
+      {q:"Which of the following is the fastest media of data transfer",opts:["Co-axial Cable","Untwisted Wire","Telephone Lines","Fiber Optic"],ans:3},
+      {q:"A router",opts:["Screens incoming information.","Distributes information between networks","Clears all viruses from a computer system","Is a work virus."],ans:1},
+      {q:"Hubs are present in the network",opts:["To diagnose line failures, measure and manage traffic flow and simplify reconfiguring of LANs.","To interconnect the LAN with WANs.","To interconnect the WANs with WANs.","To interconnect the WANs with LANs."],ans:1},
+      {q:"What does FTP stand for?",opts:["Firewall Transfer Programming","File Transmission Protocol","File Transfer Protocol","File Transfer Program"],ans:2},
+      {q:"The 'http' you type at the beginning of any site's address stands for",opts:["HTML Transfer Technology Process","Hyperspace Techniques and Technology Progress","Hyper Text Transfer Protocol","Hyperspace Terms and Technology Protocol"],ans:2},
+      {q:"SMTP is a",opts:["Networking Protocol","Protocol used for transferring message between end user & Mail Server.","Protocol used for smart card message interchange.","Encryption Standard"],ans:1},
+      {q:"If you use either Telnet or FTP, which is the highest layer you are using to transmit data?",opts:["Application","Presentation","Session","Transport"],ans:0},
+      {q:"Which layer 4 protocol is used for a Telnet connection?",opts:["IP","TCP","TCP/IP","UDP"],ans:1},
+    ]
+  },
+  {
+    id: 'ch3',
+    title: 'IP Addressing & TCP/IP',
+    subtitle: 'Physical/Logical Addresses, IP Classes, TCP/IP Model, DHCP, NAT, DNS, IPv6',
+    qs: [
+      {q:"………………… is the address which comprises of 48-bit that is imprinted at the time of manufacturing Network Interface Card",opts:["Physical address","Logical address","A & B"],ans:0},
+      {q:"………………… is a specific and unique number assigned to each host in the Internet for identification.",opts:["Physical address","Logical address","A & B"],ans:1},
+      {q:"The hardware address is also known as …………………",opts:["MAC","IP","IPv6"],ans:0},
+      {q:"………………… address is used by computers to identify each other on (LAN)",opts:["MAC","IP","IPv6"],ans:0},
+      {q:"………………… address cannot be used on WAN.",opts:["MAC","IP","IPv6"],ans:0},
+      {q:"In class ………………… 8 bits are used for identifying the network ID and 24 bits for the host ID.",opts:["A","B","D","C"],ans:0},
+      {q:"In class ………………… 16 bits are used for identifying the network ID and 16 bits for the host ID.",opts:["A","B","D","C"],ans:1},
+      {q:"In class ………………… 24 bits are used for identifying the network ID and 8 bits for the host ID.",opts:["A","B","D","C"],ans:3},
+      {q:"In class …………………, the first four bits in the network ID are set to 1110",opts:["A","B","D","C"],ans:2},
+      {q:"In class …………………, the first four bits in the network ID are set to 1111",opts:["A","B","D","C","E"],ans:4},
+      {q:"In class D, the first four bits in the network ID are set to…………",opts:["1110","1111","1100","1000"],ans:0},
+      {q:"In class ………C………, the first four bits in the network ID are set to………",opts:["1110","1111","1100","1000"],ans:2},
+      {q:"Class …………… addresses are reserved for multicast addresses.",opts:["A","B","D","C","E"],ans:2},
+      {q:"Class …………… addresses are reserved for experimentation",opts:["A","B","D","C","E"],ans:4},
+      {q:"Class …………… contains networks from 1.0.0.0 to 127.255.255.255",opts:["A","B","D","C","E"],ans:0},
+      {q:"Class …………… contains networks from 128.0.0.0 to 191.255.255.255",opts:["A","B","D","C","E"],ans:1},
+      {q:"Class …………… contains networks from 192.0.0.0 to 223.255.255.255",opts:["A","B","D","C","E"],ans:3},
+      {q:"The TCP/IP reference model consists of …………… layers",opts:["7","5","4"],ans:2},
+      {q:"…………………… Enabling users to access the network by providing a few services to the user",opts:["Application Layer","Transport Layer","Internet Layer","Network Interface"],ans:0},
+      {q:"Communication between computers is handled by the …………… Layer.",opts:["Application Layer","Transport Layer","Internet Layer","Network Interface"],ans:1},
+      {q:"Transport layer uses ……………",opts:["TCP","UDP","A&B"],ans:2},
+      {q:"…………… is responsible for dividing the data into logical units called packets before transmitting them.",opts:["TCP","UPD","A&B"],ans:0},
+      {q:"…………… layer is responsible for routing packets from source-to-destination across multiple networks.",opts:["Application Layer","Transport Layer","Internet Layer","Network Interface"],ans:2},
+      {q:"…………… layer is responsible for determining destination address if unknown",opts:["Application Layer","Transport Layer","Internet Layer","Network Interface"],ans:2},
+      {q:"…………… layer is responsible for ensuring that all the frames are received properly by a method called the Cyclic Redundancy Check (CRC)",opts:["Application Layer","Transport Layer","Internet Layer","Network Interface"],ans:3},
+      {q:"The configuration of …………… automatically provides the IP addresses to the network computers.",opts:["DHCP","NAT","DNS"],ans:0},
+      {q:"…………… Addresses are manually assigned to a computer by an administrator or ISP",opts:["Static IP","Dynamic IP","A&B"],ans:0},
+      {q:"…………… Addresses are assigned on LANs and broadband networks either randomly, or arbitrarily by a server using (DHCP).",opts:["Static IP","Dynamic IP","A&B"],ans:1},
+      {q:"IP addresses have a limitation that the users cannot be expected to remember the IP address to access a computer on the network so, there is a need for ……………",opts:["DHCP","NAT","DNS"],ans:2},
+      {q:"…………………… Is a unique name associated with a specific IP address by a program that runs on an Internet host computer",opts:["Domain Name","Protocol Name","Host Name"],ans:0},
+      {q:"…………… is a program, which coordinates the IP addresses and domain names for all computers attached to it.",opts:["DHCP","NAT","DNS"],ans:2},
+      {q:"…………… Is a method of connecting local-area network (LAN) to the Internet (or any other IP network) using one IP address.",opts:["DHCP","NAT","DNS"],ans:1},
+      {q:"Which of the following is/are used in NAT?",opts:["Network masquerading","Port forwarding","A&B"],ans:2},
+      {q:"…………… is an extended IP addresses from 32 bits to 128 bits",opts:["IPv4","IPv6","IPv5"],ans:1},
+      {q:"…………… is used to send messages to a single computer on a network",opts:["Unicast Address","Anycast Address","Multicast Address"],ans:0},
+      {q:"…………… is used to represent a group of addresses that are represented as a single address",opts:["Unicast Address","Anycast Address","Multicast Address"],ans:1},
+      {q:"…………… are used to represent a group of computers to which a message needs to be sent",opts:["Unicast Address","Anycast Address","Multicast Address"],ans:2},
+      // Book Questions Ch3
+      {q:"How long is an IPv6 address?",opts:["32 bits","128 bytes","64 bits","128 bits"],ans:3},
+      {q:"Which of the following is the valid host range for the subnet on which the IP address 192.168.168.188 255.255.255.192 resides?",opts:["192.168.168.129-190","192.168.168.129-191","192.168.168.128-190","192.168.168.128-192"],ans:0},
+      {q:"Where is a hub specified in the OSI model?",opts:["Session layer","Physical layer","Data Link layer","Application layer"],ans:1},
+      {q:"Which class of IP address has the most host addresses available by default?",opts:["class A","class B","class C","class A and B"],ans:0},
+    ]
+  },
+  {
+    id: 'ch4',
+    title: 'Wireless Networks',
+    subtitle: 'Wireless Technologies, Transmission Methods, Antennas, Topologies',
+    qs: [
+      {q:"………… is a type of wireless technologies.",opts:["cellular communications","networking between computers with wireless adapters","Both (a) and (b)"],ans:2},
+      {q:"Wireless communications systems have inherent characteristics of which make it attractive for users such as ……………",opts:["Mobility and Reachability","Installation","Scalability","Roaming services","All of them"],ans:4},
+      {q:"…………… can be configured in different topologies to meet the specification of applications and installations.",opts:["Mobility and Reachability","Installation","Scalability","Roaming services"],ans:2},
+      {q:"…………… can be easily changed from peer to peer networks to full infrastructure networks.",opts:["Mobility and Reachability","Installation","Scalability","Roaming services"],ans:2},
+      {q:"…………… provide services any where any time include trains, buses, airplanes etc.",opts:["Mobility and Reachability","Installation","Scalability","Roaming services"],ans:3},
+      {q:"…………… enable people to be better connected and reachable without any limitation of any location.",opts:["Mobility and Reachability","Installation","Scalability","Roaming services"],ans:0},
+      {q:"…………… increases productivity and flexibility.",opts:["Mobility and Reachability","Installation","Scalability","Roaming services"],ans:0},
+      {q:"Wireless Transmission Media are referred as …………… media that transport electromagnetic waves without using a physical conductor.",opts:["guided","unguided","both"],ans:1},
+      {q:"Wireless Transmission Methods:",opts:["ground propagation","sky propagation","line-of-sight propagation","All of them"],ans:3},
+      {q:"…………… allows for greater distance with greater power.",opts:["ground propagation","sky propagation","line-of-sight propagation"],ans:0},
+      {q:"In this type of transmission, low-frequency radio waves emit all directions from the transmitting antenna and follow the curvature of the planet through the lowest portion of the atmosphere.",opts:["ground propagation","sky propagation","line-of-sight propagation"],ans:0},
+      {q:"In this type of transmission, higher-frequency radio waves radiate upward into the ionosphere where they are reflected back to earth.",opts:["ground propagation","sky propagation","line-of-sight propagation"],ans:1},
+      {q:"…………… allows for greater distances with lower output power.",opts:["ground propagation","sky propagation","line-of-sight propagation"],ans:1},
+      {q:"In this type of transmission, very high-frequency signals are transmitted in straight lines directly from antenna to antenna. Antennas must be directional, facing each other.",opts:["ground propagation","sky propagation","line-of-sight propagation"],ans:2},
+      {q:"This type of transmission is tricky because radio transmissions cannot be completely focused.",opts:["ground propagation","sky propagation","line-of-sight propagation"],ans:2},
+      {q:"Types of Antennas:",opts:["Omni-directional","Yagi","Parabolic","Dipole","All of them"],ans:4},
+      {q:"The signal can be radiated out in all directions",opts:["Omni-directional","Yagi","Parabolic","Dipole"],ans:0},
+      {q:"…………… provides a fairly focused beam.",opts:["Omni-directional","Yagi","Parabolic","Dipole"],ans:1},
+      {q:"The most powerful where it is a simple conductor for radio.",opts:["Omni-directional","Yagi","Parabolic","Dipole"],ans:2},
+      {q:"…………… Used to increase range indoors.",opts:["Omni-directional","Yagi","Parabolic","Dipole"],ans:3},
+      {q:"Radio waves have frequencies between 3 khz and 1 Ghz, use …………… antennas that send out signals in all directions.",opts:["Omni-directional","Yagi","Parabolic","Dipole"],ans:0},
+      {q:"Terrestrial Microwaves used ………… dish antenna.",opts:["Omni-directional","Yagi","Parabolic","Dipole"],ans:2},
+      {q:"…………… is divided into smaller frequency bands. Each band will be used by one communication channel.",opts:["FDMA","TDMA","CDMA"],ans:0},
+      {q:"…………… is divided into slots where each communication channel is assigned one or more slots.",opts:["FDMA","TDMA","CDMA"],ans:1},
+      {q:"In ……………, each user is given a distinct sequence of bits called the chipping sequence.",opts:["FDMA","TDMA","CDMA"],ans:2},
+      {q:"Wireless networks are typically implemented using wireless topologies:",opts:["infrastructure","ad-hoc","both"],ans:2},
+      {q:"Wireless WAN technologies can be divided into categories such as ……………",opts:["Cellular communication systems","Satellite communication systems","both"],ans:2},
+    ]
+  },
+  {
+    id: 'ch5',
+    title: 'Search & Indexing',
+    subtitle: 'Microsoft Index Server, Query Types, Boolean & Proximity Operators',
+    qs: [
+      {q:"Microsoft Index Server supports ……………",opts:["Content indexing","Full-text indexing","A&B"],ans:2},
+      {q:"…………… Is the capability to index the properties or fields of Specific documents",opts:["Content indexing","Full-text indexing","A&B"],ans:0},
+      {q:"…………… the entire document is indexed and the entire index must be searched for a match the query criteria",opts:["Content indexing","Full-text indexing","A&B"],ans:1},
+      {q:"…………… allow the end-user to reduce and refine the result set of documents",opts:["Query Restrictions","Query Scopes","Boolean Operators"],ans:0},
+      {q:"…………… are AND, OR and NOT.",opts:["Relational operators","Assignment operator","Boolean operators"],ans:2},
+      {q:"…………… is identified by the keyword NEAR or the tilde (~) symbol keyword",opts:["Boolean Operators","Relational operators","Proximity Operator"],ans:2},
+      {q:"…………… returns a match (TRUE) if both words being searched for are found in the same document",opts:["NEAR","Tilde","AND"],ans:0},
+      {q:"…………… queries can be used to find documents with matching properties.",opts:["Property-Value Queries","Free Text Queries","Neither A nor B"],ans:0},
+      {q:"Index Server supports different types of property……………",opts:["Relational property queries","Regular property queries","A & B"],ans:2},
+      {q:"The query syntax for relational queries is as follows…………",opts:["$<property name> <relational operator> <property value>","@<property name> <relational operator> <property value>","#<property name> <regular expression>"],ans:1},
+    ]
+  },
+  {
+    id: 'ch6',
+    title: 'Proxy Servers',
+    subtitle: 'Forward, Reverse, Open, Caching, DNS, Anonymous & Translation Proxies',
+    qs: [
+      {q:"…………… is a server that acts as an intermediary for requests from clients seeking resources from other servers.",opts:["Proxy Server","DNS Server","Domain Name Server"],ans:0},
+      {q:"A proxy server that passes requests and responses unmodified is usually called……………",opts:["gateway","tunneling proxy","A&B"],ans:0},
+      {q:"A …………… is an Internet-facing proxy used to retrieve from a wide range of sources (in most cases anywhere on the Internet)",opts:["forward proxy","DNS Server","Reverse Proxy"],ans:0},
+      {q:"A …………… is (usually) an Internet-facing proxy used as a front-end to control and protect access to a server on a private network",opts:["Forward Server","DNS Server","Reverse Server"],ans:2},
+      {q:"…………… are proxies where the client server names the target server to connect to.",opts:["Forward proxies","Reverse Proxies","Open Proxies"],ans:0},
+      {q:"A …………… taking requests from an internal network and forwarding them to the Internet",opts:["Forward proxy","Reverse Proxy","Open Proxy"],ans:0},
+      {q:"…………… are proxies that create the actual proxy class at runtime.",opts:["Proxy Server","DNS Server","Dynamic proxies"],ans:2},
+      {q:"A/An …………… forwarding requests from and to anywhere on the Internet.",opts:["Proxy Server","DNS Server","open proxy"],ans:2},
+      {q:"A/An …………… is a forwarding proxy server that is accessible by any Internet user",opts:["Proxy Server","DNS Server","open proxy"],ans:2},
+      {q:"A …………… taking requests from the Internet and forwarding them to servers in an internal network.",opts:["Proxy Server","DNS Server","reverse proxy"],ans:2},
+      {q:"A …………… (or surrogate) is a proxy server that appears to clients to be an ordinary server.",opts:["Proxy Server","DNS Server","reverse proxy"],ans:2},
+      {q:"The proxy server can cache …………… content in memory and on disk.",opts:["dynamic","static","a&b"],ans:2},
+      {q:"Proxy server is called a/an …………… server when the web browser doesn't require to be attached to the proxy server.",opts:["Invisible proxy","visible proxy","a&b"],ans:0},
+      {q:"A …………… is a proxy server that is used to localize a website for different markets.",opts:["Proxy Server","DNS Server","translation proxy"],ans:2},
+      {q:"A …………… server accelerates service requests by retrieving content saved from a previous request made by the same client or even other clients.",opts:["Proxy Server","caching proxy","Translation proxy"],ans:1},
+      {q:"A …………… server takes DNS queries from a (usually local) network and forwards them to an Internet Domain Name Server.",opts:["Proxy Server","DNS Server","Domain Name Server"],ans:1},
+      {q:"A …………… allows a user to access web content by appending the name of the proxy server to the URL of the requested content",opts:["Proxy Server","DNS Server","suffix proxy"],ans:2},
+      {q:"…………… is a proxy that does not modify the request or response beyond what is required for proxy authentication and identification.",opts:["Translation Server","DNS Server","Transparent Proxy"],ans:2},
+      {q:"…………… is a proxy that modifies the request or response in order to provide some added service to the user agent.",opts:["DNS Server","Non-Transparent Proxy","Transparent Proxy"],ans:1},
+      {q:"A …………… can offload the web servers by caching static content",opts:["Proxy Server","DNS Server","reverse proxy"],ans:2},
+      {q:"The …………… can distribute the load to several web servers, each web server serving its own application area.",opts:["Reverse proxy","DNS Server","Translation Server"],ans:0},
+      {q:"An …………… (sometimes called a web proxy) generally attempts to anonymize web surfing",opts:["anonymous proxy server","DNS Server","Domain Name Server"],ans:0},
+      {q:"The translations used in a translation proxy can be ……………",opts:["machine translation","human translation","combination of machine and human translation","All the above"],ans:3},
+      {q:"…………… servers are easier to use than regular proxy servers but they do not offer high levels of anonymity and their primary use is for bypassing web filters.",opts:["Suffix proxy","DNS Server","Visible proxy"],ans:0},
+    ]
+  }
+];
+
+const letters = ['a','b','c','d','e'];
+const sections = {};
+chapters.forEach(ch => {
+  sections[ch.id] = { qs: ch.qs, answered: {}, correct: 0, built: false };
+});
+
+let currentTab = 'ch1';
+
+// calculate total
+let totalAll = 0;
+chapters.forEach(ch => totalAll += ch.qs.length);
+document.getElementById('total-stat').textContent = totalAll;
+
+function getGrade(pct) {
+  if (pct >= 90) return 'A+'; if (pct >= 85) return 'A'; if (pct >= 80) return 'B+';
+  if (pct >= 75) return 'B'; if (pct >= 70) return 'C+'; if (pct >= 65) return 'C';
+  if (pct >= 60) return 'D+'; if (pct >= 50) return 'D'; return 'F';
+}
+
+function updateProgress(tab) {
+  const sec = sections[tab];
+  const total = sec.qs.length;
+  const count = Object.keys(sec.answered).length;
+  const pct = Math.round(count / total * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = count + ' / ' + total + ' answered — ' + chapters.find(c=>c.id===tab).title.split(' ')[0];
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+function buildSection(chId) {
+  const sec = sections[chId];
+  if (sec.built) return;
+  sec.built = true;
+  const ch = chapters.find(c => c.id === chId);
+  const container = document.getElementById('panel-' + chId);
+
+  container.innerHTML = `
+    <div class="chapter-header">
+      <div class="chapter-num">${chId.replace('ch','Chapter ')}</div>
+      <div class="chapter-title">${ch.title}</div>
+      <div class="chapter-meta">${ch.subtitle} &nbsp;·&nbsp; ${ch.qs.length} questions</div>
+    </div>
+    <div id="qs-${chId}"></div>
+    <div class="actions">
+      <button class="btn-primary" onclick="scrollToScore('${chId}')">View Score</button>
+      <button class="btn-secondary" onclick="resetSection('${chId}')">Reset</button>
+    </div>
+    <div class="score-card" id="score-${chId}">
+      <div class="score-card-inner">
+        <div class="score-top">
+          <div>
+            <div class="score-label">Chapter Score</div>
+            <div class="score-big" id="sc-pct-${chId}">—</div>
+            <div class="score-sub" id="sc-sub-${chId}">—</div>
+          </div>
+          <div style="text-align:right">
+            <div class="score-label">Grade</div>
+            <div class="score-grade" id="sc-grade-${chId}">—</div>
+          </div>
+        </div>
+        <div class="score-breakdown">
+          <div class="score-section">
+            <div class="score-section-label">Correct</div>
+            <div class="score-section-val" id="sc-correct-${chId}">—</div>
+            <div class="score-section-pct" id="sc-acc-${chId}">—</div>
+          </div>
+          <div class="score-section">
+            <div class="score-section-label">Unanswered</div>
+            <div class="score-section-val" id="sc-skip-${chId}">—</div>
+            <div class="score-section-pct" style="color:rgba(255,255,255,.35)">not yet answered</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const qsDiv = document.getElementById('qs-' + chId);
+  sec.qs.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = chId + '-card-' + i;
+    const opts = item.opts.map((o, j) => `
+      <label class="option" id="${chId}-opt-${i}-${j}" onclick="selectOpt('${chId}',${i},${j})">
+        <input type="radio" name="${chId}-${i}" value="${j}">
+        <div class="option-dot"></div>
+        <span class="option-letter">${letters[j]})</span>
+        <span class="option-text">${o}</span>
+      </label>`).join('');
+    card.innerHTML = `
+      <div class="q-header">
+        <span class="q-badge">${i+1}</span>
+        <span class="q-text">${item.q}</span>
+      </div>
+      <div class="options">${opts}</div>
+      <div class="q-feedback" id="${chId}-fb-${i}"></div>`;
+    qsDiv.appendChild(card);
+  });
+}
+
+function selectOpt(chId, qi, oi) {
+  const sec = sections[chId];
+  if (sec.answered[qi] !== undefined) return;
+  sec.answered[qi] = oi;
+  const item = sec.qs[qi];
+  document.getElementById(`${chId}-opt-${qi}-${oi}`).classList.add('selected');
+  document.getElementById(`${chId}-card-${qi}`).classList.add('answered');
+  updateProgress(chId);
+
+  const card = document.getElementById(`${chId}-card-${qi}`);
+  const fb = document.getElementById(`${chId}-fb-${qi}`);
+  item.opts.forEach((_, j) => {
+    const opt = document.getElementById(`${chId}-opt-${qi}-${j}`);
+    opt.style.pointerEvents = 'none';
+    if (j === item.ans) opt.classList.add('correct-opt');
+    else if (j === oi && oi !== item.ans) { opt.classList.add('wrong-opt'); opt.classList.remove('selected'); }
+  });
+  if (oi === item.ans) {
+    sec.correct++;
+    card.classList.add('correct-card');
+    fb.textContent = '✓ Correct!';
+    fb.className = 'q-feedback show-correct';
+  } else {
+    card.classList.add('wrong-card');
+    fb.textContent = '✗ Incorrect — correct: ' + letters[item.ans] + ') ' + item.opts[item.ans];
+    fb.className = 'q-feedback show-wrong';
+  }
+  updateScoreCard(chId);
+}
+
+function updateScoreCard(chId) {
+  const sec = sections[chId];
+  const total = sec.qs.length;
+  const ans = Object.keys(sec.answered).length;
+  const pct = ans > 0 ? Math.round(sec.correct / ans * 100) : 0;
+  document.getElementById('score-' + chId).style.display = 'block';
+  document.getElementById('sc-pct-' + chId).textContent = pct + '%';
+  document.getElementById('sc-sub-' + chId).textContent = sec.correct + ' correct out of ' + ans + ' answered';
+  document.getElementById('sc-grade-' + chId).textContent = getGrade(pct);
+  document.getElementById('sc-correct-' + chId).textContent = sec.correct + ' / ' + ans;
+  document.getElementById('sc-acc-' + chId).textContent = ans > 0 ? pct + '% accuracy' : '—';
+  document.getElementById('sc-skip-' + chId).textContent = total - ans;
+}
+
+function scrollToScore(chId) {
+  document.getElementById('score-' + chId).scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetSection(chId) {
+  sections[chId].answered = {};
+  sections[chId].correct = 0;
+  sections[chId].built = false;
+  document.getElementById('score-' + chId).style.display = 'none';
+  buildSection(chId);
+  updateProgress(chId);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function switchTab(chId) {
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  currentTab = chId;
+  document.getElementById('panel-' + chId).classList.add('active');
+  document.querySelectorAll('.tab-btn')[chapters.findIndex(c => c.id === chId)].classList.add('active');
+  buildSection(chId);
+  updateProgress(chId);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Build panels
+function initPanels() {
+  const main = document.getElementById('main-content');
+  chapters.forEach((ch, idx) => {
+    const panel = document.createElement('div');
+    panel.className = 'section-panel' + (idx === 0 ? ' active' : '');
+    panel.id = 'panel-' + ch.id;
+    main.appendChild(panel);
+  });
+  buildSection('ch1');
+  updateProgress('ch1');
+}
+
+window.addEventListener('scroll', () => {
+  document.getElementById('scroll-btn').classList.toggle('visible', window.scrollY > 400);
+});
+
+;(function(){
+  const key = 'fchai_theme';
+  const el = document.documentElement;
+  const btn = document.getElementById('theme-toggle');
+  function set(theme) {
+    if (theme === 'dark') { el.setAttribute('data-theme','dark'); btn.textContent = '☀️'; }
+    else { el.removeAttribute('data-theme'); btn.textContent = '🌙'; }
+  }
+  let stored = localStorage.getItem(key) || 'light';
+  set(stored);
+  btn.addEventListener('click', function() {
+    const now = el.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(key, now); set(now);
+  });
+})();
+
+initPanels();
+</script>
+</body>
+</html>
