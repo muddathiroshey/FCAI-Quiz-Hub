@@ -14,23 +14,23 @@
   <ellipse cx="1020" cy="400" rx="510" ry="504" fill="url(#rad1)"/>
   <ellipse cx="120" cy="800" rx="480" ry="378" fill="url(#rad2)"/>
   
-  <text x="120" y="100" font-family="monospace" font-size="24" font-weight="bold" fill="#60a5fa">CAPITAL UNIVERSITY · CS</text>
+  <text x="120" y="80" font-family="monospace" font-size="24" font-weight="bold" fill="#60a5fa">CAPITAL UNIVERSITY · CS</text>
   
-  <text x="120" y="250" font-family="serif" font-size="120" font-weight="bold" fill="white">CS 241</text>
-  <text x="120" y="360" font-family="serif" font-size="84" font-weight="bold" fill="#93c5fd" font-style="italic">Operating Systems</text>
+  <text x="120" y="200" font-family="serif" font-size="120" font-weight="bold" fill="white">CS 241</text>
+  <text x="120" y="330" font-family="serif" font-size="84" font-weight="bold" fill="#93c5fd" font-style="italic">Operating Systems</text>
   
-  <text x="120" y="450" font-family="sans-serif" font-size="32" fill="rgba(255,255,255,0.65)">Lectures 0–8 · 117 Questions</text>
+  <text x="120" y="430" font-family="sans-serif" font-size="32" fill="rgba(255,255,255,0.65)">Lectures 0–8 · 117 Questions</text>
   
   <g>
-    <text x="120" y="600" font-family="serif" font-size="56" font-weight="bold" fill="white">117</text>
-    <text x="120" y="650" font-family="monospace" font-size="18" fill="rgba(255,255,255,0.5)" font-weight="bold">QUESTIONS</text>
+    <text x="120" y="620" font-family="serif" font-size="56" font-weight="bold" fill="white">117</text>
+    <text x="120" y="670" font-family="monospace" font-size="18" fill="rgba(255,255,255,0.5)" font-weight="bold">QUESTIONS</text>
     
-    <text x="480" y="600" font-family="serif" font-size="56" font-weight="bold" fill="white">9</text>
-    <text x="480" y="650" font-family="monospace" font-size="18" fill="rgba(255,255,255,0.5)" font-weight="bold">LECTURES</text>
+    <text x="480" y="620" font-family="serif" font-size="56" font-weight="bold" fill="white">9</text>
+    <text x="480" y="670" font-family="monospace" font-size="18" fill="rgba(255,255,255,0.5)" font-weight="bold">LECTURES</text>
     
-    <text x="800" y="600" font-family="serif" font-size="52" font-weight="bold" fill="white">MC/TF</text>
-    <text x="800" y="650" font-family="monospace" font-size="18" fill="rgba(255,255,255,0.5)" font-weight="bold">FORMAT</text>
+    <text x="800" y="620" font-family="serif" font-size="52" font-weight="bold" fill="white">MC/TF</text>
+    <text x="800" y="670" font-family="monospace" font-size="18" fill="rgba(255,255,255,0.5)" font-weight="bold">FORMAT</text>
   </g>
   
-  <text x="120" y="800" font-family="sans-serif" font-size="26" fill="rgba(255,255,255,0.7)">Dr. Ahmed Hisham Mostafa</text>
+  <text x="120" y="1050" font-family="sans-serif" font-size="26" fill="rgba(255,255,255,0.7)">Dr. Ahmed Hisham Mostafa</text>
 </svg>
