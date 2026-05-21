@@ -153,13 +153,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
 [data-theme="dark"] .scroll-top{background:#334155;}
 [data-theme="dark"] .scroll-top:hover{background:var(--accent);}
 
-.theme-toggle{position:fixed;top:16px;right:20px;z-index:300;background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.2);color:white;border-radius:20px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s;backdrop-filter:blur(8px);}
-.theme-toggle:hover{background:rgba(255,255,255,0.22);}
-[data-theme="dark"] .theme-toggle{background:rgba(0,0,0,0.3);border-color:rgba(255,255,255,0.15);}
+#theme-toggle{position:absolute;top:16px;right:18px;z-index:20;padding:8px 10px;border-radius:8px;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.06);}
+[data-theme="dark"] #theme-toggle{background:rgba(0,0,0,0.3);border-color:rgba(255,255,255,0.15);}
 </style>
 </head>
 <body>
-<button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode">☀️</button>
 <header class="hero">
   <div class="hero-inner">
     <div class="hero-eyebrow">Capital University — Computer Science And Artificial Intelligence</div>
@@ -167,6 +165,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
     <p class="hero-sub">Dr. Ahmed Hesham Mostafa &nbsp;·&nbsp; Lectures 0 – 8 &nbsp;·&nbsp; Multiple Choice & True / False</p>
     <div class="hero-disclaimer">⚠ Disclaimer: <span>All questions were made and answered by NotebookLM.</span></div>
   </div>
+  <button id="theme-toggle">🌙</button>
 </header>
 <nav class="lecture-nav">
   <div class="lecture-nav-inner" id="lec-tabs"></div>
@@ -862,18 +861,19 @@ function toggleTheme(){
   const isDark=document.documentElement.getAttribute('data-theme')==='dark';
   const newTheme=isDark?'light':'dark';
   document.documentElement.setAttribute('data-theme',newTheme);
-  localStorage.setItem('os-quiz-theme',newTheme);
+  localStorage.setItem('fchai_theme',newTheme);
   const btn=document.getElementById('theme-toggle');
   btn.textContent=isDark?'☀️':'🌙';
 }
 (function(){
-  const saved=localStorage.getItem('os-quiz-theme')||
+  const saved=localStorage.getItem('fchai_theme')||
     (window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
   document.documentElement.setAttribute('data-theme',saved);
-  document.addEventListener('DOMContentLoaded',()=>{
-    const btn=document.getElementById('theme-toggle');
-    if(btn)btn.textContent=saved==='dark'?'🌙':'☀️';
-  });
+  const btn=document.getElementById('theme-toggle');
+  if(btn){
+    btn.textContent=saved==='dark'?'☀️':'🌙';
+    btn.addEventListener('click',toggleTheme);
+  }
 })();
 buildNav();
 updateProgress();
