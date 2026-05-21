@@ -14,23 +14,23 @@
   <ellipse cx="1020" cy="252" rx="510" ry="504" fill="url(#rad1)"/>
   <ellipse cx="120" cy="504" rx="480" ry="378" fill="url(#rad2)"/>
   
-  <text x="120" y="80" font-family="DM Mono, monospace" font-size="28" font-weight="600" letter-spacing="3" fill="#60a5fa" text-transform="uppercase">Capital University — CS</text>
+  <text x="120" y="80" font-family="monospace" font-size="24" font-weight="bold" fill="#60a5fa">CAPITAL UNIVERSITY · CS</text>
   
-  <text x="120" y="200" font-family="DM Serif Display, serif" font-size="96" font-weight="600" fill="white">CS 241</text>
-  <text x="120" y="290" font-family="DM Serif Display, serif" font-size="72" font-weight="600" fill="#93c5fd" font-style="italic">Operating Systems</text>
+  <text x="120" y="200" font-family="serif" font-size="120" font-weight="bold" fill="white">CS 241</text>
+  <text x="120" y="290" font-family="serif" font-size="84" font-weight="bold" fill="#93c5fd" font-style="italic">Operating Systems</text>
   
-  <text x="120" y="360" font-family="DM Sans, sans-serif" font-size="32" fill="rgba(255,255,255,0.6)">Lectures 0–8 · 117 Questions</text>
+  <text x="120" y="360" font-family="sans-serif" font-size="32" fill="rgba(255,255,255,0.65)">Lectures 0–8 · 117 Questions</text>
   
   <g>
-    <text x="120" y="450" font-family="DM Serif Display, serif" font-size="48" font-weight="600" fill="white">117</text>
-    <text x="120" y="490" font-family="DM Mono, monospace" font-size="16" fill="rgba(255,255,255,0.5)" text-transform="uppercase" letter-spacing="2">Questions</text>
+    <text x="120" y="450" font-family="serif" font-size="56" font-weight="bold" fill="white">117</text>
+    <text x="120" y="490" font-family="monospace" font-size="18" fill="rgba(255,255,255,0.5)" font-weight="bold">QUESTIONS</text>
     
-    <text x="480" y="450" font-family="DM Serif Display, serif" font-size="48" font-weight="600" fill="white">9</text>
-    <text x="480" y="490" font-family="DM Mono, monospace" font-size="16" fill="rgba(255,255,255,0.5)" text-transform="uppercase" letter-spacing="2">Lectures</text>
+    <text x="480" y="450" font-family="serif" font-size="56" font-weight="bold" fill="white">9</text>
+    <text x="480" y="490" font-family="monospace" font-size="18" fill="rgba(255,255,255,0.5)" font-weight="bold">LECTURES</text>
     
-    <text x="800" y="450" font-family="DM Serif Display, serif" font-size="48" font-weight="600" fill="white">MC/TF</text>
-    <text x="800" y="490" font-family="DM Mono, monospace" font-size="16" fill="rgba(255,255,255,0.5)" text-transform="uppercase" letter-spacing="2">Format</text>
+    <text x="800" y="450" font-family="serif" font-size="52" font-weight="bold" fill="white">MC/TF</text>
+    <text x="800" y="490" font-family="monospace" font-size="18" fill="rgba(255,255,255,0.5)" font-weight="bold">FORMAT</text>
   </g>
   
-  <text x="120" y="560" font-family="DM Sans, sans-serif" font-size="24" fill="rgba(255,255,255,0.7)">Dr. Ahmed Hisham Mostafa</text>
+  <text x="120" y="560" font-family="sans-serif" font-size="26" fill="rgba(255,255,255,0.7)">Dr. Ahmed Hisham Mostafa</text>
 </svg>
