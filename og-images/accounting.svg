@@ -1,0 +1,36 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rad1" cx="85%" cy="40%">
+      <stop offset="0%" style="stop-color:rgba(180,83,9,0.3);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(180,83,9,0);stop-opacity:1" />
+    </radialGradient>
+    <radialGradient id="rad2" cx="10%" cy="90%">
+      <stop offset="0%" style="stop-color:rgba(217,119,6,0.2);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(217,119,6,0);stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <rect width="1200" height="630" fill="#0f172a"/>
+  <ellipse cx="1020" cy="252" rx="510" ry="504" fill="url(#rad1)"/>
+  <ellipse cx="120" cy="504" rx="480" ry="378" fill="url(#rad2)"/>
+  
+  <text x="120" y="80" font-family="DM Mono, monospace" font-size="28" font-weight="600" letter-spacing="3" fill="#60a5fa" text-transform="uppercase">Capital University — HU</text>
+  
+  <text x="120" y="200" font-family="DM Serif Display, serif" font-size="96" font-weight="600" fill="white">HU 323</text>
+  <text x="120" y="290" font-family="DM Serif Display, serif" font-size="72" font-weight="600" fill="#fef3c7" font-style="italic">Fundamentals of Accounting</text>
+  
+  <text x="120" y="360" font-family="DM Sans, sans-serif" font-size="32" fill="rgba(255,255,255,0.6)">Chapters 1–2 · 47 Questions</text>
+  
+  <g>
+    <text x="120" y="450" font-family="DM Serif Display, serif" font-size="48" font-weight="600" fill="white">47</text>
+    <text x="120" y="490" font-family="DM Mono, monospace" font-size="16" fill="rgba(255,255,255,0.5)" text-transform="uppercase" letter-spacing="2">Questions</text>
+    
+    <text x="480" y="450" font-family="DM Serif Display, serif" font-size="48" font-weight="600" fill="white">2</text>
+    <text x="480" y="490" font-family="DM Mono, monospace" font-size="16" fill="rgba(255,255,255,0.5)" text-transform="uppercase" letter-spacing="2">Chapters</text>
+    
+    <text x="800" y="450" font-family="DM Serif Display, serif" font-size="48" font-weight="600" fill="white">MCQ</text>
+    <text x="800" y="490" font-family="DM Mono, monospace" font-size="16" fill="rgba(255,255,255,0.5)" text-transform="uppercase" letter-spacing="2">Format</text>
+  </g>
+  
+  <text x="120" y="560" font-family="DM Sans, sans-serif" font-size="24" fill="rgba(255,255,255,0.7)">Dr. Hamdy Habl</text>
+</svg>
