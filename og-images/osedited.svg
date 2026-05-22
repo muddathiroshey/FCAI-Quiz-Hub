@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="1200" height="1200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rad1" cx="0.847" cy="0.46">
+      <stop offset="0" style="stop-color:rgba(67,56,202,0.3);stop-opacity:1"/>
+      <stop offset="1" style="stop-color:rgba(67,56,202,0);stop-opacity:1"/>
+    </radialGradient>
+    <radialGradient id="rad2" cx="0.312" cy="0.746">
+      <stop offset="0" style="stop-color:rgba(217,119,6,0.2);stop-opacity:1"/>
+      <stop offset="1" style="stop-color:rgba(217,119,6,0);stop-opacity:1"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="#0f172a"/>
+  <ellipse cx="1020" cy="400" rx="510" ry="504" fill="url(#rad1)"/>
+  <ellipse cx="136" cy="800" rx="480" ry="378" fill="url(#rad2)" style="transform-box: fill-box; transform-origin: 50% 50%;" transform="matrix(0.990268, 0.139173, -0.139173, 0.990268, 194.191968, 146.390888)"/>
+  <text style="fill: rgb(96, 165, 250); font-family: monospace; font-size: 26px; font-weight: 700; white-space: pre;" x="120" y="260">CAPITAL UNIVERSITY · CS</text>
+  <text style="fill: rgb(255, 255, 255); font-family: serif; font-size: 114px; font-weight: 700; white-space: pre;" x="120" y="386">CS 241</text>
+  <text style="fill: rgb(147, 197, 253); font-family: serif; font-size: 106px; font-style: italic; font-weight: 700; white-space: pre;" x="120" y="510">Operating Systems</text>
+  <text x="120" y="610" font-family="sans-serif" font-size="32" fill="rgba(255,255,255,0.65)" style="white-space: pre; font-size: 32px;">Lectures 0–8 · 411 Questions</text>
+  <g transform="matrix(1, 0, 0, 1, 0, 191.000021)">
+    <text style="fill: rgb(255, 255, 255); font-family: serif; font-size: 92px; font-weight: 700; white-space: pre;" x="216" y="602">411</text>
+    <text style="fill: rgba(255, 255, 255, 0.5); font-family: monospace; font-size: 60px; font-weight: 700; white-space: pre;" x="120" y="652">QUESTIONS</text>
+    <text style="fill: rgb(255, 255, 255); font-family: serif; font-size: 92px; font-weight: 700; white-space: pre;" x="576" y="602">9</text>
+    <text style="fill: rgba(255, 255, 255, 0.5); font-family: monospace; font-size: 60px; font-weight: 700; white-space: pre;" x="480" y="652">LECTURES</text>
+    <text style="fill: rgb(255, 255, 255); font-family: serif; font-size: 64px; font-weight: 700; white-space: pre;" x="800" y="602">MC/TF</text>
+    <text style="fill: rgba(255, 255, 255, 0.5); font-family: monospace; font-size: 60px; font-weight: 700; white-space: pre;" x="800" y="652">FORMAT</text>
+  </g>
+  <text x="120" y="994" font-family="sans-serif" font-size="26" fill="rgba(255,255,255,0.7)" style="white-space: pre; font-size: 26px;">Dr. Ahmed Hisham Mostafa</text>
+</svg>

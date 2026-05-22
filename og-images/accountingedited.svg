@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="1200" height="1200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rad1" cx="85%" cy="40%">
+      <stop offset="0" style="stop-color:rgba(180,83,9,0.3);stop-opacity:1"/>
+      <stop offset="1" style="stop-color:rgba(180,83,9,0);stop-opacity:1"/>
+    </radialGradient>
+    <radialGradient id="rad2" cx="0.405" cy="0.749">
+      <stop offset="0" style="stop-color:rgba(217,119,6,0.2);stop-opacity:1"/>
+      <stop offset="1" style="stop-color:rgba(217,119,6,0);stop-opacity:1"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="#0f172a"/>
+  <ellipse cx="1020" cy="400" rx="510" ry="504" fill="url(#rad1)"/>
+  <ellipse cx="109" cy="902" rx="480" ry="378" fill="url(#rad2)"/>
+  <text x="120" y="248" font-family="monospace" font-size="24" font-weight="bold" fill="#60a5fa" style="white-space: pre; font-size: 24px;">CAPITAL UNIVERSITY · HU</text>
+  <text x="120" y="368" font-family="serif" font-size="120" font-weight="bold" fill="white" style="white-space: pre; font-size: 120px;">HU 323</text>
+  <text x="120" y="498" font-family="serif" font-size="84" font-weight="bold" fill="#fef3c7" font-style="italic" style="white-space: pre; font-size: 84px;">Fundamentals of Accounting</text>
+  <text x="120" y="598" font-family="sans-serif" font-size="32" fill="rgba(255,255,255,0.65)" style="white-space: pre; font-size: 32px;">Chapters 1–2 · 47 Questions</text>
+  <g>
+    <text style="fill: rgb(255, 255, 255); font-family: serif; font-size: 93px; font-weight: 700; white-space: pre;" x="195" y="810">47</text>
+    <text style="fill: rgba(255, 255, 255, 0.5); font-family: monospace; font-size: 53px; font-weight: 700; white-space: pre;" x="120" y="860">QUESTIONS</text>
+    <text style="fill: rgb(255, 255, 255); font-family: serif; font-size: 93px; font-weight: 700; white-space: pre;" x="555" y="810">2</text>
+    <text style="fill: rgba(255, 255, 255, 0.5); font-family: monospace; font-size: 53px; font-weight: 700; white-space: pre;" x="480" y="860">CHAPTERS</text>
+    <text style="fill: rgb(255, 255, 255); font-family: serif; font-size: 69px; font-weight: 700; white-space: pre;" x="800" y="810">MCQ</text>
+    <text style="fill: rgba(255, 255, 255, 0.5); font-family: monospace; font-size: 53px; font-weight: 700; white-space: pre;" x="800" y="860">FORMAT</text>
+  </g>
+  <text style="fill: rgba(255, 255, 255, 0.7); font-size: 29px; white-space: pre;" x="120" y="978">Dr. Hamdy Habl</text>
+</svg>
